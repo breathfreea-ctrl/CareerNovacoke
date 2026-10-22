@@ -1,3 +1,4 @@
+ROLES = [
     {
         "id": 1,
         "name": "AI Engineer",
@@ -294,4 +295,3 @@
         "data_date": "2026-10-21"
     }
 ]
->>>>>>> origin/LIU

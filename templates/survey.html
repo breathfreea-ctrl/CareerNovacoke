@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Your starting point — Fieldnotes{% endblock %}
+{% block content %}
+<section class="page-intro compact-intro">
+  <div class="page-intro-inner">
+    <a class="back-link" href="{{ url_for('index') }}">← Back to role index</a>
+    <p class="eyebrow"><span class="eyebrow-line"></span> Your starting point</p>
+    <h1>What do you<br><em>bring with you?</em></h1>
+    <p class="hero-intro">Select the skills you have and the subjects or kinds of work that interest you. There are no wrong answers, and you can choose as many as you like.</p>
+  </div>
+  <div class="step-marker"><span>01</span><span class="step-rule"></span><span>02</span><small>YOUR INPUT</small></div>
+</section>
+
+<form class="survey-form" action="{{ url_for('results') }}" method="post">
+  <section class="selection-section" aria-labelledby="skills-heading">
+    <div class="selection-heading">
+      <div><span class="section-kicker">01 / WHAT YOU CAN DO</span><h2 id="skills-heading">Skills you bring</h2></div>
+      <span class="selection-count" data-count-for="skills">0 selected</span>
+    </div>
+    <p class="section-aside selection-help">Choose skills you have practiced in work, study, volunteering, or life. You do not need to be an expert.</p>
+    {% if skills %}
+    <div class="choice-grid">
+      {% for skill in skills %}
+      <label class="choice">
+        <input type="checkbox" name="skills" value="{{ skill }}">
+        <span class="choice-box" aria-hidden="true"></span><span>{{ skill }}</span>
+      </label>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="inline-empty">Skills are not available at the moment.</p>
+    {% endif %}
+  </section>
+
+  <section class="selection-section interest-section" aria-labelledby="interests-heading">
+    <div class="selection-heading">
+      <div><span class="section-kicker">02 / WHAT DRAWS YOU IN</span><h2 id="interests-heading">Interests to follow</h2></div>
+      <span class="selection-count" data-count-for="interests">0 selected</span>
+    </div>
+    <p class="section-aside selection-help">Think about topics, environments, and problems you would like to spend more time with.</p>
+    {% if interests %}
+    <div class="choice-grid interest-grid">
+      {% for interest in interests %}
+      <label class="choice">
+        <input type="checkbox" name="interests" value="{{ interest }}">
+        <span class="choice-box" aria-hidden="true"></span><span>{{ interest }}</span>
+      </label>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="inline-empty">Interests are not available at the moment.</p>
+    {% endif %}
+  </section>
+
+  <section class="experience-section" aria-labelledby="experience-heading">
+    <div><span class="section-kicker">A LITTLE CONTEXT</span><h2 id="experience-heading">Time in the field</h2><p>This helps frame your exploration. Experience does not change the overlap percentages.</p></div>
+    <label class="experience-input"><span>Years of experience</span><input type="number" name="experience_years" min="0" max="80" step="0.5" value="0" inputmode="decimal"></label>
+  </section>
+
+  <div class="survey-submit">
+    <p>You can continue with no selections to browse all roles.</p>
+    <button type="submit" class="button button-dark">See paths to explore <span aria-hidden="true">↗</span></button>
+  </div>
+</form>
+<script>
+  document.querySelectorAll('.survey-form input[type="checkbox"]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      ['skills', 'interests'].forEach(function (group) {
+        var count = document.querySelectorAll('input[name="' + group + '"]:checked').length;
+        var output = document.querySelector('[data-count-for="' + group + '"]');
+        if (output) output.textContent = count + (count === 1 ? ' selected' : ' selected');
+      });
+    });
+  });
+</script>
+{% endblock %}

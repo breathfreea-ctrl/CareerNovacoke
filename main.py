@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request
+import math
 
-import os
+from flask import Flask, abort, render_template, request
 from matching import match_user
 from models import ROLES
 
@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-  return render_template('index.html')#路由绑定，渲染并展示首页，首页跳转进入问卷
+  return render_template('index.html', roles=ROLES)
 
 @app.route('/survey')
 def survey():
@@ -28,7 +28,6 @@ def survey():
   return render_template(
     'survey.html',
     skills=all_skills,
-    experience=all_experience,
     interests=all_interests,
   )
 
@@ -41,24 +40,34 @@ def results():
     experience_years = float(
       request.form.get("experience_years", "0")
     )
+    if not math.isfinite(experience_years):
+      experience_years = 0
     experience_years = max(experience_years, 0)
   except ValueError:
     experience_years = 0
 
-matched_roles = match_user(
-  user_skills,
-  experience_years,
-  user_interests,
-)
+  matched_roles = match_user(
+    user_skills,
+    experience_years,
+    user_interests,
+  )
 
-return render_template(
-  'results.html', 
-  roles=matched_roles,
-  user_skills=user_skills,
-  experience_years=experience_years,
-  user_interests=user_interests,
-)
+  return render_template(
+    'results.html',
+    roles=matched_roles,
+    user_skills=user_skills,
+    experience_years=experience_years,
+    user_interests=user_interests,
+  )
+
+
+@app.route('/role/<int:role_id>')
+def role_detail(role_id):
+  role = next((role for role in ROLES if role["id"] == role_id), None)
+  if role is None:
+    abort(404)
+  return render_template('role_detail.html', role=role)
 
 
 if __name__ == '__main__':
-  app.run(host="0.0.0.0", port=3000, debug=True)#change the port with the direction of deepseek.
+  app.run(host="0.0.0.0", port=5000, debug=False)

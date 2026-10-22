@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}{{ role.name }} — Fieldnotes{% endblock %}
+{% block content %}
+<section class="role-hero">
+  <div class="role-hero-inner">
+    <a class="back-link" href="{{ url_for('index') }}">← All roles</a>
+    <p class="eyebrow"><span class="eyebrow-line"></span> Role field guide <span class="hero-role-id">/ {{ '%02d'|format(role.id) }}</span></p>
+    <h1>{{ role.name }}</h1>
+    <p class="role-lede">{{ role.description }}</p>
+    <a class="button button-dark" href="{{ url_for('survey') }}">Compare with your interests <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="role-hero-side"><span class="section-kicker">A CLOSER LOOK</span><div class="side-rule"></div><p>Use this profile to ask better questions about training, local pathways, and the day-to-day work.</p><span class="side-index">FIELD GUIDE<br>NO. {{ '%02d'|format(role.id) }}</span></div>
+</section>
+
+<div class="detail-layout">
+  <aside class="detail-nav">
+    <span class="section-kicker">IN THIS GUIDE</span>
+    <a href="#skills">Skills in the role</a>
+    <a href="#learning">Learning steps</a>
+    <a href="#pathways">Credentials</a>
+    <a href="#locations">Where it appears</a>
+    <a href="#pay">Salary information</a>
+  </aside>
+  <div class="detail-main">
+    <section class="detail-block" id="skills">
+      <p class="eyebrow"><span class="eyebrow-line"></span> The work</p>
+      <h2>Skills in the role</h2>
+      <p class="detail-intro">A useful vocabulary for exploring the work—not a checklist you need to arrive with.</p>
+      <div class="skill-cloud">{% for skill in role.required_skills %}<span class="skill-pill"><span class="pill-dot"></span>{{ skill }}</span>{% endfor %}</div>
+    </section>
+
+    <section class="detail-block learning-block" id="learning">
+      <p class="eyebrow"><span class="eyebrow-line"></span> A possible route</p>
+      <h2>Learning steps</h2>
+      <ol class="learning-list">{% for step in role.learning_steps %}<li><span class="learning-number">{{ '%02d'|format(loop.index) }}</span><p>{{ step }}</p></li>{% endfor %}</ol>
+    </section>
+
+    {% if role.interests %}
+    <section class="detail-block interest-detail">
+      <p class="eyebrow"><span class="eyebrow-line"></span> What the work touches</p>
+      <h2>Related interests</h2>
+      <div class="skill-cloud">{% for interest in role.interests %}<span class="skill-pill interest-pill"><span class="pill-dot"></span>{{ interest }}</span>{% endfor %}</div>
+    </section>
+    {% endif %}
+
+    {% if role.certifications %}
+    <section class="detail-block" id="pathways">
+      <p class="eyebrow"><span class="eyebrow-line"></span> Possible credentials</p>
+      <h2>Training & certification</h2>
+      <p class="detail-intro">Examples listed in the supplied role data. Requirements differ by location and can change; verify with the relevant regulator or provider.</p>
+      <div class="credential-list">{% for cert in role.certifications %}<article class="credential-row"><div><h3>{{ cert.name }}</h3><p>{{ cert.issuer }} <span class="credential-sep">/</span> {{ cert.region }}</p></div>{% if cert.url %}<a class="credential-link" href="{{ cert.url }}" target="_blank" rel="noopener noreferrer" aria-label="Visit {{ cert.name }} website">Visit <span aria-hidden="true">↗</span></a>{% endif %}</article>{% endfor %}</div>
+    </section>
+    {% endif %}
+
+    {% if role.top_countries %}
+    <section class="detail-block countries-block" id="locations">
+      <p class="eyebrow"><span class="eyebrow-line"></span> Geographic context</p>
+      <h2>Places to look</h2>
+      <p class="detail-intro">Countries mentioned in the supplied dataset—not a ranking or a guarantee of opportunity.</p>
+      <div class="country-list">{% for place in role.top_countries %}<article class="country-row"><span class="country-marker">{{ '%02d'|format(loop.index) }}</span><div><h3>{{ place.country }}</h3><p>{{ place.highlights }}</p></div></article>{% endfor %}</div>
+    </section>
+    {% endif %}
+
+    {% if role.salary_ranges %}
+    <section class="detail-block salary-block" id="pay">
+      <p class="eyebrow"><span class="eyebrow-line"></span> Pay context</p>
+      <h2>Salary ranges</h2>
+      <p class="caution-note"><span class="note-mark">!</span> Unverified repository data. Currency, year, market, and methodology may vary. Confirm current figures from reliable local sources before making decisions.</p>
+      <div class="salary-grid">{% for currency, levels in role.salary_ranges.items() %}<div class="salary-card"><h3>{{ currency }}</h3><dl>{% for level, amount in levels.items() %}<div><dt>{{ level }}</dt><dd>{{ amount }}</dd></div>{% endfor %}</dl></div>{% endfor %}</div>
+    </section>
+    {% endif %}
+
+    {% if role.trend_status or role.sdgs %}
+    <section class="detail-block context-block">
+      <p class="eyebrow"><span class="eyebrow-line"></span> Wider context</p>
+      {% if role.trend_status %}<h2>Trend notes</h2><p class="caution-note"><span class="note-mark">!</span> Unverified repository data. Treat this as a prompt for further research, not a current forecast.</p><p class="trend-copy">{{ role.trend_status }}</p>{% endif %}
+      {% if role.sdgs %}<h3 class="subheading">Related UN Sustainable Development Goals</h3><div class="skill-cloud">{% for sdg in role.sdgs %}<span class="skill-pill sdg-pill">{{ sdg }}</span>{% endfor %}</div>{% endif %}
+    </section>
+    {% endif %}
+    {% if role.data_sources or role.data_date %}
+    <p class="source-note">Repository references: {% if role.data_sources %}{{ role.data_sources|join(', ') }}{% endif %}{% if role.data_date %}<span> · Listed date: {{ role.data_date }}</span>{% endif %}</p>
+    {% endif %}
+  </div>
+</div>
+<section class="detail-end"><p>Curiosity is a useful first credential.</p><a class="text-link" href="{{ url_for('survey') }}">See where your interests overlap <span aria-hidden="true">→</span></a></section>
+{% endblock %}

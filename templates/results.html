@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Your role map — Fieldnotes{% endblock %}
+{% block content %}
+<section class="page-intro results-intro">
+  <div class="page-intro-inner">
+    <a class="back-link" href="{{ url_for('survey') }}">← Adjust your selections</a>
+    <p class="eyebrow"><span class="eyebrow-line"></span> Your role map</p>
+    <h1>Places your<br><em>interests meet work.</em></h1>
+    <p class="hero-intro">These figures show overlap with the role data you selected against—not a measure of job suitability, readiness, or your potential.</p>
+  </div>
+  <div class="results-note"><span class="note-mark">i</span><strong>How to read this</strong><p>Skills make up 70% and interests 30% of the overlap score. Experience is included as context only; it does not affect the score.</p></div>
+</section>
+
+<section class="results-section">
+  <div class="results-toolbar">
+    <div><span class="section-kicker">YOUR EXPLORATION</span><h2>{% if user_skills or user_interests %}{{ roles|length }} paths to consider{% else %}The full role index{% endif %}</h2></div>
+    <div class="experience-chip"><span>Experience noted</span><strong>{{ experience_years|default(0) }} years</strong></div>
+  </div>
+  {% if user_skills or user_interests %}
+  <div class="selection-summary">
+    <div><span class="section-kicker">SKILLS SELECTED</span><p>{% if user_skills %}{% for skill in user_skills %}<span class="mini-tag">{{ skill }}</span>{% endfor %}{% else %}<span class="muted">None selected</span>{% endif %}</p></div>
+    <div><span class="section-kicker">INTERESTS SELECTED</span><p>{% if user_interests %}{% for interest in user_interests %}<span class="mini-tag tag-interest">{{ interest }}</span>{% endfor %}{% else %}<span class="muted">None selected</span>{% endif %}</p></div>
+  </div>
+  {% else %}
+  <div class="browse-notice"><span class="note-mark">i</span><p>No skills or interests selected. This is an unranked browse of the available roles—not a recommendation.</p></div>
+  {% endif %}
+
+  {% if roles %}
+  <div class="result-list">
+    {% for role in roles %}
+    <article class="result-card">
+      <div class="result-score">
+        <span class="section-kicker">OVERLAP</span>
+        <strong>{{ role.match_score|default(0) }}<small>%</small></strong>
+        <span class="score-track" aria-hidden="true"><span style="width: {{ role.match_score|default(0)|int }}%"></span></span>
+      </div>
+      <div class="result-content">
+        <div class="result-title-line"><div><span class="role-index">PATH {{ '%02d'|format(loop.index) }}</span><h3>{{ role.name }}</h3></div><a class="row-arrow" href="{{ url_for('role_detail', role_id=role.id) }}" aria-label="Explore {{ role.name }}">↗</a></div>
+        <p class="result-description">{{ role.description }}</p>
+        <div class="match-columns">
+          <div><span class="match-label">SKILLS IN COMMON</span>{% if role.matched_skills %}<ul class="match-list">{% for item in role.matched_skills %}<li>{{ item }}</li>{% endfor %}</ul>{% else %}<p class="muted">No selected skills overlap yet.</p>{% endif %}</div>
+          <div><span class="match-label">INTERESTS IN COMMON</span>{% if role.matched_interests %}<ul class="match-list">{% for item in role.matched_interests %}<li>{{ item }}</li>{% endfor %}</ul>{% else %}<p class="muted">No selected interests overlap yet.</p>{% endif %}</div>
+        </div>
+        {% if role.missing_skills %}
+        <details class="missing-details"><summary>{{ role.missing_skills|length }} other skills in this role</summary><p>{% for item in role.missing_skills %}<span class="mini-tag missing-tag">{{ item }}</span>{% endfor %}</p></details>
+        {% endif %}
+        <a class="text-link result-link" href="{{ url_for('role_detail', role_id=role.id) }}">Explore this path <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <span class="empty-mark" aria-hidden="true">—</span>
+    <h3>No roles to show just yet.</h3>
+    <p>The role list is currently empty. Return to the index or try again later.</p>
+    <a class="button button-dark" href="{{ url_for('index') }}">Back to role index</a>
+  </div>
+  {% endif %}
+  <p class="data-note"><span class="note-mark">i</span> Percentages reflect overlap with the supplied role data only. They are not a prediction of hiring outcomes or personal suitability.</p>
+  <a class="text-link restart-link" href="{{ url_for('survey') }}">Start over with different selections <span aria-hidden="true">→</span></a>
+</section>
+{% endblock %}

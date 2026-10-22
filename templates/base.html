@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ed">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23235851'/%3E%3Ctext x='10' y='24' font-size='24' fill='%23f5f3ed'%3EF%3C/text%3E%3C/svg%3E">
+  <title>{% block title %}Fieldnotes — Career explorer{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="{{ url_for('index') }}" aria-label="Fieldnotes home">
+        <span class="brand-mark" aria-hidden="true">F</span>
+        <span>fieldnotes<span class="brand-dot">.</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="{{ url_for('index') }}">Explore roles</a>
+        <a href="{{ url_for('survey') }}">Find a direction <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="brand footer-brand" href="{{ url_for('index') }}"><span class="brand-mark" aria-hidden="true">F</span><span>fieldnotes<span class="brand-dot">.</span></span></a>
+      <p>A clearer map of the work you could do.</p>
+      <span class="footer-note">Explore thoughtfully. Choose for yourself.</span>
+    </div>
+  </footer>
+</body>
+</html>

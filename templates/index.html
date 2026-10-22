@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Explore careers — Fieldnotes{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="eyebrow-line"></span> A practical career explorer</p>
+      <h1>Work out what<br>could <em>work for you.</em></h1>
+      <p class="hero-intro">Career paths can be hard to picture from the outside. Start with what you know, what draws your interest, and explore the work behind the title.</p>
+      <div class="hero-actions">
+        <a class="button button-dark" href="{{ url_for('survey') }}">Explore your fit <span aria-hidden="true">↗</span></a>
+        <a class="text-link" href="#roles">Browse all roles <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-footnote"><span class="status-dot"></span> Seven paths, one place to start</div>
+    </div>
+    <div class="hero-art" aria-label="An abstract map connecting different career paths">
+      <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+      <span class="orbit-label label-tech">technology</span>
+      <span class="orbit-label label-care">care</span>
+      <span class="orbit-label label-learn">learning</span>
+      <span class="orbit-label label-service">public good</span>
+      <div class="orbit-center"><span class="center-cross">+</span><span>your next<br>direction</span></div>
+      <span class="orbit-node node-one"></span><span class="orbit-node node-two"></span><span class="orbit-node node-three"></span>
+      <span class="art-index">MAP / 01</span>
+    </div>
+  </div>
+</section>
+
+<section class="intro-strip">
+  <div class="intro-strip-inner">
+    <span class="section-kicker">HOW TO USE THIS</span>
+    <p>Not a test that tells you who to be. A starting point for understanding roles, skills, and the routes between them.</p>
+    <a href="{{ url_for('survey') }}" class="arrow-link">Build your shortlist <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<section class="role-section" id="roles">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow"><span class="eyebrow-line"></span> The role index</p>
+      <h2>Different work.<br><em>More ways in.</em></h2>
+    </div>
+    <p class="section-aside">Browse the paths in this guide. Open a role to see its skills, learning steps, and the details worth checking for yourself.</p>
+  </div>
+  {% if roles %}
+  <div class="role-list">
+    {% for role in roles %}
+    <a class="role-row" href="{{ url_for('role_detail', role_id=role.id) }}">
+      <span class="role-number">{{ '%02d'|format(loop.index) }}</span>
+      <span class="role-main"><span class="role-name">{{ role.name }}</span><span class="role-description">{{ role.description }}</span></span>
+      <span class="role-skill-count">{{ role.required_skills|length }} skills</span>
+      <span class="row-arrow" aria-hidden="true">↗</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <span class="empty-mark" aria-hidden="true">—</span>
+    <h3>The role index is getting ready.</h3>
+    <p>There are no roles to display right now. Please check back soon.</p>
+  </div>
+  {% endif %}
+  <p class="data-note"><span class="note-mark">i</span> Role information is supplied as a starting point. Check local requirements, current pay, and licensing with trusted sources.</p>
+</section>
+
+<section class="closing-band">
+  <div class="closing-inner">
+    <span class="closing-index">A GOOD NEXT STEP</span>
+    <h2>Start with what<br>you already <em>bring.</em></h2>
+    <p>Choose skills and interests to see where they overlap with the roles in this guide.</p>
+    <a class="button button-light" href="{{ url_for('survey') }}">Take a closer look <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="closing-stamp" aria-hidden="true"><span>FIELD</span><span>NOTES</span><i>+</i></div>
+</section>
+{% endblock %}

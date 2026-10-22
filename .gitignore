@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+.pythonlibs/
+.venv/
+.env
+/generated-artifacts/
