@@ -1,4 +1,4 @@
-ROLE:[
+ROLES = [
 {
         "id": 8,
         "name": "Gender-Based Violence Programme Officer / Advocate
