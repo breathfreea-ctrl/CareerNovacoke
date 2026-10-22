@@ -1,7 +1,7 @@
 ROLES = [
 {
         "id": 8,
-        "name": "Gender-Based Violence Programme Officer / Advocate
+        "name": "Gender-Based Violence Programme Officer/Advocate
 ",
         "description": "Plans and implements projects to prevent gender-based violence through public education, community advocacy, and inter-agency collaboration to promote gender equality and protect survivors.",
         "required_skills": [
