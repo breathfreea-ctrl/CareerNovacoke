@@ -1,220 +1,297 @@
-ROLES = [
-{
-        "id": 8,
-        "name": "Gender-Based Violence Programme Officer",
-        "description": "Plans and implements projects to prevent gender-based violence through public education, community advocacy, and inter-agency collaboration to promote gender equality and protect survivors.",
+    {
+        "id": 1,
+        "name": "AI Engineer",
+        "description": "Combines software engineering, machine learning, and data engineering to transform AI models into stable production-grade systems.",
         "required_skills": [
-"Gender equality and GBV awareness", "Survivor-centered care and confidentiality",
-"Programme planning and management", "Monitoring, evaluation, and learning (MEAL)",  
-"Coordination and partnership management", "Policy advocacy and community engagement",   
-"Budgeting, fundraising, and proposal writing", "Cultural awareness and inclusivity", 
- "Ethical data collection and analysis", "Self-care and professional judgment" 
-],
-        "interests": ["Promoting gender equality",
-                      "Supporting vulnerable communities",
-                      "Protecting human rights",
-                      "Raising public awareness",
-                      "Solving social issues",
-                      "Organizing community projects",
-                      "Advocating for social justice"
-],
-        "learning_steps": ["Build foundations",
-                           "Learn survivor-centered practice",
-                           "Develop programme-management skills",
-                           "Build MEAL and data skills",
-                           "Practice advocacy and community engagement",
-                           "Gain practical experience",
-                           "Choose a specialization"
- ],
-        "sdgs": ["SDG 5: Gender Equality",
-   "SDG 3: Good Health and Well-being",
-    "SDG 10: Reduced Inequalities",
-    "SDG 16: Peace, Justice and Strong Institutions",
-    "SDG 17: Partnerships for the Goals"],
-        "trend_status": [ "GBV work continues to be needed in humanitarian settings. WHO reports that in 2022 only 0.2% of official development assistance went to programmes focused on preventing violence against women, with funding falling further in 2025.”],
+            "Python Programming", "Machine Learning", "Deep Learning",
+            "PyTorch/TensorFlow", "Data Pre-processing", "LLM Application (RAG/Agent)",
+            "MLOps & Model Deployment", "Docker/K8s", "Cloud AI Platforms (AWS/GCP)",
+            "AI Safety & Compliance"
+        ],
+        "interests": ["Technology", "AI Models", "System Architecture", "Open Source"],
+        "learning_steps": [
+            "Learn Python and Math fundamentals",
+            "Master deep learning frameworks and data processing",
+            "Complete end-to-end AI projects and deploy them",
+            "Participate in real-world AI projects and track frontier tech"
+        ],
+        "sdgs": ["SDG 8: Decent Work and Economic Growth", "SDG 9: Industry, Innovation and Infrastructure", "SDG 10: Reduced Inequalities"],
+        "trend_status": "BLS projects 22% growth (2024-2034). High demand for hybrid engineers combining software dev, ML, and MLOps.",
         "certifications": [
-        {"name": "How to Provide Initial Support to Survivors of Gender-Based Violence (GBV)","issuer": "UNICEF Agora, developed with UNHCR, IOM, and UNFPA","region": "Global (course-completion certificate; not a professional licence)","url": "https://agora.unwomen.org/course/info.php?id=45769"},
-        {"name": "Gender-Based Violence Core Concepts","issuer": "UNICEF Agora","region": "Global (course-completion certificate; not a professional licence)", "url": "https://agora.unwomen.org/course/info.php?id=36743" },
-        {"name": "How To: Participation of Women and Girls","issuer": "UNICEF Agora","region": "Global (course-completion certificate; not a professional licence)","url": "https://agora.unwomen.org/course/info.php?id=41319"},
-        {"name": "Foundations of Gender-Transformative Approaches","issuer": "UNICEF Agora", "region": "Global (course-completion certificate; not a professional licence)","url": "https://agora.unwomen.org/course/info.php?id=29963" }
+            {"name": "AWS Certified Machine Learning - Specialty", "issuer": "AWS", "region": "Global", "url": "https://aws.amazon.com/certification/"},
+            {"name": "Azure AI Engineer Associate", "issuer": "Microsoft", "region": "Global", "url": "https://learn.microsoft.com/"},
+            {"name": "Google Professional Machine Learning Engineer", "issuer": "Google Cloud", "region": "Global", "url": "https://cloud.google.com/certification/"}
         ],
         "salary_ranges": {
-    "MYR": {"Entry-Level": "36k-48k per year", "Junior": "45k-60k per year", "Mid": "54k-72k per year", "Senior": "66k-90k per year", "Programme_Director_or_Regional_Lead_Equivalent": "90k-130k+ per year (estimate)"},
-    "SGD": {"Entry-Level": "36k-48k per year", "Junior": "45k-60k per year", "Mid": "54k-72k per year", "Senior": "66k-90k per year", "Programme_Director_or_Regional_Lead_Equivalent": "90k-130k+ per year (estimate)"},
-    "HKD": {"Entry-Level": "240k-336k per year", "Junior": "276k-384k per year", "Mid": "336k-480k per year", "Senior": "420k-600k per year", "Programme_Director_or_Regional_Lead_Equivalent": "600k-900k+ per year (estimate)"},
-    "AUD": {"Entry-Level": "84k-105k per year", "Junior": "90k-112k per year", "Mid": "100k-125k per year", "Senior": "116k-141k per year", "Programme_Director_or_Regional_Lead_Equivalent": "140k-180k+ per year (estimate)"},
-    "USD": {"Entry-Level": "45k-58k per year", "Junior": "50k-65k per year", "Mid": "58k-75k per year", "Senior": "75k-100k per year", "Programme_Director_or_Regional_Lead_Equivalent": "100k-140k+ per year (estimate)"},
-    "GBP": {"Entry-Level": "25k-30k per year", "Junior": "27k-33k per year", "Mid": "29k-36k per year", "Senior": "35k-45k per year", "Programme_Director_or_Regional_Lead_Equivalent": "45k-65k+ per year (estimate)"},
-    "CAD": {"Entry-Level": "50k-65k per year", "Junior": "55k-70k per year", "Mid": "65k-80k per year", "Senior": "80k-100k per year", "Programme_Director_or_Regional_Lead_Equivalent": "100k-140k+ per year (estimate)"}
-},
+            "MYR": {"Junior": "65k-90k", "Mid": "90k-140k", "Senior": "140k-200k", "Tech Lead": "200k-280k"},
+            "SGD": {"Junior": "60k-80k", "Mid": "80k-120k", "Senior": "120k-180k", "Tech Lead": "180k-250k"},
+            "HKD": {"Junior": "360k-500k", "Mid": "500k-800k", "Senior": "800k-1,200k", "Tech Lead": "1,200k-1,800k"},
+            "AUD": {"Junior": "85k-105k", "Mid": "105k-140k", "Senior": "140k-190k", "Tech Lead": "190k-260k"},
+            "USD": {"Junior": "130k-180k", "Mid": "170k-240k", "Senior": "230k-320k", "Staff": "320k-450k"},
+            "GBP": {"Junior": "40k-55k", "Mid": "55k-80k", "Senior": "80k-110k", "Tech Lead": "110k-150k"},
+            "CAD": {"Junior": "75k-95k", "Mid": "95k-130k", "Senior": "130k-175k", "Tech Lead": "175k-230k"}
+        },
         "top_countries": [
-        {"country": "United States","highlights": "The Department of Justice's Office on Violence Against Women administers grant programs supporting prevention, victim services, and responses to domestic and sexual violence."},
-        {"country": "United Kingdom","highlights": "The government has a cross-government strategy with a stated goal of halving violence against women and girls within a decade."},
-        {"country": "Canada","highlights": "Federal, provincial, and territorial governments coordinate through a 10-year National Action Plan to End Gender-Based Violence."},
-        {"country": "Australia","highlights": "The National Plan to End Violence against Women and Children 2022–2032 provides a national framework for government action."}
-    ],
-        "data_sources": [
-    {"name": "UNICEF Agora — How to Provide Initial Support to Survivors of Gender-Based Violence (GBV)","url": "https://agora.unwomen.org/course/info.php?id=45769"},
-    {"name": "UNICEF Agora — Gender-Based Violence Core Concepts", "url": "https://agora.unwomen.org/course/info.php?id=36743"},
-    {"name": "UNICEF Agora — How To: Participation of Women and Girls","url": "https://agora.unwomen.org/course/info.php?id=41319"},
-    {"name": "UNICEF Agora — Foundations of Gender-Transformative Approaches","url": "https://agora.unwomen.org/course/info.php?id=29963"},
-    {"name": "U.S. Bureau of Labor Statistics — Social and Community Service Managers","url": "https://www.bls.gov/ooh/management/social-and-community-service-managers.htm"},
-    {"name": "London City Hall — Senior Project and Policy Officer vacancy","url": "https://www.london.gov.uk/take-part/working-city-hall/current-vacancies/senior-project-and-policy-officer-rough-sleeping-specialist-supported-housing-and-domestic-abuse"},
-    {"name": "Government of Canada Job Bank — Wages for Managers in Social, Community and Correctional Services","url": "https://www.jobbank.gc.ca/wagereport/occupation/1782"},
-    {"name": "Jobs and Skills Australia — Welfare Support Workers","url": "https://www.jobsandskills.gov.au/data/occupation-and-industry-profiles/occupations-anzsco/4117-welfare-support-workers"},
-    {"name": "U.S. Department of Justice — OVW FY 2026 Grant Awards","url": "https://www.justice.gov/ovw/awards/fy-2026-ovw-grant-awards-program"},
-    {"name": "UK Government — Freedom from Violence and Abuse Strategy","url": "https://www.gov.uk/government/publications/freedom-from-violence-and-abuse-a-cross-government-strategy"},
-    {"name": "Women and Gender Equality Canada — National Action Plan progress report 2024–2025","url": "https://www.canada.ca/en/women-gender-equality/gender-based-violence/intergovernmental-collaboration/bilateral-agreements/annual-progress-report/progress-report-2024-2025.html"},
-    {"name": "Australian Government — National Plan to End Violence against Women and Children 2022–2032", "url": "https://www.dss.gov.au/ending-violence"},
-    {"name": "Indeed — Victim Advocate Salary in the United States","url": "https://www.indeed.com/career/victim-advocate/salaries"},
-    {"name": "Indeed — Domestic Violence Advocate Salary in the United Kingdom","url": "https://uk.indeed.com/career/domestic-violence-advocate/salaries"},
-    {"name": "Indeed — Domestic Violence Advocate Salary in Canada","url": "https://ca.indeed.com/career/domestic-violence-advocate/salaries"},
-    {"name": "Indeed — Domestic Violence Advocate Salary in Australia","url": "https://au.indeed.com/career/domestic-violence-advocate/salaries"},
-    {"name": "King County — Bilingual Spanish Domestic Violence and Violent Crime Victim Advocate vacancy","url": "https://www.governmentjobs.com/jobs/5514558-0/bilingual-spanish-domestic-violence-violent-crime-victim-advocate"},
-    {"name": "City of Seattle — Victim Advocate Supervisor vacancy","url": "https://www.governmentjobs.com/careers/seattle/jobs/newprint/5409417"},
-    {"name": "UK Work Hub — Independent Domestic Violence Advisor vacancy","url": "https://www.jobs.service.gov.uk/jobs/6ad78f92dc16831235d54ec4"},
-    {"name": "Thurrock Council — Domestic Abuse Officer vacancy","url": "https://www.jobs.service.gov.uk/jobs/6ac794318c59c53bf35d17fa"},
-    {"name": "Victim Services Toronto — Neighbourhood Victim Advocate vacancy", "url": "https://workinnonprofits.ca/jobs/view/110781/E/neighbourhood-victim-advocate-co-located-in-51-division"},
-    {"name": "Victorian Government — Senior Family Violence Program Advisor vacancy", "url": "https://jobs.careers.vic.gov.au/jobtools/jncustomsearch.viewFullSingle?in_jnCounter=226705865&in_organid=18393"}
-],
-
+            {"country": "United States", "highlights": "World-leading AI ecosystem, top universities, and highest VC investment."},
+            {"country": "China", "highlights": "Huge internet and manufacturing market, large-scale foundation models and compute clusters."},
+            {"country": "United Kingdom", "highlights": "European AI talent hub, home to DeepMind, strong in finance and biotech AI."}
+        ],
+        "data_sources": ["Robert Half 2026 Salary Guide", "U.S. BLS 2025", "Michael Page 2026"],
         "data_date": "2026-10-21"
-},
-{
-        "id": 9,
-        "name": "Mechanical Engineer",
-        "description": "Designs, develops, tests, and improves mechanical devices, systems, and processes used in industries such as manufacturing, transport, energy, and building services.",
+    },
+    {
+        "id": 2,
+        "name": "Accountant (Chartered Professional)",
+        "description": "Licensed professionals performing financial accounting, audit assurance, tax compliance, management accounting, and ESG reporting.",
         "required_skills": [
-"Mechanical design and engineering fundamentals", "CAD and 3D modelling",
-"Thermodynamics, fluid mechanics, and materials science", "Prototyping and testing",
-"Manufacturing and production processes", "Data analysis and simulation",
-"Problem-solving and systems thinking", "Technical communication and documentation",
-"Project management and teamwork", "Safety, quality, and sustainability"
-],
-        "interests": ["Designing machines and mechanical systems",
-                      "Solving practical engineering problems",
-                      "Working with manufacturing and robotics",
-                      "Improving energy efficiency",
-                      "Building and testing prototypes",
-                      "Applying mathematics and physics",
-                      "Developing sustainable products"
-],
-        "learning_steps": ["Build foundations in mathematics, physics, and engineering",
-                           "Complete an accredited mechanical engineering degree or equivalent",
-                           "Learn CAD, simulation, and technical drawing",
-                           "Build practical experience through projects, labs, or internships",
-                           "Develop testing, manufacturing, and quality skills",
-                           "Learn safety standards and professional ethics",
-                           "Pursue local professional registration where required"
-],
-        "sdgs": ["SDG 4: Quality Education",
-   "SDG 7: Affordable and Clean Energy",
-    "SDG 9: Industry, Innovation and Infrastructure",
-    "SDG 12: Responsible Consumption and Production",
-    "SDG 13: Climate Action"],
-        "trend_status": ["Growing in the United States: BLS projects mechanical-engineer employment to increase 11% from 2025 to 2035. Energy-sector research also identifies persistent demand for engineers and other technical workers as clean-energy systems expand; this is a sector signal, not a mechanical-engineer-only forecast."],
+            "Financial Accounting", "Audit Assurance", "Tax Compliance",
+            "Management Accounting", "Internal Control", "Accounting Ethics",
+            "Financial Data Analytics", "ESG Reporting", "Commercial Law"
+        ],
+        "interests": ["Finance", "Compliance", "Corporate Governance", "Tax Planning"],
+        "learning_steps": [
+            "Learn fundamental financial accounting and commercial law",
+            "Study IFRS, auditing standards, and tax systems",
+            "Complete supervised practical experience in a firm or corporate finance",
+            "Pass qualification exams and complete mandatory CPD"
+        ],
+        "sdgs": ["SDG 8: Decent Work and Economic Growth", "SDG 10: Reduced Inequalities", "SDG 12: Responsible Consumption and Production", "SDG 16: Peace, Justice and Strong Institutions"],
+        "trend_status": "BLS projects 5% growth (2025-2035). Routine bookkeeping is shrinking, while hybrid skills in data analytics and ESG are in high demand.",
         "certifications": [
-        {"name": "Professional Engineer (PE) License — Mechanical","issuer": "State engineering licensing board; PE examination administered by NCEES","region": "United States (licensure is state-based)","url": "https://ncees.org/exams/pe-exam/mechanical/"},
-        {"name": "Chartered Engineer (CEng)","issuer": "Engineering Council through a licensed Professional Engineering Institution","region": "United Kingdom","url": "https://www.engc.org.uk/professional-registration/our-professional-titles/chartered-engineer-ceng"},
-        {"name": "Professional Engineer (P.Eng.) Licence","issuer": "Provincial or territorial engineering regulator; Engineers Canada provides the national overview","region": "Canada (provincial or territorial licence)","url": "https://engineerscanada.ca/become-an-engineer/overview-of-licensing-process"},
-        {"name": "Chartered Professional Engineer (CPEng)","issuer": "Engineers Australia","region": "Australia (professional credential; statutory registration may also apply in some jurisdictions)","url": "https://www.engineersaustralia.org.au/credentials/chartered"}
+            {"name": "ACCA", "issuer": "ACCA", "region": "Global", "url": "https://www.accaglobal.com"},
+            {"name": "CPA Australia", "issuer": "CPA Australia", "region": "Australia, HK, etc.", "url": "https://www.cpaaustralia.com.au"},
+            {"name": "ICAEW ACA", "issuer": "ICAEW", "region": "UK, HK, etc.", "url": "https://www.icaew.com"},
+            {"name": "CGMA", "issuer": "CIMA/AICPA", "region": "Global", "url": "https://www.cgma.org"},
+            {"name": "ESG Reporting Certificate", "issuer": "IFAC", "region": "Global", "url": "https://education.ifac.org/"}
         ],
         "salary_ranges": {
-    "MYR": {"Entry-Level": "36k-48k per year", "Junior": "48k-66k per year", "Mid": "60k-84k per year", "Senior": "84k-120k per year", "Partner_or_Consultancy_Principal_Equivalent": "120k-180k+ per year (estimate; business income varies)"},
-    "SGD": {"Entry-Level": "36k-51k per year", "Junior": "50k-65k per year", "Mid": "60k-85k per year", "Senior": "85k-125k per year", "Partner_or_Consultancy_Principal_Equivalent": "125k-200k+ per year (estimate; business income varies)"},
-    "HKD": {"Entry-Level": "276k-372k per year", "Junior": "336k-480k per year", "Mid": "420k-600k per year", "Senior": "600k-900k per year", "Partner_or_Consultancy_Principal_Equivalent": "900k-1,500k+ per year (estimate; business income varies)"},
-    "AUD": {"Entry-Level": "70k-90k per year", "Junior": "85k-105k per year", "Mid": "100k-130k per year", "Senior": "125k-170k per year", "Partner_or_Consultancy_Principal_Equivalent": "170k-240k+ per year (estimate; business income varies)"},
-    "USD": {"Entry-Level": "$74,000-$90,000 per year", "Junior": "$90,000-$104,000 per year", "Mid": "$104,000-$130,000 per year", "Senior": "$130,000-$164,000 per year", "Partner_or_Consultancy_Principal_Equivalent": "$165,000-$230,000+ per year (estimate; business income varies)"},
-    "GBP": {"Entry-Level": "28k-38k per year", "Junior": "36k-45k per year", "Mid": "45k-55k per year", "Senior": "55k-70k per year", "Partner_or_Consultancy_Principal_Equivalent": "70k-110k+ per year (estimate; business income varies)"},
-    "CAD": {"Entry-Level": "62k-80k per year", "Junior": "80k-100k per year", "Mid": "95k-120k per year", "Senior": "120k-150k per year", "Partner_or_Consultancy_Principal_Equivalent": "150k-220k+ per year (estimate; business income varies)"}
-},
-       "top_countries": [
-        {"country": "United States","highlights": "BLS projects 11% employment growth for mechanical engineers from 2025 to 2035 and reports a May 2025 median annual wage of USD 104,110; professional licensure is state-based."},
-        {"country": "United Kingdom","highlights": "The UK has a formal Engineering Council registration pathway to CEng, while the National Careers Service reports mechanical-engineer salaries from £28,000 starter to £60,000 experienced."},
-        {"country": "Canada","highlights": "Mechanical-engineering practice is regulated by provincial and territorial regulators; Job Bank reports a national median wage of CAD 45.67 per hour."},
-        {"country": "Australia","highlights": "Jobs and Skills Australia records 22,900 Mechanical Engineers and notes that registration may be required in some states and territories; Engineers Australia offers the CPEng credential."}
-    ],
-         "data_sources": [
-    {"name": "U.S. Bureau of Labor Statistics — Mechanical Engineers: pay and employment projections","url": "https://www.bls.gov/ooh/architecture-and-engineering/mechanical-engineers.htm"},
-    {"name": "International Energy Agency — Ensuring a Skilled Renewable Energy and Energy Efficiency Workforce","url": "https://www.iea.org/reports/ensuring-a-skilled-renewable-energy-and-energy-efficiency-workforce"},
-    {"name": "UK National Careers Service — Mechanical Engineer","url": "https://nationalcareers.service.gov.uk/job-profiles/mechanical-engineer"},
-    {"name": "UK Government — Review of Salary Requirements, occupation data for Mechanical Engineers","url": "https://www.gov.uk/government/publications/review-of-salary-requirements/review-of-salary-requirements-accessible"},
-    {"name": "Government of Canada Job Bank — Mechanical Engineer wages","url": "https://www.jobbank.gc.ca/marketreport/wages-occupation/2757/ca"},
-    {"name": "Jobs and Skills Australia — Mechanical Engineers","url": "https://www.jobsandskills.gov.au/data/occupation-and-industry-profiles/occupations/233512-mechanical-engineers"},
-    {"name": "Jobs and Skills Australia — Industrial, Mechanical and Production Engineers","url": "https://www.jobsandskills.gov.au/data/occupation-and-industry-profiles/occupations-anzsco/2335-industrial-mechanical-and-production-engineers"},
-    {"name": "NCEES — PE Mechanical Exam","url": "https://ncees.org/exams/pe-exam/mechanical/"},
-    {"name": "Engineering Council — Chartered Engineer (CEng)","url": "https://www.engc.org.uk/professional-registration/our-professional-titles/chartered-engineer-ceng"},
-    {"name": "Engineers Canada — Overview of the Licensing Process","url": "https://engineerscanada.ca/become-an-engineer/overview-of-licensing-process"},
-    {"name": "Engineers Australia — Chartered Credential","url": "https://www.engineersaustralia.org.au/credentials/chartered"}
-],
-        "data_date": "2026-10-21"
-},
-{
-        "id": 10,
-        "name": "Teacher",
-        "description": "Plans and delivers lessons, assesses student learning, supports students’ academic and personal development, and works with families and colleagues to create a safe and effective learning environment.",
-        "required_skills": [
-"Subject knowledge and curriculum planning", "Lesson design and delivery",
-"Classroom management and student engagement", "Assessment and feedback",
-"Communication and relationship-building", "Inclusive and differentiated instruction",
-"Digital learning and educational technology", "Safeguarding and professional ethics",
-"Adaptability and reflective practice", "Collaboration with families and colleagues"
-],
-        "interests": ["Helping learners build knowledge and confidence",
-                      "Explaining ideas in accessible ways",
-                      "Supporting children and young people",
-                      "Designing lessons and learning activities",
-                      "Using technology to improve learning",
-                      "Building inclusive classrooms",
-                      "Contributing to communities"
-],
-        "learning_steps": ["Choose the age group and subjects you want to teach",
-                           "Complete the required degree and teacher-preparation pathway",
-                           "Meet the local teacher-certification or registration requirements",
-                           "Complete supervised classroom practice or student teaching",
-                           "Build lesson-planning, assessment, and classroom-management skills",
-                           "Gain experience through placements, tutoring, or school support roles",
-                           "Continue professional learning and pursue leadership or specialist pathways"
-],
-        "sdgs": ["SDG 4: Quality Education",
-   "SDG 5: Gender Equality",
-    "SDG 10: Reduced Inequalities",
-    "SDG 16: Peace, Justice and Strong Institutions",
-    "SDG 17: Partnerships for the Goals"],
-        "trend_status": [ "Long-term global demand remains high: UNESCO estimates that 44 million additional primary and secondary teachers are needed by 2030. In the United States, BLS projects little or no employment growth for high-school teachers from 2025 to 2035, but estimates about 63,500 openings per year, mostly from replacement needs."],
-        "certifications": [
-        {"name": "State Teaching License or Teaching Certificate","issuer": "State Department of Education or state licensing authority (requirements vary by state)","region": "United States (state-specific)","url": "https://www.ed.gov/about/contact-us/faqs/Teaching%20Initiatives%20and%20Resources"},
-        {"name": "Qualified Teacher Status (QTS)","issuer": "Teaching Regulation Agency, Department for Education","region": "England","url": "https://www.gov.uk/guidance/qualified-teacher-status-qts"},
-        {"name": "Certificate of Qualification / Teaching Certificate","issuer": "Provincial or territorial teacher regulator (example: Ontario College of Teachers)","region": "Canada (provincial or territorial)","url": "https://www.oct.ca/en-ca/becoming-a-teacher/requirements"},
-        {"name": "Teacher Registration","issuer": "Teacher regulatory authority in the relevant state or territory; AITSL provides national standards information","region": "Australia (state or territory registration)","url": "https://www.aitsl.edu.au/teaching-and-leading/become-a-teacher/teacher-registration-in-australia"}
+            "MYR": {"Entry": "60k-75k", "Mid": "75k-100k", "Senior": "100k-130k", "Manager": "130k-180k"},
+            "SGD": {"Entry": "45k-55k", "Mid": "55k-80k", "Senior": "80k-110k", "Manager": "110k-160k"},
+            "HKD": {"Entry": "240k-300k", "Mid": "360k-500k", "Senior": "500k-700k", "Manager": "700k-1000k"},
+            "AUD": {"Entry": "65k-80k", "Mid": "80k-105k", "Senior": "105k-130k", "Manager": "130k-170k"},
+            "USD": {"Entry": "65k-85k", "Senior": "90k-120k", "Manager": "130k-175k", "Senior Manager": "170k-230k"},
+            "GBP": {"Entry": "30k-35k", "Mid": "45k-60k", "Senior": "60k-80k", "Manager": "80k-110k"},
+            "CAD": {"Entry": "60k-75k", "Mid": "75k-95k", "Senior": "95k-130k", "Manager": "130k-170k"}
+        },
+        "top_countries": [
+            {"country": "United States", "highlights": "World's largest accountancy market with mature AICPA-CPA framework."},
+            {"country": "United Kingdom", "highlights": "Birthplace of modern accountancy, home to ICAEW and ACCA."},
+            {"country": "Canada", "highlights": "Unified CPA Canada framework with provincial regulation and North American recognition."}
         ],
-       "salary_ranges": {
-    "MYR": {"Entry-Level": "27k-42k per year", "Junior": "36k-48k per year", "Mid": "42k-66k per year", "Senior": "60k-90k per year", "Principal_or_School_Leadership_Equivalent": "80k-120k+ per year (estimate)"},
-    "SGD": {"Entry-Level": "36k-48k per year", "Junior": "45k-60k per year", "Mid": "54k-72k per year", "Senior": "72k-100k per year", "Principal_or_School_Leadership_Equivalent": "100k-150k+ per year (estimate)"},
-    "HKD": {"Entry-Level": "429k-540k per year", "Junior": "480k-600k per year", "Mid": "540k-720k per year", "Senior": "720k-900k per year", "Principal_or_School_Leadership_Equivalent": "840k-1,200k+ per year (estimate)"},
-    "AUD": {"Entry-Level": "90k-105k per year", "Junior": "95k-115k per year", "Mid": "105k-125k per year", "Senior": "125k-145k per year", "Principal_or_School_Leadership_Equivalent": "145k-180k+ per year (estimate)"},
-    "USD": {"Entry-Level": "49k-60k per year", "Junior": "55k-65k per year", "Mid": "60k-75k per year", "Senior": "75k-95k per year", "Principal_or_School_Leadership_Equivalent": "95k-130k+ per year (estimate)"},
-    "GBP": {"Entry-Level": "33k-39k per year", "Junior": "35k-42k per year", "Mid": "39k-47k per year", "Senior": "47k-53k per year", "Principal_or_School_Leadership_Equivalent": "53k-80k+ per year (estimate)"},
-    "CAD": {"Entry-Level": "60k-80k per year", "Junior": "70k-90k per year", "Mid": "80k-100k per year", "Senior": "100k-125k per year", "Principal_or_School_Leadership_Equivalent": "120k-160k+ per year (estimate)"}
-},
-       "top_countries": [
-        {"country": "United States","highlights": "BLS projects about 63,500 high-school-teacher openings per year from 2025 to 2035, mainly from replacement needs; public-school teachers must meet state certification requirements."},
-        {"country": "United Kingdom","highlights": "England has a defined Qualified Teacher Status pathway and published national teacher pay ranges; the National Careers Service reports £34,000 starter to £53,000 experienced for secondary teachers."},
-        {"country": "Canada","highlights": "Teacher certification is handled by provincial and territorial regulators; Job Bank reports a national secondary-teacher median wage of CAD 45.67 per hour."},
-        {"country": "Australia","highlights": "Jobs and Skills Australia reports 161,400 secondary-school teachers and median full-time weekly earnings of AUD 2,322; registration is managed by state and territory regulators."}
-    ],
-        "data_sources": [
-    {"name": "U.S. Bureau of Labor Statistics — High School Teachers: wages and employment outlook","url": "https://www.bls.gov/ooh/education-training-and-library/high-school-teachers.htm"},
-    {"name": "UNESCO — Global Report on Teachers and projected teacher needs by 2030","url": "https://www.unesco.org/en/articles/global-report-teachers-addressing-teacher-shortages-and-transforming-profession"},
-    {"name": "UK National Careers Service — Secondary School Teacher","url": "https://nationalcareers.service.gov.uk/job-profiles/secondary-school-teacher"},
-    {"name": "UK Government — School Teachers' Pay and Conditions Document 2025","url": "https://www.gov.uk/government/publications/school-teachers-pay-and-conditions"},
-    {"name": "Government of Canada Job Bank — Secondary School Teacher wages","url": "https://www.jobbank.gc.ca/marketreport/wages-occupation/15904/ca"},
-    {"name": "Jobs and Skills Australia — Secondary School Teachers","url": "https://www.jobsandskills.gov.au/data/occupation-and-industry-profiles/occupations-anzsco/2414-secondary-school-teachers"},
-    {"name": "U.S. Department of Education — Teacher licensure information","url": "https://www.ed.gov/about/contact-us/faqs/Teaching%20Initiatives%20and%20Resources"},
-    {"name": "UK Department for Education — Qualified Teacher Status (QTS)","url": "https://www.gov.uk/guidance/qualified-teacher-status-qts"},
-    {"name": "Ontario College of Teachers — Certification requirements","url": "https://www.oct.ca/en-ca/becoming-a-teacher/requirements"},
-    {"name": "Australian Institute for Teaching and School Leadership — Teacher registration","url": "https://www.aitsl.edu.au/teaching-and-leading/become-a-teacher/teacher-registration-in-australia"}
-],
+        "data_sources": ["IFAC 2025 Annual Report", "U.S. BLS 2025", "Robert Half 2026", "Michael Page 2026"],
         "data_date": "2026-10-21"
-}
+    },
+    {
+        "id": 3,
+        "name": "Sustainable Development Education Curriculum Developer",
+        "description": "Designs curricula, materials, and learning activities aligned with UN SDGs and UNESCO ESD-for-2030 standards.",
+        "required_skills": [
+            "ESD & SDG Framework", "Curriculum Design", "Instructional Design (ADDIE)",
+            "Inclusive Curriculum", "Curriculum Evaluation", "Stakeholder Communication",
+            "Content Research", "LMS Platforms", "Project Management"
+        ],
+        "interests": ["Education Innovation", "Sustainability", "Curriculum Design", "NGO Work"],
+        "learning_steps": [
+            "Learn SDG frameworks and foundational pedagogy",
+            "Master backward design/ADDIE and UNESCO-IBE guidance",
+            "Produce sample curricula and pilot evaluations",
+            "Participate in real ESD projects and continuous CPD"
+        ],
+        "sdgs": ["SDG 4: Quality Education", "SDG 13: Climate Action", "SDG 15: Life on Land", "SDG 16: Peace, Justice and Strong Institutions"],
+        "trend_status": "BLS projects 1% growth (2024-2034, slower than average). Demand expands in public education, NGOs, and ESG corporations.",
+        "certifications": [
+            {"name": "WSQ DDDLP 2.0 Diploma", "issuer": "IAL Singapore", "region": "Singapore", "url": "https://www.ial.edu.sg/"},
+            {"name": "UNESCO ESD for 2030 Course", "issuer": "UNESCO", "region": "Global", "url": "https://en.unesco.org/esd-for-2030/capacity-building"},
+            {"name": "WISDP CSDP", "issuer": "WISDP", "region": "Hong Kong, etc.", "url": "https://wisdp.org/"},
+            {"name": "ATD Instructional Design Certificate", "issuer": "ATD", "region": "Global", "url": "https://www.atd.edu/"}
+        ],
+        "salary_ranges": {
+            "MYR": {"Junior": "45k-60k", "Mid": "60k-85k", "Senior": "85k-115k", "Manager": "115k-150k"},
+            "SGD": {"Junior": "38k-50k", "Mid": "50k-70k", "Senior": "70k-95k", "Manager": "95k-125k"},
+            "HKD": {"Junior": "240k-340k", "Mid": "340k-480k", "Senior": "480k-650k", "Manager": "650k-850k"},
+            "AUD": {"Junior": "62k-78k", "Mid": "78k-100k", "Senior": "100k-115k", "Manager": "115k-140k"},
+            "USD": {"Junior": "48k-62k", "Mid": "62k-80k", "Senior": "80k-105k", "Manager": "105k-135k"},
+            "GBP": {"Junior": "28k-36k", "Mid": "36k-48k", "Senior": "48k-62k", "Manager": "62k-80k"},
+            "CAD": {"Junior": "48k-62k", "Mid": "62k-78k", "Senior": "78k-98k", "Manager": "98k-125k"}
+        },
+        "top_countries": [
+            {"country": "Finland", "highlights": "Deep integration of phenomenon-based learning and sustainability, legally embedded in national curricula."},
+            {"country": "Japan", "highlights": "Systematic ESD since the 1990s, clear national curriculum requirements, and mature school-NGO networks."},
+            {"country": "Germany", "highlights": "Mandatory interdisciplinary ESD in state laws, supported by federal grants and corporate foundations."}
+        ],
+        "data_sources": ["U.S. BLS 2025", "UNESCO A/80/236", "Michael Page 2026"],
+        "data_date": "2026-10-21"
+    },
+    {
+        "id": 4,
+        "name": "Psychologist",
+        "description": "Applies psychological theories and assessment tools for mental health intervention, research, and organizational consulting. Clinical psychologists cannot prescribe medication.",
+        "required_skills": [
+            "Active Listening", "Empathy", "Ethical Decision-Making",
+            "Psychological Assessment", "Intervention Planning", "Critical Thinking",
+            "Psychological Statistics", "Clinical Documentation", "Cross-cultural Competence",
+            "Interviewing Skills"
+        ],
+        "interests": ["Mental Health", "Helping Others", "Behavioral Research", "Organizational Consulting"],
+        "learning_steps": [
+            "Learn foundational psychology courses",
+            "Study CBT, psychometrics, and major therapy orientations",
+            "Complete research or clinical training with supervision",
+            "Obtain advanced degrees/licensure and maintain continuing education"
+        ],
+        "sdgs": ["SDG 3: Good Health and Well-being", "SDG 4: Quality Education", "SDG 10: Reduced Inequalities", "SDG 16: Peace, Justice and Strong Institutions"],
+        "trend_status": "BLS projects 6% overall growth (2024-2034), with 11.2% growth for clinical and counseling psychologists. Driven by rising global mental health demand.",
+        "certifications": [
+            {"name": "ASPPB CPQ", "issuer": "ASPPB", "region": "North America/Global", "url": "https://www.asppb.net/"},
+            {"name": "EuroPsy", "issuer": "EFPA", "region": "Europe/Global", "url": "https://www.efpa.eu/"},
+            {"name": "EMDR Therapist", "issuer": "EMDRIA", "region": "Global", "url": "https://www.emdria.org/"},
+            {"name": "CBT Certification", "issuer": "CACBT", "region": "Global", "url": "https://worldcbt.org/"},
+            {"name": "WHO PFA Certificate", "issuer": "WHO / PAHO", "region": "Global", "url": "https://campus.paho.org/"}
+        ],
+        "salary_ranges": {
+            "MYR": {"Assistant": "42k-55k", "Registered": "55k-75k", "Mid": "75k-100k", "Senior": "100k-130k", "Private": "160k-300k+"},
+            "SGD": {"Assistant": "40k-50k", "Registered": "55k-70k", "Mid": "70k-95k", "Senior": "95k-120k", "Private": "150k-250k+"},
+            "HKD": {"Assistant": "220k-300k", "Registered": "300k-420k", "Mid": "420k-600k", "Senior": "600k-800k", "Private": "1,000k-2,000k+"},
+            "AUD": {"Assistant": "60k-75k", "Registered": "75k-90k", "Mid": "90k-115k", "Senior": "115k-140k", "Private": "170k-260k+"},
+            "USD": {"Assistant": "52k-68k", "Registered": "68k-85k", "Mid": "85k-110k", "Senior": "110k-140k", "Private/I-O": "160k-240k+"},
+            "GBP": {"Assistant": "28k-36k", "Trainee": "38k-48k", "Mid": "48k-60k", "Senior": "60k-72k", "Principal": "72k-90k"},
+            "CAD": {"Assistant": "48k-60k", "Registered": "60k-78k", "Mid": "78k-95k", "Senior": "95k-115k", "Private": "120k-160k+"}
+        },
+        "top_countries": [
+            {"country": "United States", "highlights": "World's most mature system for psychology education, licensure, and employment. APA sets global standards."},
+            {"country": "United Kingdom", "highlights": "Statutory registration by HCPC, accreditation by BPS, and well-established NHS psychological services."},
+            {"country": "Canada", "highlights": "Provincial colleges govern registration, unified ethics and supervision requirements, balanced research and clinical focus."}
+        ],
+        "data_sources": ["U.S. BLS 2025", "TherapyRoute 2025", "APA Psychologist Salary Survey 2025"],
+        "data_date": "2026-10-21"
+    },
+    {
+        "id": 5,
+        "name": "ICT-Access Project Officer",
+        "description": "Manages full-cycle inclusive connectivity projects in the ICT4D sector, expanding broadband/mobile access for remote and underserved populations.",
+        "required_skills": [
+            "ICT4D Policy Literacy", "Logical Framework Design", "Budget & Compliance",
+            "Multi-stakeholder Coordination", "Monitoring & Evaluation (M&E)",
+            "ICT Infrastructure Literacy", "Procurement Oversight", "Report Writing",
+            "Cross-cultural Communication", "Data Analysis"
+        ],
+        "interests": ["Digital Inclusion", "International Development", "Project Management", "Social Impact"],
+        "learning_steps": [
+            "Learn digital divide concepts and UN UMC objectives",
+            "Master LFA, M&E methodologies, and PPP models",
+            "Complete ICT4D internships and build a project portfolio",
+            "Participate in full-cycle real-world projects and track policy updates"
+        ],
+        "sdgs": ["SDG 9: Industry, Innovation and Infrastructure", "SDG 10: Reduced Inequalities", "SDG 11: Sustainable Cities and Communities", "SDG 17: Partnerships for the Goals"],
+        "trend_status": "BLS projects 7% growth for project management specialists (2025-2035). Developing nations continuously release inclusive broadband jobs.",
+        "certifications": [
+            {"name": "PMP", "issuer": "PMI", "region": "Global", "url": "https://www.pmi.org/"},
+            {"name": "PMD-PRO", "issuer": "PM4DEV", "region": "Global", "url": "https://www.pm4dev.com/"},
+            {"name": "ITU Academy Certificate", "issuer": "ITU", "region": "Global", "url": "https://academy.itu.int/"},
+            {"name": "UNDP M&E Certificate", "issuer": "UNDP", "region": "Global", "url": "https://learning.undp.org/"},
+            {"name": "CCNA", "issuer": "Cisco", "region": "Global", "url": "https://www.cisco.com/"}
+        ],
+        "salary_ranges": {
+            "MYR": {"Junior": "50k-70k", "Mid": "70k-100k", "Senior": "100k-140k", "PM": "140k-190k"},
+            "SGD": {"Junior": "42k-55k", "Mid": "55k-75k", "Senior": "75k-100k", "PM": "100k-140k"},
+            "HKD": {"Junior": "300k-420k", "Mid": "420k-650k", "Senior": "650k-900k", "PM": "900k-1,300k"},
+            "AUD": {"Junior": "70k-88k", "Mid": "88k-115k", "Senior": "115k-145k", "PM": "145k-190k"},
+            "USD": {"Junior": "55k-72k", "Mid": "72k-95k", "Senior": "95k-120k", "PM": "120k-160k"},
+            "GBP": {"Junior": "32k-42k", "Mid": "42k-58k", "Senior": "58k-78k", "PM": "78k-105k"},
+            "CAD": {"Junior": "55k-72k", "Mid": "72k-95k", "Senior": "95k-120k", "PM": "120k-160k"}
+        },
+        "top_countries": [
+            {"country": "United States", "highlights": "Dense multilateral institutions, federal/state rural broadband programs, and complete ICT4D research clusters."},
+            {"country": "Finland", "highlights": "High domestic universal broadband coverage, exports digital inclusion expertise, and mature universal service funds."},
+            {"country": "Singapore", "highlights": "Highly advanced domestic infrastructure, Asia-Pacific hub for multilateral bodies, and strong hybrid talent pool."}
+        ],
+        "data_sources": ["U.S. BLS 2025", "ITU ICT Development Index 2026", "Michael Page 2026"],
+        "data_date": "2026-10-21"
+    },
+    {
+        "id": 6,
+        "name": "Physician (Medical Doctor)",
+        "description": "Licensed healthcare professionals responsible for disease diagnosis, treatment, preventive care, and patient management.",
+        "required_skills": [
+            "Clinical Consultation", "Diagnosis & Differential Diagnosis", "Lab/Imaging Interpretation",
+            "Treatment Plan Formulation", "Emergency Care", "Doctor-patient Communication",
+            "Medical Ethics", "Medical Documentation", "Evidence-based Medicine",
+            "Public Health Mindset"
+        ],
+        "interests": ["Healthcare", "Patient Care", "Medical Research", "Public Health"],
+        "learning_steps": [
+            "Study basic medical sciences",
+            "Complete clinical theory and clerkship",
+            "Finish supervised internship and residency training",
+            "Pass licensing exams and maintain CME (Continuing Medical Education)"
+        ],
+        "sdgs": ["SDG 3: Good Health and Well-being", "SDG 4: Quality Education", "SDG 10: Reduced Inequalities", "SDG 17: Partnerships for the Goals"],
+        "trend_status": "BLS projects 3% growth (2024-2034, on par with average). Aging populations drive demand, though long training cycles limit short-term expansion.",
+        "certifications": [
+            {"name": "AMC (Australian Medical Council)", "issuer": "AMC", "region": "Australia", "url": "https://www.amc.org.au/"},
+            {"name": "PLAB / GMC Registration", "issuer": "GMC", "region": "UK", "url": "https://www.gmc-uk.org/"},
+            {"name": "USMLE", "issuer": "ECFMG/NBME", "region": "US", "url": "https://www.ecfmg.org/"},
+            {"name": "WFME Accreditation", "issuer": "WFME", "region": "Global", "url": "https://wfme.org/"}
+        ],
+        "salary_ranges": {
+            "MYR": {"Intern": "54k-66k", "MO": "72k-96k", "Registrar": "108k-168k", "Consultant": "180k-240k", "Private": "300k-700k+"},
+            "SGD": {"Intern": "60k-72k", "MO": "78k-108k", "Registrar": "108k-168k", "Assoc Consultant": "180k-220k", "Private": "400k-800k+"},
+            "HKD": {"Resident": "900k-1,200k", "Assoc Consultant": "1,400k-1,800k", "Consultant": "2,000k-3,000k", "Private": "3,500k-8,000k+"},
+            "AUD": {"Intern": "80k-98k", "Resident": "90k-110k", "Registrar": "110k-160k", "Staff Consultant": "205k-345k", "Private": "300k-680k+"},
+            "USD": {"Resident": "65k-85k", "Fellow": "80k-100k", "Primary Care": "220k-320k", "Specialist": "350k-600k+"},
+            "GBP": {"FY1": "32k-38k", "FY2": "38k-45k", "Registrar": "48k-70k", "Consultant": "90k-130k"},
+            "CAD": {"Resident": "60k-85k", "Family Physician": "180k-260k", "Specialist": "240k-420k"}
+        },
+        "top_countries": [
+            {"country": "United States", "highlights": "Large physician workforce, rigorous MD/USMLE pathway, mature residency and fellowship training."},
+            {"country": "Germany", "highlights": "Mature European medical system, standardised residency, universal statutory health insurance, and GP gatekeeping."},
+            {"country": "Australia", "highlights": "Strict WFME standards, AMC regulation, universal Medicare, and strong rural/remote incentives."}
+        ],
+        "data_sources": ["U.S. BLS 2025", "WHO Global Health Workforce Report 2026", "OECD Health Statistics 2025", "Michael Page 2026"],
+        "data_date": "2026-10-21"
+    },
+    {
+        "id": 7,
+        "name": "Lawyer (Attorney-at-Law)",
+        "description": "Licensed professionals providing legal advice, drafting legal documents, negotiation, and courtroom representation.",
+        "required_skills": [
+            "Legal Research", "Legal Document Drafting", "Case Strategy Analysis",
+            "Court Advocacy & Negotiation", "Legal Ethics", "Client Communication",
+            "Evidence Organization", "Time Management", "Legal Tech Tools",
+            "Cross-jurisdictional Perspective"
+        ],
+        "interests": ["Law & Justice", "Debate & Negotiation", "Compliance", "Pro Bono Work"],
+        "learning_steps": [
+            "Study foundational law subjects",
+            "Practice legal writing, case analysis, and moot court",
+            "Complete qualifying law degree and supervised training (pupillage/articling)",
+            "Pass bar exams, apply for practising certificate, and maintain CLE (Continuing Legal Education)"
+        ],
+        "sdgs": ["SDG 5: Gender Equality", "SDG 10: Reduced Inequalities", "SDG 16: Peace, Justice and Strong Institutions", "SDG 17: Partnerships for the Goals"],
+        "trend_status": "BLS projects 4% growth (2024-2034, on par with average). Corporate compliance, cross-border trade, and ESG legal work drive demand; AI automates routine drafting but not courtroom advocacy.",
+        "certifications": [
+            {"name": "Singapore QLPT", "issuer": "Ministry of Law Singapore", "region": "Singapore", "url": "https://www.mlaw.gov.sg/"},
+            {"name": "Malaysian Bar Practising Certificate", "issuer": "Malaysian Bar", "region": "Malaysia", "url": "https://www.malaysianbar.org.my/"},
+            {"name": "Legal Profession Board (State)", "issuer": "Australia", "region": "Australia", "url": "https://www.legalprofession.gov.au/"},
+            {"name": "CIArb Membership", "issuer": "Chartered Institute of Arbitrators", "region": "Global", "url": "https://www.ciarb.org/"},
+            {"name": "HK Solicitors/Barristers", "issuer": "Law Society of Hong Kong", "region": "Hong Kong", "url": "https://www.hklawsoc.org.hk/"}
+        ],
+        "salary_ranges": {
+            "MYR": {"Chambering": "42k-60k", "NQ": "60k-90k", "Mid": "90k-130k", "Senior": "130k-180k", "Partner": "240k-500k+"},
+            "SGD": {"Pupillage": "40k-55k", "NQ": "100k-140k", "Mid": "140k-190k", "Senior": "190k-260k", "Partner": "350k-800k+"},
+            "HKD": {"Trainee": "240k-300k", "NQ": "360k-480k", "Mid": "480k-700k", "Senior": "700k-1,100k", "Partner": "1,600k-4,000k+"},
+            "AUD": {"Articling": "60k-75k", "NQ": "75k-95k", "Mid": "95k-130k", "Senior": "130k-180k", "Partner": "260k-450k+"},
+            "USD": {"First-Year Big Law": "225k-250k", "Mid": "270k-350k", "Senior": "350k-450k", "Counsel": "420k-600k"},
+            "GBP": {"Trainee": "38k-50k", "NQ": "70k-110k", "Mid": "110k-150k", "Senior": "150k-200k", "Partner": "280k-700k+"},
+            "CAD": {"Articling": "60k-80k", "First-Year": "115k-130k", "Mid": "130k-170k", "Senior": "170k-220k", "Partner": "280k-500k+"}
+        },
+        "top_countries": [
+            {"country": "United States", "highlights": "World's largest lawyer workforce, state-based bar licensing, and highly developed corporate/capital market legal sectors."},
+            {"country": "United Kingdom", "highlights": "Dual-track solicitor and barrister system, global hub for cross-border commercial law in London."},
+            {"country": "Canada", "highlights": "Provincial law societies, coexistence of common law and Quebec civil law, balanced commercial and public legal aid practice."}
+        ],
+        "data_sources": ["U.S. BLS 2025", "ABA 2025", "Robert Half 2026", "Michael Page 2026"],
+        "data_date": "2026-10-21"
+    }
 ]
+>>>>>>> origin/LIU
