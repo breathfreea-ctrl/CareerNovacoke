@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>首页｜未来职业探索</title>
+<meta name="description" content="从技能、经验和兴趣出发，慢慢找到适合你的未来职业。">
+<style>
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Ma+Shan+Zheng&display=swap");
+
+.career-home {
+  --ink: #35433e;
+  --muted-ink: #78827b;
+  --quiet-ink: #9a9f95;
+  --paper: #f5f3ec;
+  --paper-deep: #efeee5;
+  --sage: #aab9a6;
+  --sage-deep: #718579;
+  --clay: #c8a99b;
+  --blue: #a8b7ba;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Ma Shan Zheng", "KaiTi", "STKaiti", "KaiTi_GB2312", serif;
+}
+
+.career-home *,
+.career-home *::before,
+.career-home *::after {
+  box-sizing: border-box;
+}
+
+.career-home a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.career-home::before {
+  position: fixed;
+  z-index: 5;
+  pointer-events: none;
+  content: "";
+  inset: 0;
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.84' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.17'/%3E%3C/svg%3E");
+}
+
+.career-header {
+  height: 82px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(67, 81, 72, 0.1);
+  animation: career-rise 700ms 80ms both;
+}
+
+.career-brand,
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.brand-symbol {
+  width: 29px;
+  height: 29px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(74, 97, 82, 0.34);
+  border-radius: 50%;
+  color: var(--sage-deep);
+}
+
+.header-note {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--muted-ink);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.header-note-dot,
+.label-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #9ba98e;
+}
+
+.career-hero {
+  position: relative;
+  max-width: 1240px;
+  min-height: 645px;
+  margin: 0 auto;
+  padding: 80px 42px 86px;
+  display: grid;
+  grid-template-columns: 0.94fr 1.06fr;
+  align-items: center;
+  gap: 34px;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  padding: 6px 0 18px 36px;
+  animation: career-rise 760ms 150ms both;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #748477;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+}
+
+.hero-eyebrow i {
+  color: #b3b5a6;
+  font-style: normal;
+}
+
+.eyebrow-line {
+  width: 24px;
+  height: 1px;
+  background: #9eae9d;
+}
+
+.hero-copy h1 {
+  margin: 30px 0 20px;
+  color: #394740;
+  font-size: clamp(40px, 4.6vw, 61px);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 1.34;
+}
+
+.hero-copy h1 > span:first-of-type {
+  color: #758b7a;
+}
+
+.title-period {
+  color: #c39d87;
+}
+
+.hero-intro {
+  margin: 0;
+  color: #747e77;
+  font-size: 14px;
+  line-height: 2.05;
+  letter-spacing: 0.025em;
+}
+
+.career-cta {
+  width: fit-content;
+  min-width: 194px;
+  margin-top: 33px;
+  padding: 8px 9px 8px 21px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 23px;
+  border: 1px solid #778b7b;
+  border-radius: 3px;
+  background: #778b7b;
+  color: #faf9f4 !important;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
+}
+
+.career-cta:hover {
+  transform: translateY(-2px);
+  border-color: #5e7765;
+  background: #5e7765;
+}
+
+.cta-arrow {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(248, 248, 239, 0.46);
+  border-radius: 2px;
+  transition: transform 220ms ease;
+}
+
+.career-cta:hover .cta-arrow {
+  transform: translateX(3px);
+}
+
+.hero-reassurance {
+  margin-top: 17px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8c948b;
+  font-size: 11px;
+  letter-spacing: 0.035em;
+}
+
+.reassurance-mark {
+  display: flex;
+  color: #b48f79;
+}
+
+.hero-art {
+  position: relative;
+  min-height: 478px;
+  overflow: hidden;
+  animation: career-rise 820ms 240ms both;
+}
+
+.art-wash {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(0.2px);
+}
+
+.art-wash-one {
+  width: 390px;
+  height: 390px;
+  top: 54px;
+  left: 90px;
+  background: radial-gradient(circle, rgba(218, 222, 203, 0.67) 0%, rgba(218, 222, 203, 0.44) 43%, rgba(218, 222, 203, 0) 72%);
+}
+
+.art-wash-two {
+  width: 260px;
+  height: 260px;
+  right: 1px;
+  bottom: 6px;
+  background: radial-gradient(circle, rgba(217, 196, 177, 0.45) 0%, rgba(217, 196, 177, 0) 70%);
+}
+
+.art-sun {
+  position: absolute;
+  width: 137px;
+  height: 137px;
+  top: 72px;
+  right: 111px;
+  border-radius: 50%;
+  background: #e4d7c4;
+  opacity: 0.75;
+}
+
+.art-orbit {
+  position: absolute;
+  border: 1px solid rgba(111, 133, 116, 0.18);
+  border-radius: 50%;
+  transform: rotate(-27deg);
+}
+
+.orbit-one {
+  width: 382px;
+  height: 205px;
+  top: 141px;
+  left: 88px;
+}
+
+.orbit-two {
+  width: 452px;
+  height: 278px;
+  top: 113px;
+  left: 41px;
+  transform: rotate(20deg);
+  border-color: rgba(172, 143, 124, 0.18);
+}
+
+.path-drawing {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  overflow: visible;
+}
+
+.path-drawing path {
+  stroke: #778d7b;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 5 8;
+  opacity: 0.8;
+}
+
+.path-drawing .path-secondary {
+  stroke: #b2947e;
+  stroke-width: 1;
+  stroke-dasharray: 2 7;
+  opacity: 0.55;
+}
+
+.path-node {
+  fill: #f5f3ec;
+  stroke: #879c88;
+  stroke-width: 1.5;
+}
+
+.node-two {
+  stroke: #bd9b84;
+}
+
+.node-three {
+  stroke: #9eafb0;
+}
+
+.path-end {
+  fill: #82947e;
+  stroke: #f5f3ec;
+  stroke-width: 5;
+}
+
+.art-label {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border: 1px solid rgba(120, 136, 121, 0.13);
+  border-radius: 2px;
+  background: rgba(249, 247, 240, 0.78);
+  color: #77847a;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  box-shadow: 0 8px 25px rgba(79, 90, 75, 0.04);
+}
+
+.label-start {
+  left: 12px;
+  bottom: 43px;
+}
+
+.label-mid {
+  top: 194px;
+  left: 49%;
+  color: #ac8975;
+}
+
+.art-destination {
+  position: absolute;
+  top: 74px;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #576d5d;
+}
+
+.destination-icon {
+  width: 39px;
+  height: 39px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(99, 125, 101, 0.3);
+  border-radius: 50%;
+  background: rgba(245, 243, 236, 0.8);
+}
+
+.art-destination strong,
+.art-destination small {
+  display: block;
+}
+
+.art-destination strong {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.art-destination small {
+  margin-top: 4px;
+  color: #8a9389;
+  font-size: 10px;
+}
+
+.art-caption {
+  position: absolute;
+  right: 7px;
+  bottom: 12px;
+  color: #979b8e;
+  font-size: 10px;
+  letter-spacing: 0.07em;
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 26px;
+  left: 78px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #899187 !important;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  transition: color 180ms ease;
+}
+
+.scroll-cue:hover {
+  color: #536d5c !important;
+}
+
+.pathways {
+  padding: 77px max(42px, calc((100vw - 1160px) / 2)) 88px;
+  background: var(--paper-deep);
+  border-top: 1px solid rgba(67, 81, 72, 0.08);
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 37px;
+  animation: career-rise 650ms both;
+}
+
+.section-kicker {
+  color: #899688;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+}
+
+.section-heading h2 {
+  margin: 13px 0 0;
+  color: #44534a;
+  font-size: clamp(22px, 2.7vw, 30px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+.section-aside {
+  padding-bottom: 4px;
+  color: #8c9187;
+  font-size: 11px;
+  letter-spacing: 0.035em;
+}
+
+.pathway-list {
+  border-top: 1px solid rgba(94, 110, 96, 0.2);
+}
+
+.pathway {
+  min-height: 112px;
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) 120px 42px;
+  align-items: center;
+  gap: 18px;
+  border-bottom: 1px solid rgba(94, 110, 96, 0.2);
+  transition: padding 220ms ease, background 220ms ease;
+}
+
+.pathway:hover {
+  padding-right: 10px;
+  padding-left: 10px;
+  background: rgba(249, 247, 240, 0.52);
+}
+
+.pathway-number {
+  color: #a0a797;
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+
+.pathway-copy h3 {
+  margin: 0;
+  color: #4b5b50;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+}
+
+.pathway-copy p {
+  margin: 8px 0 0;
+  color: #838a80;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.pathway-mark {
+  width: fit-content;
+  padding: 7px 10px;
+  border: 1px solid rgba(108, 131, 111, 0.22);
+  border-radius: 2px;
+  color: #7d8b7d;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+
+.pathway-clay .pathway-mark {
+  border-color: rgba(169, 130, 107, 0.24);
+  color: #a2836f;
+}
+
+.pathway-blue .pathway-mark {
+  border-color: rgba(112, 139, 143, 0.25);
+  color: #73888a;
+}
+
+.pathway-link {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(94, 110, 96, 0.23);
+  border-radius: 50%;
+  color: #718274 !important;
+  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.pathway-link:hover {
+  transform: translateX(3px);
+  background: #778b7b;
+  color: #f7f5ee !important;
+}
+
+.career-footer {
+  min-height: 86px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 16px 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.footer-brand {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.footer-brand .brand-symbol {
+  width: 25px;
+  height: 25px;
+}
+
+.career-footer p {
+  margin: 0;
+  color: #92978d;
+  font-size: 11px;
+  letter-spacing: 0.035em;
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #728273 !important;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  transition: gap 180ms ease;
+}
+
+.footer-link:hover {
+  gap: 12px;
+}
+
+/* Opening moment — a small pause before the page unfolds. */
+.career-welcome {
+  position: fixed;
+  z-index: 8;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 30px;
+  background: var(--paper);
+  transition: opacity 760ms ease, transform 760ms ease;
+}
+
+.career-welcome::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0.1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.84' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.17'/%3E%3C/svg%3E");
+}
+
+.career-welcome.is-leaving {
+  transform: translateY(-9px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.welcome-sun {
+  position: absolute;
+  top: 12%;
+  right: 15%;
+  width: clamp(150px, 22vw, 290px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(225, 214, 196, 0.7), rgba(225, 214, 196, 0));
+  animation: welcome-breathe 5s ease-in-out infinite alternate;
+}
+
+.welcome-orbit {
+  position: absolute;
+  right: -8%;
+  bottom: -43%;
+  width: min(78vw, 930px);
+  aspect-ratio: 1.55;
+  border: 1px solid rgba(113, 133, 121, 0.14);
+  border-radius: 50%;
+  transform: rotate(-18deg);
+}
+
+.welcome-content {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 760px);
+  padding: 26px 0;
+  text-align: center;
+  animation: welcome-arrive 520ms ease-out both;
+}
+
+.welcome-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #596b5e;
+  font-size: 13px;
+  letter-spacing: 0.07em;
+}
+
+.welcome-brand-mark {
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(74, 97, 82, 0.34);
+  border-radius: 50%;
+  color: var(--sage-deep);
+}
+
+.welcome-eyebrow {
+  margin: 55px 0 13px;
+  color: #8d998b;
+  font-size: 12px;
+  letter-spacing: 0.17em;
+  animation: welcome-arrive 520ms ease-out both;
+}
+
+.welcome-title {
+  margin: 0;
+  color: #394740;
+  font-size: clamp(36px, 5.2vw, 64px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.35;
+}
+
+.welcome-title span {
+  display: block;
+  color: #65766a;
+  font-size: 0.58em;
+  letter-spacing: 0.03em;
+  animation: welcome-arrive 520ms ease-out both;
+}
+
+.welcome-title strong {
+  font-weight: 500;
+  animation: welcome-arrive 520ms ease-out both;
+}
+
+.welcome-title b {
+  color: #c39d87;
+  font-weight: 500;
+}
+
+.welcome-copy {
+  max-width: 535px;
+  margin: 21px auto 0;
+  color: #78827b;
+  font-size: 14px;
+  line-height: 2.1;
+  letter-spacing: 0.035em;
+  animation: welcome-arrive 520ms ease-out both;
+}
+
+.welcome-enter {
+  min-height: 48px;
+  margin-top: 34px;
+  padding: 7px 8px 7px 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  border: 1px solid #778b7b;
+  border-radius: 3px;
+  background: #778b7b;
+  color: #faf9f4;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 0.07em;
+  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
+  animation: welcome-arrive 520ms ease-out both;
+}
+
+.welcome-enter:hover {
+  transform: translateY(-2px);
+  border-color: #5e7765;
+  background: #5e7765;
+}
+
+.welcome-enter:focus-visible {
+  outline: 2px solid #5e7765;
+  outline-offset: 4px;
+}
+
+.welcome-enter-arrow {
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(248, 248, 239, 0.46);
+}
+
+.welcome-reassurance {
+  margin: 15px 0 0;
+  color: #9a9f95;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  animation: welcome-arrive 520ms ease-out both;
+}
+
+.welcome-progress {
+  width: 110px;
+  height: 1px;
+  margin: 34px auto 0;
+  overflow: hidden;
+  background: rgba(113, 133, 121, 0.16);
+}
+
+.welcome-progress span {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: #879a87;
+  animation: welcome-progress 6.4s linear forwards;
+}
+
+@keyframes welcome-arrive {
+  from {
+    transform: translateY(12px);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes welcome-breathe {
+  from {
+    transform: scale(0.92);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1.06);
+    opacity: 0.95;
+  }
+}
+
+@keyframes welcome-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes career-rise {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .career-hero {
+    min-height: 580px;
+    padding-right: 30px;
+    padding-left: 30px;
+    gap: 4px;
+  }
+
+  .hero-copy {
+    padding-left: 8px;
+  }
+
+  .hero-art {
+    min-height: 420px;
+    transform: scale(0.94);
+    transform-origin: center;
+  }
+
+  .scroll-cue {
+    left: 38px;
+  }
+
+  .pathways {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+}
+
+@media (max-width: 680px) {
+  .career-welcome {
+    padding: 26px 23px;
+  }
+
+  .welcome-sun {
+    top: 8%;
+    right: -8%;
+  }
+
+  .welcome-orbit {
+    right: -55%;
+    bottom: -26%;
+    width: 130vw;
+  }
+
+  .welcome-eyebrow {
+    margin-top: 45px;
+    font-size: 11px;
+  }
+
+  .welcome-title {
+    font-size: clamp(35px, 9vw, 48px);
+    line-height: 1.5;
+  }
+
+  .welcome-title span {
+    margin-bottom: 3px;
+  }
+
+  .welcome-copy {
+    max-width: 340px;
+    margin-top: 17px;
+    font-size: 13px;
+    line-height: 2;
+  }
+
+  .welcome-break {
+    display: none;
+  }
+
+  .welcome-enter {
+    margin-top: 27px;
+  }
+
+  .welcome-progress {
+    margin-top: 28px;
+  }
+
+  .career-header {
+    height: 68px;
+    padding: 0 22px;
+  }
+
+  .career-brand {
+    font-size: 13px;
+  }
+
+  .header-note {
+    font-size: 10px;
+  }
+
+  .career-hero {
+    min-height: auto;
+    padding: 63px 23px 76px;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .hero-copy {
+    padding: 0;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+  }
+
+  .hero-copy h1 {
+    margin: 24px 0 16px;
+    font-size: clamp(39px, 10.5vw, 54px);
+    line-height: 1.38;
+  }
+
+  .hero-intro {
+    font-size: 13px;
+    line-height: 1.9;
+  }
+
+  .desktop-break {
+    display: none;
+  }
+
+  .career-cta {
+    margin-top: 26px;
+  }
+
+  .hero-art {
+    width: 100%;
+    min-height: min(84vw, 390px);
+    margin-top: 2px;
+    transform: none;
+  }
+
+  .art-wash-one {
+    width: 85vw;
+    height: 85vw;
+    max-width: 360px;
+    max-height: 360px;
+    top: 0;
+    left: 3%;
+  }
+
+  .art-sun {
+    width: 100px;
+    height: 100px;
+    top: 34px;
+    right: 17%;
+  }
+
+  .orbit-one {
+    width: 78%;
+    height: 45%;
+    top: 27%;
+    left: 10%;
+  }
+
+  .orbit-two {
+    width: 94%;
+    height: 58%;
+    top: 21%;
+    left: 2%;
+  }
+
+  .art-destination {
+    top: 31px;
+    right: 0;
+  }
+
+  .label-start {
+    left: 0;
+    bottom: 34px;
+  }
+
+  .label-mid {
+    top: 42%;
+    left: 42%;
+  }
+
+  .art-caption {
+    right: 0;
+    bottom: 4px;
+    font-size: 9px;
+  }
+
+  .scroll-cue {
+    bottom: 25px;
+    left: 23px;
+  }
+
+  .pathways {
+    padding: 53px 23px 58px;
+  }
+
+  .section-heading {
+    display: block;
+    margin-bottom: 28px;
+  }
+
+  .section-heading h2 {
+    margin-top: 11px;
+    font-size: 22px;
+    line-height: 1.6;
+  }
+
+  .section-aside {
+    display: block;
+    margin-top: 9px;
+    font-size: 10px;
+    line-height: 1.7;
+  }
+
+  .pathway {
+    min-height: 126px;
+    grid-template-columns: 29px minmax(0, 1fr) 34px;
+    gap: 10px;
+  }
+
+  .pathway:hover {
+    padding-right: 4px;
+    padding-left: 4px;
+  }
+
+  .pathway-copy h3 {
+    font-size: 15px;
+  }
+
+  .pathway-copy p {
+    max-width: 260px;
+    margin-top: 7px;
+    font-size: 11px;
+    line-height: 1.8;
+  }
+
+  .pathway-mark {
+    display: none;
+  }
+
+  .career-footer {
+    min-height: 100px;
+    padding: 18px 23px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .career-footer p {
+    order: 3;
+    width: 100%;
+    font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .career-home *,
+  .career-home *::before,
+  .career-home *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+html { scroll-behavior: smooth; }
+body { margin: 0; }
+a:focus-visible { outline: 2px solid #5e7765; outline-offset: 4px; }
+</style>
+<noscript><style>.career-welcome { display: none; }</style></noscript>
+</head>
+<body>
+<main class="career-home" id="home">
+
+        <div
+          class="career-welcome" id="welcome"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="career-welcome-title"
+        >
+          <div class="welcome-sun" aria-hidden="true"></div>
+          <div class="welcome-orbit" aria-hidden="true"></div>
+          <div class="welcome-content">
+            <div class="welcome-brand">
+              <span class="welcome-brand-mark" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg>
+              </span>
+              <span>未来职业探索</span>
+            </div>
+            <p class="welcome-eyebrow">送给正在思考下一步的你</p>
+            <h2 class="welcome-title" id="career-welcome-title">
+              <span>欢迎你，</span>
+              <strong>慢慢找到自己的方向</strong>
+              <b>。</b>
+            </h2>
+            <p class="welcome-copy">
+              这里没有标准答案，也不必急着决定。
+              <br class="welcome-break" />
+              带上你的兴趣、经验与技能，我们陪你一起，把未来看得清晰一点。
+            </p>
+            <button class="welcome-enter" type="button" id="enter-home">
+              <span>好，我们慢慢开始</span>
+              <span class="welcome-enter-arrow" aria-hidden="true">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+              </span>
+            </button>
+            <p class="welcome-reassurance">也可以停留片刻，页面会为你慢慢展开</p>
+            <div class="welcome-progress" aria-hidden="true">
+              <span></span>
+            </div>
+          </div>
+        </div>
+
+      <header class="career-header">
+        <a class="career-brand" href="#home" aria-label="未来职业探索首页">
+          <span class="brand-symbol" aria-hidden="true">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg>
+          </span>
+          <span>未来职业探索</span>
+        </a>
+        <div class="header-note">
+          <span class="header-note-dot"></span>
+          给下一段旅程一点空间
+        </div>
+      </header>
+
+      <section class="career-hero">
+        <div class="hero-copy">
+          <div class="hero-eyebrow">
+            <span class="eyebrow-line"></span>
+            技能 <i>·</i> 经验 <i>·</i> 兴趣
+          </div>
+          <h1>
+            探索适合你的
+            <br />
+            <span>未来职业</span>
+            <span class="title-period">。</span>
+          </h1>
+          <p class="hero-intro">
+            告诉我们你掌握的技能、相关经验和兴趣方向，
+            <br class="desktop-break" />
+            查看职业匹配结果、技能差距和学习建议。
+          </p>
+          <a class="career-cta" href="/survey">
+            <span>陪我一起，慢慢找方向</span>
+            <span class="cta-arrow" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+            </span>
+          </a>
+          <div class="hero-reassurance">
+            <span class="reassurance-mark" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4zM5 3v4M3 5h4"/></svg>
+            </span>
+            没有标准答案，只从你出发
+          </div>
+        </div>
+
+        <div class="hero-art" aria-label="抽象的职业探索路径插画">
+          <div class="art-wash art-wash-one"></div>
+          <div class="art-wash art-wash-two"></div>
+          <div class="art-sun"></div>
+          <div class="art-orbit orbit-one"></div>
+          <div class="art-orbit orbit-two"></div>
+          <svg class="path-drawing" viewBox="0 0 580 520" fill="none" role="presentation">
+            <path d="M58 427C128 398 137 345 199 332C262 319 290 368 344 344C405 317 384 245 431 212C470 185 500 188 538 148" />
+            <path class="path-secondary" d="M76 455C145 430 173 394 221 395C273 396 300 426 346 400" />
+            <circle class="path-node node-one" cx="199" cy="332" r="7" />
+            <circle class="path-node node-two" cx="344" cy="344" r="7" />
+            <circle class="path-node node-three" cx="431" cy="212" r="7" />
+            <circle class="path-end" cx="538" cy="148" r="12" />
+          </svg>
+          <div class="art-label label-start">
+            <span class="label-dot"></span>
+            从此刻出发
+          </div>
+          <div class="art-label label-mid">
+            <span>你的节奏</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </div>
+          <div class="art-destination">
+            <span class="destination-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg>
+            </span>
+            <span>
+              <strong>新的可能</strong>
+              <small>慢慢找到方向</small>
+            </span>
+          </div>
+          <div class="art-caption">每一种经历，都能成为下一步的线索</div>
+        </div>
+
+        <a class="scroll-cue" href="#explore" aria-label="向下浏览">
+          <span>向下探索</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14m-7-7 7 7 7-7"/></svg>
+        </a>
+      </section>
+
+      <section class="pathways" id="explore">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">一段温和的探索</span>
+            <h2>把模糊的想法，变成清晰的下一步。</h2>
+          </div>
+          <span class="section-aside">从认识自己开始，不必一次想清所有答案。</span>
+        </div>
+
+        <div class="pathway-list">
+          <article class="pathway pathway-sage">
+      <span class="pathway-number">01</span>
+      <div class="pathway-copy"><h3>了解你的优势</h3><p>根据你填写的技能、经验和兴趣，计算职业匹配度。</p></div>
+      <span class="pathway-mark">优势画像</span>
+      <a href="/survey" class="pathway-link" aria-label="了解你的优势，陪我一起探索下一步"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+    </article>
+<article class="pathway pathway-clay">
+      <span class="pathway-number">02</span>
+      <div class="pathway-copy"><h3>发现技能差距</h3><p>查看目标职业需要哪些技能，以及你可以继续学习什么。</p></div>
+      <span class="pathway-mark">成长地图</span>
+      <a href="/survey" class="pathway-link" aria-label="发现技能差距，陪我一起探索下一步"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+    </article>
+<article class="pathway pathway-blue">
+      <span class="pathway-number">03</span>
+      <div class="pathway-copy"><h3>规划下一步</h3><p>查看职业学习步骤及其关联的可持续发展目标。</p></div>
+      <span class="pathway-mark">行动建议</span>
+      <a href="/survey" class="pathway-link" aria-label="规划下一步，陪我一起探索下一步"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+    </article>
+        </div>
+      </section>
+
+      <footer class="career-footer">
+        <a class="footer-brand" href="#home">
+          <span class="brand-symbol" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg>
+          </span>
+          未来职业探索
+        </a>
+        <p>你的下一步，不需要和任何人一样。</p>
+        <a href="/survey" class="footer-link">
+          陪我继续探索 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+        </a>
+      </footer>
+    </main>
+<script>
+const welcome = document.getElementById('welcome');
+const enterButton = document.getElementById('enter-home');
+const sections = [...document.querySelector('main').children].filter(el => el !== welcome);
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+sections.forEach(el => el.inert = true);
+enterButton.focus({preventScroll: true});
+let leaving = false;
+let timer;
+function enterHome() {
+  if (leaving) return;
+  leaving = true;
+  clearTimeout(timer);
+  welcome.classList.add('is-leaving');
+  setTimeout(() => {
+    const restoreFocus = welcome.contains(document.activeElement);
+    welcome.remove();
+    sections.forEach(el => el.inert = false);
+    if (restoreFocus) {
+      const title = document.querySelector('h1');
+      title.tabIndex = -1;
+      title.focus({preventScroll: true});
+    }
+  }, reduceMotion ? 0 : 760);
+}
+enterButton.addEventListener('click', enterHome);
+welcome.addEventListener('keydown', event => {
+  if (event.key === 'Escape') enterHome();
+  if (event.key === 'Tab') { event.preventDefault(); enterButton.focus(); }
+});
+timer = setTimeout(enterHome, reduceMotion ? 1400 : 6400);
+// This export is a homepage, not an implemented questionnaire.
+// Remove this handler when a real survey page is connected.
+document.querySelectorAll('a[href="/survey"]').forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    alert('问卷尚未实现。此 HTML 文件包含独立首页；接入问卷页面后即可继续探索。');
+  });
+});
+</script>
+</body>
+</html>
