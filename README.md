@@ -165,7 +165,7 @@ Describe how your team used Replit. For example:
 - [ ] Slide deck link added
 - [ ] Demo video link added
 - [ ] Replit used, with proof of use in `submission/`
-- [GPU not used] RunPod used, with proof of use in `submission/`
+- [ ] (GPU not used) RunPod used, with proof of use in `submission/`
 - [ ] Preliminary submission completed (`SDC2026_TeamName_Preliminary.pdf`)
 - [ ] Technology declaration completed (`SDC2026_TeamName_TechDeclaration.pdf`)
 - [ ] Submission files renamed with your team name (replace `TeamName`)
