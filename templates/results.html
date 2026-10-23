@@ -1,140 +1,192 @@
 {% extends "base.html" %}
 
-{% block title %}Career Match Survey — Your Results{% endblock %}
+{% block title %}Your Career Matches — Hello Future!{% endblock %}
 
 {% block content %}
 <header class="report-header">
-  <h1>Your Career Match Report</h1>
+  <p class="eyebrow">YOUR CAREER MATCH REPORT</p>
+  <h1>Your next step starts here.</h1>
   <p class="sub">
-    We compared your profile against 10 careers. Here are your top matches and customized roadmaps.
+    We compared your answers with 10 careers. Here are your strongest matches
+    and a learning plan for each one.
   </p>
 </header>
 
-{% if results %}
+{% if not results %}
+  <section class="card empty-results">
+    <h2>No suitable match found yet</h2>
+    <p>
+      We haven’t found a career in our current list that reaches the match
+      threshold for your answers. We’ll continue to improve the survey.
+    </p>
+    <p lang="zh-CN">
+      很抱歉，目前没有录入与您匹配度足够高的职业。我们会继续完善职业库。
+    </p>
+    <a class="button button--primary" href="{{ url_for('survey', reset=1) }}">
+      Start over
+    </a>
+  </section>
+{% else %}
   {% for role in results %}
-    <article class="role-card rank-{{ loop.index }}">
-      <div class="role-header">
-        <div class="role-title-wrap">
-          <div class="role-rank">Your {{ loop.index }}{% if loop.index == 1 %}st{% elif loop.index == 2 %}nd{% elif loop.index == 3 %}rd{% else %}th{% endif %} Best Match</div>
-          <h2 class="role-title">{{ role.title }}</h2>
+    <article class="role-card {% if loop.first %}role-card--top{% endif %}">
+      <header class="role-card__header">
+        <div>
+          <p class="role-rank">
+            {% if loop.index == 1 %}
+              Your 1st best match
+            {% elif loop.index == 2 %}
+              Your 2nd best match
+            {% else %}
+              Your 3rd best match
+            {% endif %}
+          </p>
 
-          {% if role.tier %}
-            <div
-              class="tier-tag"
-              style="color: {{ role.tier.color }}; background: {{ role.tier.bg }}; border-color: {{ role.tier.border }}"
-            >
-              {{ role.tier.emoji }} {{ role.tier.title }}
-            </div>
-          {% endif %}
+          <h2>{{ role.title }}</h2>
+
+          <span
+            class="tier-tag"
+            style="
+              color: {{ role.tier.color }};
+              background: {{ role.tier.bg }};
+              border-color: {{ role.tier.border }};
+            "
+          >
+            {{ role.tier.emoji }} {{ role.tier.title }}
+          </span>
         </div>
 
-        <div class="score-big">
-          {{ role.totalPoints }}<span> pts</span>
-        </div>
-      </div>
+        <p class="score">
+          {{ role.totalPoints }}
+          <span>pts</span>
+        </p>
+      </header>
 
-      {% if role.tier %}
-        <p class="match-summary">{{ role.tier.desc }}</p>
-      {% endif %}
+      <p class="tier-description" style="color: {{ role.tier.color }};">
+        {{ role.tier.desc }}
+      </p>
 
       <details class="breakdown">
-        <summary>View Point Breakdown</summary>
-        <div class="match-detail">
+        <summary>View point breakdown</summary>
+        <div class="breakdown__list">
           {% for item in role.breakdown %}
-            <div class="match-item">
+            <div class="breakdown__item">
               <span>{{ item.label }}</span>
-              <span class="pts {% if item.points < 0 %}minus{% else %}plus{% endif %}">
+              <strong class="{% if item.points < 0 %}points--negative{% else %}points--positive{% endif %}">
                 {% if item.points > 0 %}+{% endif %}{{ item.points }} pts
-              </span>
+              </strong>
             </div>
           {% endfor %}
 
-          <div class="match-item">
-            <strong>Total Points</strong>
+          <div class="breakdown__item breakdown__item--total">
+            <span>Total points</span>
             <strong>{{ role.totalPoints }} pts</strong>
           </div>
         </div>
       </details>
 
       <section class="career-info">
-        <h3>Career Overview</h3>
-        <p><strong>Content &amp; Rewards:</strong> {{ role.overview }}</p>
-        <p><strong>Industry Outlook:</strong> {{ role.outlook }}</p>
-
-        {% if role.ai_match %}
-          <p>
-            <strong>AI Era Adaptation:</strong>
-            <span class="ai-tag"
-                  style="color: {{ role.ai_match.color }}; background: {{ role.ai_match.bg }}">
-              {{ role.ai_match.level }}
-            </span>
-          </p>
-        {% endif %}
-
-        {% if role.sdgs %}
-          <p><strong>SDG Relevance:</strong><br>
+        <h3>Career overview</h3>
+        <p><strong>Content &amp; rewards:</strong> {{ role.overview }}</p>
+        <p><strong>Industry outlook:</strong> {{ role.outlook }}</p>
+        <p>
+          <strong>AI era adaptation:</strong>
+          <span
+            class="ai-tag"
+            style="
+              color: {{ role.ai_match.color }};
+              background: {{ role.ai_match.bg }};
+            "
+          >
+            {{ role.ai_match.level }}
+          </span>
+        </p>
+        <p>
+          <strong>Core required skills:</strong>
+          {{ role.required_skills | join(", ") }}
+        </p>
+        <div>
+          <strong>SDG relevance:</strong>
+          <div class="tag-list">
             {% for sdg in role.sdgs %}
               <span class="sdg-tag">{{ sdg }}</span>
             {% endfor %}
-          </p>
-        {% endif %}
-
-        <p><strong>Core Required Skills:</strong> {{ role.required_skills | join(', ') }}</p>
+          </div>
+        </div>
       </section>
 
-      {% if role.mentor %}
-        <section class="mentor-card">
-          <h3>Industry Role Model</h3>
-          <h4>👤 {{ role.mentor.name }}</h4>
-          <div class="mentor-meta">
-            <span>{{ role.mentor.org }}</span>
-            <span>{{ role.mentor.years }} in the field</span>
-          </div>
-          <p><strong>Career Path:</strong> {{ role.mentor.path }}</p>
-          <p><strong>A Day in the Life:</strong> {{ role.mentor.daily }}</p>
-        </section>
-      {% endif %}
+      <section class="mentor-card">
+        <h3>Industry role model</h3>
+        <h4>{{ role.mentor.name }}</h4>
 
-      {% if role.learning_plan %}
-        <section class="learning-plan">
-          <h3>Your Personalized Action Plan</h3>
-          <p>Targeting employment in <strong>{{ role.learning_plan.time }}</strong>
-            in <strong>{{ role.learning_plan.country }}</strong>:</p>
-          <ul>
-            {% for step in role.learning_plan.steps %}
-              <li>
-                <span class="phase">{{ step.phase }}</span>
-                {{ step.description }}
-              </li>
-            {% endfor %}
-          </ul>
-          <p class="plan-tip">
-            💡 <strong>Humanized Advice:</strong>
-            Focus on practical projects and one core credential. Employers value real experience.
-          </p>
-        </section>
-      {% endif %}
+        <div class="mentor-meta">
+          <span>{{ role.mentor.org }}</span>
+          <span>{{ role.mentor.years }} in the field</span>
+        </div>
+
+        <p><strong>Career path:</strong> {{ role.mentor.path }}</p>
+        <p><strong>A day in the life:</strong> {{ role.mentor.daily }}</p>
+      </section>
+
+      <section class="learning-plan">
+        <h3>Your personalized action plan</h3>
+        <p>
+          Targeting employment in
+          <strong>{{ role.learning_plan.time }}</strong>
+          in
+          <strong>{{ role.learning_plan.country }}</strong>.
+        </p>
+
+        <ul class="learning-plan__phases">
+          {% for phase in role.learning_plan.phases %}
+            <li>
+              <strong>{{ phase.title }}</strong>
+              <p>{{ phase.description }}</p>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <aside class="plan-tip">
+          <strong>Advice:</strong> {{ role.learning_plan.tip }}
+        </aside>
+      </section>
+
+      <a
+        class="button button--secondary"
+        href="{{ url_for('role_detail', role_id=role.id) }}"
+      >
+        View role details
+      </a>
     </article>
   {% endfor %}
-{% else %}
-  <section class="card no-match">
-    <h2>No Suitable Match Found</h2>
-    <p>
-      We are sorry, but we haven't recorded a career match for you yet.
-      We will continue to improve the database. Wishing you success in finding a suitable career.
-    </p>
-    <a class="button primary" href="{{ url_for('index') }}">Start over</a>
-  </section>
 {% endif %}
 
-<footer class="final-farewell">
-  Wishing you a better future, hello future!<br>
-  <span>祝您拥有一个更好的未来，hello future！</span>
-</footer>
+<div class="results-actions">
+  <button class="button button--secondary" id="download-data" type="button">
+    Download my answers (JSON)
+  </button>
+  <a class="button button--secondary" href="{{ url_for('survey', reset=1) }}">
+    Start over
+  </a>
+</div>
+{% endblock %}
 
-{% if results %}
-  <div class="results-actions">
-    <a class="button primary" href="{{ url_for('index') }}">Start over</a>
-  </div>
-{% endif %}
+{% block scripts %}
+<script>
+  const surveyAnswers = {{ answers | tojson }};
+
+  document.getElementById("download-data").addEventListener("click", () => {
+    const file = new Blob(
+      [JSON.stringify(surveyAnswers, null, 2)],
+      { type: "application/json" }
+    );
+    const url = URL.createObjectURL(file);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "career-survey-data.json";
+    link.click();
+
+    URL.revokeObjectURL(url);
+  });
+</script>
 {% endblock %}

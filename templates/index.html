@@ -3,15 +3,22 @@
 {% block title %}Career Match Survey — Hello Future!{% endblock %}
 
 {% block content %}
-<section class="card">
-  <h1>Hello Future! 👋</h1>
+<section class="card welcome-card">
+  <p class="eyebrow">HELLO FUTURE!</p>
+  <h1>Find a career path that fits you.</h1>
+
   <p class="sub">
-    Welcome. Find the career path that fits you.
-    This survey takes about 3–5 minutes. Please answer honestly.
+    Answer a few questions about your skills, interests, salary expectations,
+    and preferred work location. You’ll receive career matches and a
+    personalized learning plan.
   </p>
 
-  <form action="{{ url_for('survey') }}" method="get">
-    <button class="primary" type="submit">Start</button>
-  </form>
+  <p class="welcome-card__note">
+    The survey takes about 3–5 minutes. Please answer as honestly as you can.
+  </p>
+
+  <a class="button button--primary" href="{{ url_for('survey', reset=1) }}">
+    Start the survey
+  </a>
 </section>
 {% endblock %}

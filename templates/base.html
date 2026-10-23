@@ -3,16 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>{% block title %}Career Match Survey — Hello Future!{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}"
+  >
+
   {% block head %}{% endblock %}
 </head>
 <body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-brand" href="{{ url_for('index') }}">
+        Hello Future!
+      </a>
+      <span class="site-header__caption">Career Match Survey</span>
+    </div>
+  </header>
+
   <main class="wrap">
     {% block content %}{% endblock %}
   </main>
 
-  {% block page_bar %}{% endblock %}
+  <footer class="site-footer">
+    <p>Wishing you a better future, hello future!</p>
+    <p lang="en">Wishing you a better future, hello future！</p>
+  </footer>
+
   {% block scripts %}{% endblock %}
 </body>
 </html>

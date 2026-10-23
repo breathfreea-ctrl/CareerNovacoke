@@ -1,4 +1,4 @@
-"""Career survey data and question definitions."""
+"""职业数据、问卷选项和问卷题目配置。"""
 
 ROLES = [
     {
@@ -18,10 +18,12 @@ ROLES = [
             "bg": "#f0fdf4",
         },
         "overview": (
-            "Process datasets, fine-tune models, build RAG/Agent systems, "
-            "and deploy production-grade AI. High financial return and excellent flexibility."
+            "Process datasets, fine-tune models, build RAG/Agent systems, and deploy "
+            "production-grade AI. High financial return and excellent flexibility."
         ),
-        "outlook": "BLS projects 22% growth. Foundation models drive massive demand across industries.",
+        "outlook": (
+            "BLS projects 22% growth. Foundation models drive massive demand across industries."
+        ),
         "sdgs": [
             "SDG 9: Industry & Infrastructure",
             "SDG 8: Decent Work",
@@ -53,8 +55,8 @@ ROLES = [
                 "→ Senior Software Engineer, AI (2025)"
             ),
             "daily": (
-                "Building tailored AI solutions across Cadmatic's global product portfolio — "
-                "3D modeling, geometric computation, legacy data models, and domain-specific logic."
+                "Building tailored AI solutions across Cadmatic's global product portfolio "
+                "— 3D modeling, geometric computation, legacy data models, and domain-specific logic."
             ),
         },
     },
@@ -77,7 +79,9 @@ ROLES = [
             "Design, develop, and test mechanical equipment. "
             "High social value with stable compensation."
         ),
-        "outlook": "Steady 11% growth in the US. Clean energy and automation driving new opportunities.",
+        "outlook": (
+            "Steady 11% growth in the US. Clean energy and automation driving new opportunities."
+        ),
         "sdgs": [
             "SDG 9: Industry & Infrastructure",
             "SDG 8: Decent Work",
@@ -132,8 +136,13 @@ ROLES = [
             "color": "#2563eb",
             "bg": "#eff6ff",
         },
-        "overview": "Manage inclusive connectivity projects. Meaningful social impact with solid NGO compensation.",
-        "outlook": "UN connectivity goals drive demand. Budget fluctuations affect job supply.",
+        "overview": (
+            "Manage inclusive connectivity projects. "
+            "Meaningful social impact with solid NGO compensation."
+        ),
+        "outlook": (
+            "UN connectivity goals drive demand. Budget fluctuations affect job supply."
+        ),
         "sdgs": [
             "SDG 9: Industry & Infrastructure",
             "SDG 10: Reduced Inequalities",
@@ -161,11 +170,12 @@ ROLES = [
             "years": "13+ years",
             "path": (
                 "Social Worker → Protection Officer (UN Women) → Protection Specialist (DRC) "
-                "→ GBV Coordinator (Relief International) → GBV Programme Specialist (UNICEF, 2022-present)"
+                "→ GBV Coordinator (Relief International) → GBV Programme Specialist "
+                "(UNICEF, 2022-present)"
             ),
             "daily": (
-                "Technical supervision of GBV and protection teams, capacity building, launching "
-                "GBV case management initiatives, and supporting GBV sub-cluster coordination."
+                "Technical supervision of GBV and protection teams, capacity building, "
+                "launching GBV case management initiatives, and supporting GBV sub-cluster coordination."
             ),
         },
     },
@@ -185,10 +195,12 @@ ROLES = [
             "bg": "#eff6ff",
         },
         "overview": (
-            "Diagnose, treat, and prevent diseases. Extremely high social prestige "
-            "and top-tier compensation."
+            "Diagnose, treat, and prevent diseases. "
+            "Extremely high social prestige and top-tier compensation."
         ),
-        "outlook": "Aging populations ensure stability. Structural shortages in rural areas.",
+        "outlook": (
+            "Aging populations ensure stability. Structural shortages in rural areas."
+        ),
         "sdgs": [
             "SDG 10: Reduced Inequalities",
             "SDG 5: Gender Equality",
@@ -197,7 +209,7 @@ ROLES = [
         "certs": {
             "Default": ["National Medical License"],
             "United States": ["USMLE Steps 1-3"],
-            "Germany": ["German Medical License"],
+            "United Kingdom": ["PLAB"],
             "Australia": ["AMC Exam"],
         },
         "learning_resources": {
@@ -215,13 +227,13 @@ ROLES = [
             "org": "Private Practice, Massachusetts (Family Medicine + OB)",
             "years": "24 years",
             "path": (
-                "Northeastern co-op program → UMass Medical School "
-                "→ UMass Family Medicine Residency → Joined Sturdy Memorial Hospital (first job) "
-                "→ Private practice"
+                "Northeastern co-op program → UMass Medical School → "
+                "UMass Family Medicine Residency → Joined Sturdy Memorial Hospital "
+                "(first job) → Private practice"
             ),
             "daily": (
-                "Outpatient family medicine, obstetrics, teaching, and serving as a delegate "
-                "to the AMA House of Delegates."
+                "Outpatient family medicine, obstetrics, teaching, and serving as "
+                "a delegate to the AMA House of Delegates."
             ),
         },
     },
@@ -244,8 +256,12 @@ ROLES = [
             "color": "#d97706",
             "bg": "#fffbeb",
         },
-        "overview": "Assess and treat emotional/behavioral disorders. High job satisfaction.",
-        "outlook": "11.2% growth for clinical roles. Rising mental health awareness.",
+        "overview": (
+            "Assess and treat emotional/behavioral disorders. High job satisfaction."
+        ),
+        "outlook": (
+            "11.2% growth for clinical roles. Rising mental health awareness."
+        ),
         "sdgs": [
             "SDG 10: Reduced Inequalities",
             "SDG 5: Gender Equality",
@@ -269,15 +285,19 @@ ROLES = [
         },
         "mentor": {
             "name": "Dr. Claire Pitt",
-            "org": "NHS + Private Practice (UK), Clinical Psychologist & EMDR Europe Accredited Practitioner",
+            "org": (
+                "NHS + Private Practice (UK), Clinical Psychologist "
+                "& EMDR Europe Accredited Practitioner"
+            ),
             "years": "12 years to qualification",
             "path": (
-                "Undergraduate (2006) → Master's → Support Worker → Assistant Psychologist x2 "
-                "→ Doctorate → Qualified Clinical Psychologist (2018)."
+                "Undergraduate (2006) → Master's → Support Worker → "
+                "Assistant Psychologist x2 → Doctorate → "
+                "Qualified Clinical Psychologist (2018)."
             ),
             "daily": (
-                "Clinical psychology in NHS and private practice; EMDR therapy; supervising "
-                "and shortlisting aspiring psychologists."
+                "Clinical psychology in NHS and private practice; EMDR therapy; "
+                "supervising and shortlisting aspiring psychologists."
             ),
         },
     },
@@ -301,7 +321,9 @@ ROLES = [
             "Provide legal counsel, draft documents, and represent clients. "
             "High earning potential in commercial law."
         ),
-        "outlook": "Steady demand. AI automates review but not court advocacy.",
+        "outlook": (
+            "Steady demand. AI automates review but not court advocacy."
+        ),
         "sdgs": [
             "SDG 5: Gender Equality",
             "SDG 10: Reduced Inequalities",
@@ -328,12 +350,13 @@ ROLES = [
             "org": "Guoyao Qindao Law Firm, Senior Partner",
             "years": "8 years",
             "path": (
-                "Intern (2017) → Practising Lawyer (2018) → Joined Partner Track (2022, year 4) "
-                "→ Preparatory Partner → General Partner → Senior Partner."
+                "Intern (2017) → Practising Lawyer (2018) → Joined Partner Track "
+                "(2022, year 4) → Preparatory Partner → General Partner → Senior Partner."
             ),
             "daily": (
-                "Deep focus on construction engineering and real estate law; has handled multiple "
-                "complex cases exceeding 100 million RMB; firm management and youth lawyer mentoring."
+                "Deep focus on construction engineering and real estate law; has handled "
+                "multiple complex cases exceeding 100 million RMB; firm management "
+                "and youth lawyer mentoring."
             ),
         },
     },
@@ -356,8 +379,12 @@ ROLES = [
             "color": "#d97706",
             "bg": "#fffbeb",
         },
-        "overview": "Support survivors and advocate for policy change. Deeply meaningful NGO work.",
-        "outlook": "Funding competition is fierce, but demand remains high in humanitarian settings.",
+        "overview": (
+            "Support survivors and advocate for policy change. Deeply meaningful NGO work."
+        ),
+        "outlook": (
+            "Funding competition is fierce, but demand remains high in humanitarian settings."
+        ),
         "sdgs": [
             "SDG 5: Gender Equality",
             "SDG 10: Reduced Inequalities",
@@ -383,11 +410,13 @@ ROLES = [
             "years": "10+ years",
             "path": (
                 "Child Protection Assistant (Plan International, 2012-2015) "
-                "→ Women Support Officer (Health Link South Sudan) → GBV Officer (2024-present)."
+                "→ Women Support Officer (Health Link South Sudan) "
+                "→ GBV Officer (2024-present)."
             ),
             "daily": (
-                "Implementing GBV prevention and response interventions, ensuring survivor-centred, "
-                "ethical, and culturally appropriate service delivery across multiple sites."
+                "Implementing GBV prevention and response interventions, ensuring "
+                "survivor-centred, ethical, and culturally appropriate service delivery "
+                "across multiple sites."
             ),
         },
     },
@@ -410,8 +439,12 @@ ROLES = [
             "color": "#2563eb",
             "bg": "#eff6ff",
         },
-        "overview": "Educate students and shape the future. Stable public sector employment.",
-        "outlook": "Global demand remains huge (44M more teachers needed by 2030).",
+        "overview": (
+            "Educate students and shape the future. Stable public sector employment."
+        ),
+        "outlook": (
+            "Global demand remains huge (44M more teachers needed by 2030)."
+        ),
         "sdgs": [
             "SDG 4: Quality Education",
             "SDG 5: Gender Equality",
@@ -437,8 +470,9 @@ ROLES = [
             "org": "Primary School, China (Special-grade Teacher)",
             "years": "~30 years",
             "path": (
-                "Rural all-subject teacher (1994) → Deputy Director of Teaching Affairs (2003) "
-                "→ Municipal Teaching Expert → Provincial Discipline Leader → Special-grade Teacher."
+                "Rural all-subject teacher (1994) → Deputy Director of Teaching Affairs "
+                "(2003) → Municipal Teaching Expert → Provincial Discipline Leader "
+                "→ Special-grade Teacher."
             ),
             "daily": (
                 "Teaching, lesson polishing, leading research projects, writing papers "
@@ -449,7 +483,11 @@ ROLES = [
     {
         "id": "esd",
         "title": "ESD Curriculum Developer",
-        "required_skills": ["ESD Framework", "Curriculum Design", "LMS Tools"],
+        "required_skills": [
+            "ESD Framework",
+            "Curriculum Design",
+            "LMS Tools",
+        ],
         "interests": [
             "Protecting the Environment",
             "Teaching & Mentoring",
@@ -462,7 +500,9 @@ ROLES = [
             "color": "#2563eb",
             "bg": "#eff6ff",
         },
-        "overview": "Design educational materials aligned with UN SDGs. Highly meaningful work.",
+        "overview": (
+            "Design educational materials aligned with UN SDGs. Highly meaningful work."
+        ),
         "outlook": "SDG 4.7 mandates driving growth in public education.",
         "sdgs": [
             "SDG 4: Quality Education",
@@ -492,15 +532,19 @@ ROLES = [
                 "→ Senior Curriculum Manager in EdTech."
             ),
             "daily": (
-                "Designing learning sequences, building content, aligning courses to programme "
-                "objectives, running feedback loops, and iterating curriculum."
+                "Designing learning sequences, building content, aligning courses to "
+                "programme objectives, running feedback loops, and iterating curriculum."
             ),
         },
     },
     {
         "id": "acc",
         "title": "Accountant",
-        "required_skills": ["Financial Accounting", "Audit Assurance", "Tax"],
+        "required_skills": [
+            "Financial Accounting",
+            "Audit Assurance",
+            "Tax",
+        ],
         "interests": [
             "Finance & Numbers",
             "Compliance & Risk Control",
@@ -512,8 +556,13 @@ ROLES = [
             "color": "#2563eb",
             "bg": "#eff6ff",
         },
-        "overview": "Prepare financial reports and ensure compliance. High stability and clear progression.",
-        "outlook": "5% growth. AI automates bookkeeping, pushing professionals toward advisory.",
+        "overview": (
+            "Prepare financial reports and ensure compliance. "
+            "High stability and clear progression."
+        ),
+        "outlook": (
+            "5% growth. AI automates bookkeeping, pushing professionals toward advisory."
+        ),
         "sdgs": [
             "SDG 8: Decent Work",
             "SDG 10: Reduced Inequalities",
@@ -544,12 +593,13 @@ ROLES = [
                 "Nanjing Mulei Laser (2022) → CFO, Anhui Kechuang Zhongguang Technology (2024)."
             ),
             "daily": (
-                "Financial strategy, digital transformation (RPA, OCR), shifting the finance team "
-                "from traditional accounting to business-finance integration."
+                "Financial strategy, digital transformation (RPA, OCR), shifting the finance "
+                "team from traditional accounting to business-finance integration."
             ),
         },
     },
 ]
+
 
 SKILL_GROUPS = [
     {
@@ -615,6 +665,7 @@ SKILL_GROUPS = [
     },
 ]
 
+
 INTEREST_GROUPS = [
     {
         "id": "int-tech",
@@ -668,6 +719,7 @@ INTEREST_GROUPS = [
     },
 ]
 
+
 TIME_OPTIONS = [
     "Less than 1 year",
     "1–2 years",
@@ -698,27 +750,17 @@ COUNTRY_OPTIONS = [
     "Japan",
 ]
 
-def opt(arr):
-    """Convert option strings to the {v, t} shape used by the original survey."""
-    return [{"v": value, "t": value} for value in arr]
 
-
+# 首页负责欢迎说明；这里从第一道实际问卷题开始。
 SCHEMA = [
-    {
-        "id": "welcome",
-        "type": "welcome",
-        "title": "Hello Future! 👋",
-        "text": (
-            "Welcome. Find the career path that fits you. "
-            "This survey takes about 3–5 minutes. Please answer honestly."
-        ),
-    },
     {
         "id": "path",
         "type": "single",
         "required": True,
-        "title": "Do you want to work in a field you already have experience in, "
-                 "or start a completely new career path?",
+        "title": (
+            "Do you want to work in a field you already have experience in, "
+            "or start a completely new career path?"
+        ),
         "options": [
             {"v": "A", "t": "A. Work in a field I already have experience in"},
             {"v": "B", "t": "B. Start a completely new career path"},
@@ -728,9 +770,12 @@ SCHEMA = [
         "id": "skills",
         "type": "groupedMulti",
         "required": True,
-        "when": "a.path === 'A' || a.ready === 'YES'",
+        "when": lambda answers: answers.get("path") in {"A", "B"},
         "title": "Your areas of expertise",
-        "hint": "Select a category, then select specific skills you have or are currently learning.",
+        "hint": (
+            "Select a category, then select specific skills you have "
+            "or are currently learning."
+        ),
         "groups": SKILL_GROUPS,
         "hasFollowUp": True,
     },
@@ -738,9 +783,11 @@ SCHEMA = [
         "id": "interest",
         "type": "groupedMulti",
         "required": True,
-        "when": "a.path === 'A' || a.ready === 'YES'",
+        "when": lambda answers: answers.get("path") in {"A", "B"},
         "title": "What kind of tasks do you enjoy doing?",
-        "hint": "Select a category, then select the activities you find engaging.",
+        "hint": (
+            "Select a category, then select the activities you find engaging."
+        ),
         "groups": INTEREST_GROUPS,
         "hasFollowUp": False,
     },
@@ -748,41 +795,38 @@ SCHEMA = [
         "id": "time",
         "type": "single",
         "required": True,
-        "when": "a.path === 'A' || a.ready === 'YES'",
+        "when": lambda answers: answers.get("path") in {"A", "B"},
         "title": "When do you plan to start working in this field?",
-        "options": opt(["This year", "In 1 year", "In 2-3 years", "Longer than 3 years"]),
+        "options": [
+            {"v": value, "t": value}
+            for value in ["This year", "In 1 year", "In 2-3 years", "Longer than 3 years"]
+        ],
     },
     {
         "id": "salary",
         "type": "single",
         "required": True,
-        "when": "a.path === 'A' || a.ready === 'YES'",
+        "when": lambda answers: answers.get("path") in {"A", "B"},
         "title": "What is your expected annual salary? (in USD)",
-        "options": opt(SALARY_OPTIONS),
+        "options": [{"v": value, "t": value} for value in SALARY_OPTIONS],
     },
     {
         "id": "country",
         "type": "single",
         "required": True,
-        "when": "a.path === 'A' || a.ready === 'YES'",
+        "when": lambda answers: answers.get("path") in {"A", "B"},
         "title": "Which country or region do you plan to work in?",
-        "options": opt(COUNTRY_OPTIONS),
+        "options": [{"v": value, "t": value} for value in COUNTRY_OPTIONS],
     },
     {
         "id": "ready",
         "type": "single",
         "required": True,
-        "when": "a.path === 'B'",
+        "when": lambda answers: answers.get("path") == "B",
         "title": "Do you have enough time and determination to prepare?",
         "options": [
             {"v": "YES", "t": "YES, I am ready"},
             {"v": "NO", "t": "NO, not yet"},
         ],
-    },
-    {
-        "id": "reality",
-        "type": "notice",
-        "when": "a.path === 'B' && a.ready === 'NO'",
-        "text": "Hope you can reconsider. Your future career is a crucial part of your future life.",
     },
 ]

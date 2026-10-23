@@ -1,247 +1,298 @@
-from flask import Flask, redirect, render_template, request, session, url_for
+import os
 
-from matching import generateLearningPlan, match_user
+from flask import Flask, abort, redirect, render_template, request, session, url_for
+
+from matching import generate_learning_plan, get_tier, match_user
 from models import ROLES, SCHEMA
 
+
 app = Flask(__name__)
-app.secret_key = "career-survey-local-session-key"
+app.secret_key = os.environ.get("SECRET_KEY", "change-this-secret-key-before-deployment")
+app.config.update(
+    SESSION_COOKIE_NAME="career_survey_session",
+    SESSION_COOKIE_PATH="/",
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="None",
+    SESSION_COOKIE_SECURE=True,
+)
+
+def get_answers():
+    """Read the survey answers saved in the user's session."""
+    answers = session.get("answers", {})
+    return answers if isinstance(answers, dict) else {}
 
 
-def _question_is_visible(question, answers):
-    """判断条件题是否应显示。"""
-    condition = question.get("when")
+def get_active_steps(answers):
+    """Return the questions shown for the selected career path."""
+    path = answers.get("path")
+    visible_ids = {"path"}
 
-    if not condition:
-        return True
+    if path in {"A", "B"}:
+        visible_ids.update({
+            "skills",
+            "interest",
+            "time",
+            "salary",
+            "country",
+        })
 
-    if condition == "a.path === 'A' || a.ready === 'YES'":
-        return answers.get("path") == "A" or answers.get("ready") == "YES"
+    if path == "B":
+        visible_ids.add("ready")
 
-    if condition == "a.path === 'B'":
-        return answers.get("path") == "B"
-
-    if condition == "a.path === 'B' && a.ready === 'NO'":
-        return answers.get("path") == "B" and answers.get("ready") == "NO"
-
-    return True
-
-
-def _survey_steps(answers):
-    """获取当前答案下需要显示的题目，并整理选项格式。"""
-    questions = []
-
-    for question in SCHEMA:
-        if question.get("id") == "welcome":
-            continue
-        if not _question_is_visible(question, answers):
-            continue
-        questions.append(question)
-
-    if answers.get("path") == "B":
-        order = {
-            "path": 0,
-            "ready": 1,
-            "skills": 2,
-            "interest": 3,
-            "time": 4,
-            "salary": 5,
-            "country": 6,
-            "reality": 7,
-        }
-        questions.sort(
-            key=lambda question: order.get(question.get("id"), 99)
-        )
-
-    prepared = []
-
-    for question in questions:
-        item = dict(question)
-        item["options"] = []
-
-        if question.get("type") == "groupedMulti":
-            for group in question.get("groups", []):
-                for child in group.get("children", []):
-                    item["options"].append({
-                        "value": child["label"],
-                        "label": child["label"],
-                    })
-            item["input_type"] = "checkbox"
-        else:
-            for option in question.get("options", []):
-                item["options"].append({
-                    "value": option["v"],
-                    "label": option["t"],
-                })
-            item["input_type"] = "radio"
-
-        if question.get("type") == "notice":
-            item["title"] = question.get("text", "")
-            item["options"] = []
-            item["required"] = False
-
-        prepared.append(item)
-
-    return prepared
+    return [
+        question
+        for question in SCHEMA
+        if question.get("id") in visible_ids
+    ]
 
 
-def _clear_dependent_answers(answers):
-    """切换职业路径时清除依赖旧路径的答案。"""
-    for key in (
-        "skills",
-        "skills_majors",
-        "skills_detail",
-        "interest",
-        "interest_majors",
-        "interest_detail",
-        "time",
-        "salary",
-        "country",
-        "ready",
-    ):
-        answers.pop(key, None)
+def save_current_answer(question, answers):
+    """Read the current question's answer from the submitted form."""
+    question_id = question["id"]
+    question_type = question.get("type")
+
+    if question_type == "single":
+        new_value = request.form.get(question_id, "").strip()
+
+        # Changing the path invalidates answers from the previous path.
+        if question_id == "path" and answers.get("path") != new_value:
+            for key in (
+                "skills",
+                "skills_majors",
+                "skills_detail",
+                "interest",
+                "interest_majors",
+                "time",
+                "salary",
+                "country",
+                "ready",
+            ):
+                answers.pop(key, None)
+
+        if new_value:
+            answers[question_id] = new_value
+
+    elif question_type == "groupedMulti":
+        selected = request.form.getlist(question_id)
+        answers[question_id] = selected
+
+        detail_key = f"{question_id}_detail"
+        details = answers.get(detail_key, {})
+
+        if question.get("hasFollowUp"):
+            # The survey template should name these fields years__<skill>
+            # and cert__<skill>, using the skill label in the field name.
+            details = {}
+            for label in selected:
+                years = request.form.get(f"years__{label}", "").strip()
+                cert = request.form.get(f"cert__{label}", "").strip()
+                details[label] = {"years": years, "cert": cert}
+
+            answers[detail_key] = details
+
+    return answers
 
 
-def _next_unanswered_index(questions, answers):
-    """定位下一道当前分支中尚未回答的题目。"""
-    for index, question in enumerate(questions):
-        if question.get("type") == "notice":
-            return index
-        if question["id"] not in answers:
-            return index
+def validate_answer(question, answers):
+    """Return an error message when a required answer is incomplete."""
+    if not question.get("required", False):
+        return None
+
+    question_id = question["id"]
+
+    if question.get("type") == "groupedMulti":
+        selected = answers.get(question_id, [])
+        if not selected:
+            return "Please select at least one option."
+
+        if question.get("hasFollowUp"):
+            details = answers.get(f"{question_id}_detail", {})
+            for label in selected:
+                row = details.get(label, {})
+                if not row.get("years") or not row.get("cert"):
+                    return f'Please complete the experience and certification fields for "{label}".'
+
+        return None
+
+    if not answers.get(question_id):
+        return "Please complete this question first."
+
     return None
 
 
 @app.route("/")
 def index():
-    session.pop("survey_answers", None)
-    session.pop("survey_index", None)
     return render_template("index.html")
 
 
 @app.route("/survey", methods=["GET", "POST"])
 def survey():
-    answers = dict(session.get("survey_answers", {}))
-    questions = _survey_steps(answers)
+    answers = get_answers()
+    steps = get_active_steps(answers)
 
-    if not questions:
+    if not steps:
+        session.clear()
         return redirect(url_for("index"))
 
-    try:
-        current_index = int(session.get("survey_index", 0))
-    except (TypeError, ValueError):
-        current_index = 0
-    current_index = max(0, min(current_index, len(questions) - 1))
+    if request.method == "GET" and request.args.get("reset") == "1":
+        session.clear()
+        answers = {}
+        steps = get_active_steps(answers)
 
     if request.method == "POST":
+        question_id = request.form.get("question_id", "")
         action = request.form.get("action", "next")
-        current_question = questions[current_index]
-        question_id = current_question["id"]
+
+        question = next(
+            (
+                item for item in steps
+                if isinstance(item, dict) and item.get("id") == question_id
+            ),
+            None,
+        )
+        if question is None:
+            abort(400, description="The submitted question is not part of this survey path.")
+
+        answers = save_current_answer(question, answers)
+        print("POST 表单：", request.form.to_dict(flat=False))
+        print("保存的答案：", answers)
+        print("后续步骤：", [item["id"] for item in get_active_steps(answers)])
+        steps = get_active_steps(answers)
+
+        # The step list can change after answering the path question.
+        question_ids = [item["id"] for item in steps]
+        if question_id not in question_ids:
+            question_id = steps[0]["id"]
+
+        current_index = question_ids.index(question_id)
+        error = None
+
+        if action != "back":
+            error = validate_answer(question, answers)
+
+        if error:
+            session["answers"] = answers
+            print("POST 下一题：", question_id)
+            session["current_id"] = question_id
+            session.modified = True
+            return render_template(
+                "survey.html",
+                question=question,
+                answers=answers,
+                error=error,
+                step_number=current_index + 1,
+                total_steps=get_total_steps(answers),
+                is_last=is_final_question(question_id, answers),
+            )
 
         if action == "back":
-            session["survey_index"] = max(0, current_index - 1)
-            return redirect(url_for("survey"))
-
-        if current_question.get("type") == "notice":
-            session.pop("survey_answers", None)
-            session.pop("survey_index", None)
-            return redirect(url_for("index"))
-
-        if current_question.get("type") == "groupedMulti":
-            allowed_values = {
-                option["value"] for option in current_question.get("options", [])
-            }
-            value = [
-                item for item in request.form.getlist(question_id)
-                if item in allowed_values
-            ]
-            if current_question.get("required") and not value:
-                return render_template(
-                    "survey.html",
-                    questions=[current_question],
-                    current_index=current_index + 1,
-                    total_questions=len(questions),
-                    progress=round(
-                        current_index / max(len(questions), 1) * 100
-                    ),
-                    error="Please select at least one option.",
-                )
-        else:
-            value = request.form.get(question_id, "")
-            allowed_values = {
-                option["value"] for option in current_question.get("options", [])
-            }
-            if value not in allowed_values:
-                value = ""
-            if current_question.get("required") and not value:
-                return render_template(
-                    "survey.html",
-                    questions=[current_question],
-                    current_index=current_index + 1,
-                    total_questions=len(questions),
-                    progress=round(
-                        current_index / max(len(questions), 1) * 100
-                    ),
-                    error="Please complete this question first.",
-                )
-
-        if question_id == "path":
-            _clear_dependent_answers(answers)
-
-        answers[question_id] = value
-        session["survey_answers"] = answers
-
-        # 根据已回答的题目 ID 找下一题，避免条件分支变化时跳题。
-        questions = _survey_steps(answers)
-        next_index = _next_unanswered_index(questions, answers)
-
-        if next_index is None:
-            session.pop("survey_index", None)
+            if current_index > 0:
+                question_id = steps[current_index - 1]["id"]
+        elif current_index == len(steps) - 1:
+            session["answers"] = answers
+            session.pop("current_id", None)
+            session.modified = True
             return redirect(url_for("results"))
+        else:
+            question_id = steps[current_index + 1]["id"]
 
-        session["survey_index"] = next_index
-        return redirect(url_for("survey"))
+        session["answers"] = answers
+        session["current_id"] = question_id
+        session.modified = True
 
-    current_question = questions[current_index]
-    progress = round(current_index / max(len(questions), 1) * 100)
+        print("POST 下一题：", question_id)
+        print("POST session：", dict(session))
+
+        response = redirect(url_for("survey"))
+        print("响应是否设置 session cookie：", "Set-Cookie" in response.headers)
+        return response
+    print("GET session：", dict(session))
+    print(
+        "GET 是否收到 session cookie：",
+        bool(request.cookies.get(app.config.get("SESSION_COOKIE_NAME", "session")))
+    )
+
+    current_id = session.get("current_id", steps[0]["id"])
+    current_index = next(
+        (index for index, item in enumerate(steps) if item["id"] == current_id),
+        0,
+    )
+    question = steps[current_index]
 
     return render_template(
         "survey.html",
-        questions=[current_question],
-        current_index=current_index + 1,
-        total_questions=len(questions),
-        progress=progress,
+        question=question,
+        answers=answers,
         error=None,
+        step_number=current_index + 1,
+        total_steps=get_total_steps(answers),
+        is_last=is_final_question(question["id"], answers),
     )
 
 
 @app.route("/results")
 def results():
-    answers = session.get("survey_answers", {})
-    if not answers:
+    answers = get_answers()
+    if not answers.get("path"):
         return redirect(url_for("index"))
 
     all_results = match_user(answers)
     top_results = [
-        role for role in all_results if role["totalPoints"] >= 34
+        role for role in all_results if role.get("totalPoints", 0) >= 34
     ][:3]
 
+    results_with_details = []
     for role in top_results:
-        role["learning_plan"] = generateLearningPlan(role, answers)
+        results_with_details.append(
+            {
+                **role,
+                "tier": get_tier(role["totalPoints"]),
+                "learning_plan": generate_learning_plan(role, answers),
+            }
+        )
 
-    return render_template("results.html", results=top_results)
-
-
-@app.route("/role/<int:role_id>")
-def role_detail(role_id):
-    role = next(
-        (item for item in ROLES if item.get("id") == role_id),
-        None,
+    return render_template(
+        "results.html",
+        results=results_with_details,
+        answers=answers,
     )
+
+
+@app.route("/role/<role_id>")
+def role_detail(role_id):
+    role = next((item for item in ROLES if item["id"] == role_id), None)
     if role is None:
-        return redirect(url_for("results"))
+        abort(404)
 
-    return render_template("role_detail.html", role=role)
+    answers = get_answers()
+    matched_role = next(
+        (item for item in match_user(answers) if item["id"] == role_id),
+        None,
+    ) if answers else None
 
+    return render_template(
+        "role_detail.html",
+        role=role,
+        match=matched_role,
+        tier=get_tier(matched_role["totalPoints"]) if matched_role else None,
+        learning_plan=(
+            generate_learning_plan(role, answers)
+            if matched_role
+            else None
+        ),
+    )
+
+def get_total_steps(answers):
+    # A 路径有 6 题；B 路径多一道准备度题，共 7 题。
+    return 6 if answers.get("path") == "A" else 7
+
+
+def is_final_question(question_id, answers):
+    if answers.get("path") == "A":
+        return question_id == "country"
+    if answers.get("path") == "B":
+        return question_id == "ready"
+    return False
 
 if __name__ == "__main__":
     app.run(debug=True)

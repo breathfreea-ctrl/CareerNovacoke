@@ -1,62 +1,179 @@
 {% extends "base.html" %}
 
-{% block title %}Career Match Survey — Questions{% endblock %}
+{% block title %}Survey — Hello Future!{% endblock %}
 
 {% block content %}
-<section class="card">
-  {% if questions %}
-    <div class="progress" aria-label="Survey progress">
-      <i style="width: {{ progress }}%"></i>
-    </div>
+<section class="card survey-card">
+  <div class="survey-progress" aria-label="Survey progress">
+    <div
+      class="survey-progress__bar"
+      style="width: {{ (step_number / total_steps * 100) | round | int }}%;"
+    ></div>
+  </div>
 
-    <p class="step-text">
-      Question {{ current_index }} of {{ total_questions }}
-    </p>
+  <p class="step-text">
+    Question {{ step_number }} of {{ total_steps }}
+  </p>
 
-    <form action="{{ url_for('survey') }}" method="post">
-      {% for question in questions %}
-        <fieldset class="question">
-          <legend class="q">
-            {{ question.title }}
-            {% if question.required %}
-              <span class="req" aria-label="required">*</span>
-            {% endif %}
-          </legend>
+  <form method="post" action="{{ url_for('survey') }}" novalidate>
+    <input type="hidden" name="question_id" value="{{ question.id }}">
 
-          {% if question.hint %}
-            <p class="hint">{{ question.hint }}</p>
-          {% endif %}
+    <fieldset class="question">
+      <legend class="question__title">
+        {{ question.title }}
+        {% if question.required %}
+          <span class="required-mark" aria-label="required">*</span>
+        {% endif %}
+      </legend>
 
-          {% for option in question.options %}
-            <label class="opt">
-              <input
-                type="{{ question.input_type | default('radio') }}"
-                name="{{ question.id }}"
-                value="{{ option.value }}"
-                {% if question.required and question.input_type != 'checkbox' %}required{% endif %}
-              >
-              <span>{{ option.label }}</span>
-            </label>
-          {% endfor %}
-        </fieldset>
-      {% endfor %}
-
-      {% if error %}
-        <p class="err" role="alert">{{ error }}</p>
+      {% if question.hint %}
+        <p class="hint">{{ question.hint }}</p>
       {% endif %}
 
-      <div class="survey-actions">
-        {% if current_index > 1 %}
-          <button type="submit" name="action" value="back">Back</button>
-        {% endif %}
+      {% if error %}
+        <p class="form-error" role="alert">{{ error }}</p>
+      {% endif %}
 
-        <button class="primary" type="submit" name="action" value="next">
-          {% if current_index == total_questions %}Submit{% else %}Next{% endif %}
+      {% if question.type == "single" %}
+        <div class="option-list">
+          {% for option in question.options %}
+            <label class="option-card">
+              <input
+                type="radio"
+                name="{{ question.id }}"
+                value="{{ option.v }}"
+                {% if answers.get(question.id) == option.v %}checked{% endif %}
+                {% if question.required %}required{% endif %}
+              >
+              <span>{{ option.t }}</span>
+            </label>
+          {% endfor %}
+        </div>
+
+      {% elif question.type == "groupedMulti" %}
+        {% set selected_values = answers.get(question.id, []) %}
+        {% set detail_map = answers.get(question.id ~ "_detail", {}) %}
+
+        <div class="group-list">
+          {% for group in question.groups %}
+            {% set group_is_open = namespace(value=false) %}
+            {% for child in group.children %}
+              {% if child.label in selected_values %}
+                {% set group_is_open.value = true %}
+              {% endif %}
+            {% endfor %}
+
+            <details class="option-group" {% if group_is_open.value %}open{% endif %}>
+              <summary class="option-group__heading">
+                {{ group.label }}
+              </summary>
+
+              <div class="option-group__body">
+                {% for child in group.children %}
+                  {% set is_selected = child.label in selected_values %}
+                  {% set child_details = detail_map.get(child.label, {}) %}
+
+                  <div class="skill-option">
+                    <label class="checkbox-option">
+                      <input
+                        type="checkbox"
+                        name="{{ question.id }}"
+                        value="{{ child.label }}"
+                        {% if is_selected %}checked{% endif %}
+                      >
+                      <span>{{ child.label }}</span>
+                    </label>
+
+                    {% if question.hasFollowUp %}
+                      <div
+                        class="skill-followup"
+                        data-followup-for="{{ child.id }}"
+                        {% if not is_selected %}hidden{% endif %}
+                      >
+                        <label class="field">
+                          <span>Experience</span>
+                          <select name="years__{{ child.label }}">
+                            <option value="">Select years...</option>
+                            {% for years in [
+                              "Less than 1 year",
+                              "1–2 years",
+                              "2–3 years",
+                              "More than 3 years"
+                            ] %}
+                              <option
+                                value="{{ years }}"
+                                {% if child_details.get("years") == years %}selected{% endif %}
+                              >
+                                {{ years }}
+                              </option>
+                            {% endfor %}
+                          </select>
+                        </label>
+
+                        <label class="field">
+                          <span>Certification</span>
+                          <select name="cert__{{ child.label }}">
+                            <option value="">Select...</option>
+                            {% for certification in ["Yes", "No"] %}
+                              <option
+                                value="{{ certification }}"
+                                {% if child_details.get("cert") == certification %}selected{% endif %}
+                              >
+                                {{ certification }}
+                              </option>
+                            {% endfor %}
+                          </select>
+                        </label>
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+            </details>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </fieldset>
+
+    <div class="survey-actions">
+      {% if can_go_back %}
+        <button
+          class="button button--secondary"
+          type="submit"
+          name="action"
+          value="back"
+          formnovalidate
+        >
+          Back
         </button>
-      </div>
-    </form>
-  {% else %}
-    <p class="sub">No questions are available.</p>
-  {% endif %}
+      {% endif %}
+
+      <button
+        class="button button--primary"
+        type="submit"
+        name="action"
+        value="next"
+        formnovalidate
+      >
+        {% if is_last %}See my results{% else %}Next{% endif %}
+      </button>
+    </div>
+  </form>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.querySelectorAll(".skill-option input[type='checkbox']").forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      const followup = checkbox
+        .closest(".skill-option")
+        .querySelector(".skill-followup");
+
+      if (followup) {
+        followup.hidden = !checkbox.checked;
+      }
+    });
+  });
+</script>
 {% endblock %}
