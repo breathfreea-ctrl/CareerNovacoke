@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Career Match Survey — Hello Future!{% endblock %}
+
+{% block content %}
+  <section class="card survey-card welcome-card" aria-labelledby="survey-welcome-title">
+    <div class="card-orbit" aria-hidden="true"></div>
+    <div class="card-content">
+      <p class="survey-kicker">未来职业探索 <span aria-hidden="true">·</span> 从你出发</p>
+      <h1 id="survey-welcome-title">Hello Future! 👋</h1>
+      <p class="sub">Welcome. Find the career path that fits you. This survey takes about 3–5 minutes. Please answer honestly.</p>
+      <div class="survey-divider" aria-hidden="true"><span></span></div>
+      <p class="survey-context">用一点时间梳理技能、经验与兴趣，给下一步多一些线索。</p>
+      <form class="survey-form" method="get" action="{{ url_for('survey') }}">
+        <button class="primary survey-button" type="submit">
+          <span>Start</span>
+          <span class="button-arrow" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          </span>
+        </button>
+      </form>
+      <p class="survey-footnote">约 3–5 分钟 · 没有标准答案</p>
+    </div>
+  </section>
+{% endblock %}

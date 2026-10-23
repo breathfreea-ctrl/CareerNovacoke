@@ -9,10 +9,19 @@ def index():
 
 
 @app.route('/survey')
+def survey():
+    # Keep the Start destination explicit until the questionnaire is implemented.
+    return render_template('survey.html'), 501
+
+
+@app.route('/survey/welcome')
+def survey_welcome():
+    return render_template('survey_welcome.html')
+
+
 @app.route('/results', methods=['POST'])
 def questionnaire_unavailable():
-    # The imported homepage is complete, but its questionnaire is not implemented.
-    # Do not load the unfinished matching/data modules just to display the homepage.
+    # Do not load the unfinished matching/data modules to display public pages.
     abort(501, description="问卷与职业匹配功能尚未实现。请返回首页浏览。")
 
 

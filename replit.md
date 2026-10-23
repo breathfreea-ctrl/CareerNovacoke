@@ -9,12 +9,17 @@
 
 ## Current scope
 
-This restoration serves the existing standalone homepage without changing its
-design. The homepage already explains, through its existing button handlers,
-that the questionnaire has not been implemented.
+The homepage's exploration links navigate to `/survey/welcome`, a questionnaire
+welcome page based on the user's supplied Jinja template. It shares the
+homepage's typography, diagonal pale-yellow/pink gradient, and sage buttons.
+The reusable layout is in `templates/base.html`, with styles in
+`static/survey.css`.
 
-The imported survey/results templates and `matching.py` are empty, and
-`models.py` contains incomplete data and a merge-conflict remnant. These were
-left untouched rather than inventing matching behavior during a request to
-reopen the homepage. Direct requests to the unfinished questionnaire routes
-return an explicit HTTP 501 instead of an empty page or a startup crash.
+The welcome page's Start form submits a GET request to `/survey`. Questionnaire
+questions and matching are not implemented yet, so this destination renders a
+styled, explicit HTTP 501 notice with links back to the welcome page and home.
+No survey answers are collected or stored.
+
+The imported `matching.py` and results template are empty, and `models.py`
+contains incomplete data and a merge-conflict remnant. These remain untouched;
+do not import them into public-page routes until the matching feature is built.

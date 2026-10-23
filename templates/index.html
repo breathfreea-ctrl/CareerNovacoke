@@ -125,7 +125,7 @@
   margin: 0 auto;
   padding: 80px 42px 86px;
   display: grid;
-  grid-template-columns: 0.94fr 1.06fr;
+  grid-template-columns: 1.38fr 1fr;
   align-items: center;
   gap: 34px;
 }
@@ -167,6 +167,14 @@
   line-height: 1.3;
 }
 
+.career-home .hero-copy h1.text-center {
+  text-align: center;
+}
+
+.career-home .hero-copy h1[class~="text-[90px]"] {
+  font-size: 90px;
+}
+
 .hero-title-line {
   display: block;
 }
@@ -190,6 +198,10 @@
   font-size: 16px;
   line-height: 1.95;
   letter-spacing: 0.025em;
+}
+
+.career-home .hero-intro.text-center {
+  text-align: center;
 }
 
 .hero-actions {
@@ -902,11 +914,28 @@
 }
 
 @media (max-width: 1200px) {
+  .career-home .hero-copy h1[class~="text-[90px]"] {
+    font-size: clamp(48px, 6.5vw, 74px);
+  }
+
+  .hero-actions {
+    grid-template-columns: max-content minmax(190px, 1fr);
+    gap: 18px;
+    margin-top: 28px;
+  }
+}
+
+@media (max-width: 900px) {
+  .career-home .hero-copy h1[class~="text-[90px]"] {
+    font-size: clamp(40px, 6.5vw, 59px);
+  }
+}
+
+@media (max-width: 1000px) {
   .hero-actions {
     grid-template-columns: minmax(0, 1fr);
     justify-items: start;
     gap: 16px;
-    margin-top: 28px;
   }
 }
 
@@ -990,8 +1019,11 @@
 
   .hero-copy h1 {
     margin: 24px 0 16px;
-    font-size: clamp(32px, 11vw, 59px);
     line-height: 1.3;
+  }
+
+  .career-home .hero-copy h1[class~="text-[90px]"] {
+    font-size: clamp(32px, 11vw, 59px);
   }
 
   .hero-intro {
@@ -1206,18 +1238,18 @@ a:focus-visible { outline: 2px solid #5e7765; outline-offset: 4px; }
             <span class="eyebrow-line"></span>
             技能 <i>·</i> 经验 <i>·</i> 兴趣
           </div>
-          <h1>
+          <h1 class="text-center text-[90px]">
             <span class="hero-title-line hero-title-lead">探索适合你的</span>
             <span class="hero-title-line hero-title-accent">未来职业<span class="title-period">。</span></span>
           </h1>
           <div class="hero-actions">
-            <a class="career-cta" href="/survey">
+            <a class="career-cta" href="{{ url_for('survey_welcome') }}">
               <span>陪我一起，慢慢找方向</span>
               <span class="cta-arrow" aria-hidden="true">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
               </span>
             </a>
-            <p class="hero-intro">
+            <p class="hero-intro text-center">
               告诉我们你掌握的技能、相关经验和兴趣方向，
               <br class="desktop-break" />
               查看职业匹配结果、技能差距和学习建议。
@@ -1285,19 +1317,19 @@ a:focus-visible { outline: 2px solid #5e7765; outline-offset: 4px; }
       <span class="pathway-number">01</span>
       <div class="pathway-copy"><h3>了解你的优势</h3><p>根据你填写的技能、经验和兴趣，计算职业匹配度。</p></div>
       <span class="pathway-mark">优势画像</span>
-      <a href="/survey" class="pathway-link" aria-label="了解你的优势，陪我一起探索下一步"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+      <a href="{{ url_for('survey_welcome') }}" class="pathway-link" aria-label="了解你的优势，陪我一起探索下一步"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
     </article>
 <article class="pathway pathway-clay">
       <span class="pathway-number">02</span>
       <div class="pathway-copy"><h3>发现技能差距</h3><p>查看目标职业需要哪些技能，以及你可以继续学习什么。</p></div>
       <span class="pathway-mark">成长地图</span>
-      <a href="/survey" class="pathway-link" aria-label="发现技能差距，陪我一起探索下一步"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+      <a href="{{ url_for('survey_welcome') }}" class="pathway-link" aria-label="发现技能差距，陪我一起探索下一步"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
     </article>
 <article class="pathway pathway-blue">
       <span class="pathway-number">03</span>
       <div class="pathway-copy"><h3>规划下一步</h3><p>查看职业学习步骤及其关联的可持续发展目标。</p></div>
       <span class="pathway-mark">行动建议</span>
-      <a href="/survey" class="pathway-link" aria-label="规划下一步，陪我一起探索下一步"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+      <a href="{{ url_for('survey_welcome') }}" class="pathway-link" aria-label="规划下一步，陪我一起探索下一步"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
     </article>
         </div>
       </section>
@@ -1310,7 +1342,7 @@ a:focus-visible { outline: 2px solid #5e7765; outline-offset: 4px; }
           未来职业探索
         </a>
         <p>你的下一步，不需要和任何人一样。</p>
-        <a href="/survey" class="footer-link">
+        <a href="{{ url_for('survey_welcome') }}" class="footer-link">
           陪我继续探索 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
         </a>
       </footer>
@@ -1346,14 +1378,6 @@ welcome.addEventListener('keydown', event => {
   if (event.key === 'Tab') { event.preventDefault(); enterButton.focus(); }
 });
 timer = setTimeout(enterHome, reduceMotion ? 1400 : 6400);
-// This export is a homepage, not an implemented questionnaire.
-// Remove this handler when a real survey page is connected.
-document.querySelectorAll('a[href="/survey"]').forEach(link => {
-  link.addEventListener('click', event => {
-    event.preventDefault();
-    alert('问卷尚未实现。此 HTML 文件包含独立首页；接入问卷页面后即可继续探索。');
-  });
-});
 </script>
 </body>
 </html>

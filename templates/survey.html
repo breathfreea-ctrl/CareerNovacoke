@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}问卷准备中｜未来职业探索{% endblock %}
+
+{% block content %}
+  <section class="card survey-card unavailable-card" aria-labelledby="survey-unavailable-title">
+    <div class="status-mark" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v9l5 3"/><circle cx="12" cy="12" r="9"/></svg>
+    </div>
+    <p class="survey-kicker">未来职业探索 <span aria-hidden="true">·</span> 正在准备中</p>
+    <h1 id="survey-unavailable-title">问卷暂时还没有接入</h1>
+    <p class="unavailable-copy">感谢你愿意开始探索。目前问卷题目尚未连接，因此还不能收集答案或生成职业建议。你可以先回到介绍页，或返回首页继续浏览。</p>
+    <div class="unavailable-actions">
+      <a class="survey-button" href="{{ url_for('survey_welcome') }}">
+        <span>返回问卷介绍</span>
+        <span class="button-arrow" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+        </span>
+      </a>
+      <a class="text-link" href="{{ url_for('index') }}">回到首页</a>
+    </div>
+    <p class="survey-footnote">这里不会保存或评估任何回答。</p>
+  </section>
+{% endblock %}
