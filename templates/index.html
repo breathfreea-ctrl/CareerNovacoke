@@ -36,6 +36,23 @@
   text-decoration: none;
 }
 
+.career-home a:focus-visible,
+.career-home button:focus-visible {
+  outline: 2px solid #526d5a;
+  outline-offset: 4px;
+}
+
+.career-brand:hover,
+.footer-brand:hover {
+  color: #536d5c;
+}
+
+.career-brand:hover .brand-symbol,
+.footer-brand:hover .brand-symbol {
+  border-color: rgba(74, 97, 82, 0.62);
+  background: rgba(170, 185, 166, 0.14);
+}
+
 .career-home::before {
   position: fixed;
   z-index: 5;
@@ -162,25 +179,33 @@
 .career-cta {
   width: fit-content;
   min-width: 194px;
+  min-height: 50px;
   margin-top: 33px;
-  padding: 8px 9px 8px 21px;
+  padding: 8px 9px 8px 22px;
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
   gap: 23px;
-  border: 1px solid #778b7b;
+  border: 1px solid #657b69;
   border-radius: 3px;
-  background: #778b7b;
+  background: #657b69;
   color: #faf9f4 !important;
   font-size: 13px;
   letter-spacing: 0.08em;
-  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
+  box-shadow: 0 3px 9px rgba(65, 82, 68, 0.12);
+  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
 }
 
 .career-cta:hover {
   transform: translateY(-2px);
-  border-color: #5e7765;
-  background: #5e7765;
+  border-color: #4f6957;
+  background: #4f6957;
+  box-shadow: 0 6px 14px rgba(65, 82, 68, 0.18);
+}
+
+.career-cta:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 3px rgba(65, 82, 68, 0.12);
 }
 
 .cta-arrow {
@@ -394,18 +419,29 @@
 .scroll-cue {
   position: absolute;
   bottom: 26px;
-  left: 78px;
+  left: 68px;
+  min-height: 44px;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
   gap: 11px;
-  color: #899187 !important;
+  border: 1px solid rgba(94, 110, 96, 0.2);
+  border-radius: 2px;
+  background: rgba(249, 247, 240, 0.58);
+  color: #667569 !important;
   font-size: 10px;
   letter-spacing: 0.12em;
-  transition: color 180ms ease;
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
 
 .scroll-cue:hover {
-  color: #536d5c !important;
+  border-color: rgba(79, 105, 87, 0.48);
+  background: rgba(249, 247, 240, 0.92);
+  color: #4f6957 !important;
+}
+
+.scroll-cue:active {
+  transform: translateY(1px);
 }
 
 .pathways {
@@ -451,17 +487,11 @@
 .pathway {
   min-height: 112px;
   display: grid;
-  grid-template-columns: 70px minmax(0, 1fr) 120px 42px;
+  grid-template-columns: 70px minmax(0, 1fr) 120px 48px;
   align-items: center;
   gap: 18px;
   border-bottom: 1px solid rgba(94, 110, 96, 0.2);
   transition: padding 220ms ease, background 220ms ease;
-}
-
-.pathway:hover {
-  padding-right: 10px;
-  padding-left: 10px;
-  background: rgba(249, 247, 240, 0.52);
 }
 
 .pathway-number {
@@ -507,20 +537,26 @@
 }
 
 .pathway-link {
-  width: 34px;
-  height: 34px;
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(94, 110, 96, 0.23);
+  border: 1px solid rgba(82, 109, 90, 0.38);
   border-radius: 50%;
-  color: #718274 !important;
-  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+  background: rgba(249, 247, 240, 0.54);
+  color: #526d5a !important;
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
 
 .pathway-link:hover {
   transform: translateX(3px);
-  background: #778b7b;
+  border-color: #526d5a;
+  background: #657b69;
   color: #f7f5ee !important;
+}
+
+.pathway-link:active {
+  transform: translateX(1px) scale(0.97);
 }
 
 .career-footer {
@@ -552,10 +588,14 @@
 }
 
 .footer-link {
+  min-height: 44px;
+  padding: 8px 10px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #728273 !important;
+  border: 1px solid rgba(94, 110, 96, 0.24);
+  border-radius: 2px;
+  color: #536d5c !important;
   font-size: 11px;
   letter-spacing: 0.04em;
   transition: gap 180ms ease;
@@ -563,6 +603,12 @@
 
 .footer-link:hover {
   gap: 12px;
+  border-color: rgba(79, 105, 87, 0.48);
+  background: rgba(239, 238, 229, 0.7);
+}
+
+.footer-link:active {
+  transform: translateY(1px);
 }
 
 /* Opening moment — a small pause before the page unfolds. */
@@ -689,6 +735,7 @@
 }
 
 .welcome-enter {
+  min-width: min(250px, 100%);
   min-height: 48px;
   margin-top: 34px;
   padding: 7px 8px 7px 22px;
@@ -696,22 +743,29 @@
   align-items: center;
   justify-content: space-between;
   gap: 28px;
-  border: 1px solid #778b7b;
+  border: 1px solid #657b69;
   border-radius: 3px;
-  background: #778b7b;
+  background: #657b69;
   color: #faf9f4;
   cursor: pointer;
   font: inherit;
   font-size: 13px;
   letter-spacing: 0.07em;
-  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
+  box-shadow: 0 3px 9px rgba(65, 82, 68, 0.12);
+  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
   animation: welcome-arrive 520ms ease-out both;
 }
 
 .welcome-enter:hover {
   transform: translateY(-2px);
-  border-color: #5e7765;
-  background: #5e7765;
+  border-color: #4f6957;
+  background: #4f6957;
+  box-shadow: 0 6px 14px rgba(65, 82, 68, 0.18);
+}
+
+.welcome-enter:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 3px rgba(65, 82, 68, 0.12);
 }
 
 .welcome-enter:focus-visible {
@@ -720,8 +774,8 @@
 }
 
 .welcome-enter-arrow {
-  width: 31px;
-  height: 31px;
+  width: 32px;
+  height: 32px;
   display: grid;
   place-items: center;
   border: 1px solid rgba(248, 248, 239, 0.46);
@@ -976,7 +1030,7 @@
 
   .scroll-cue {
     bottom: 25px;
-    left: 23px;
+    left: 13px;
   }
 
   .pathways {
@@ -1003,13 +1057,8 @@
 
   .pathway {
     min-height: 126px;
-    grid-template-columns: 29px minmax(0, 1fr) 34px;
+    grid-template-columns: 29px minmax(0, 1fr) 48px;
     gap: 10px;
-  }
-
-  .pathway:hover {
-    padding-right: 4px;
-    padding-left: 4px;
   }
 
   .pathway-copy h3 {
