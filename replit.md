@@ -22,6 +22,13 @@ handwritten styling. On other pages, body text, options and controls use clean
 sans-serif typography: DM Sans for Latin text and Noto Sans SC for Chinese,
 with platform fallbacks.
 
+The homepage has synchronized Chinese/English controls in its header and welcome
+overlay. It defaults to Chinese and remembers the selection in the browser under
+`career-home-language`. Translation covers homepage copy and accessibility text
+only; questionnaire and report pages are not localized by this switch. Browser
+storage denial must not prevent switching. Language changes must preserve all
+links, welcome-dialog keyboard navigation and focus handling.
+
 The welcome page's Start form opens `/survey`. Three basic steps cover skills,
 experience, and interests, configured in `survey_questions.py`. GET displays the
 current step; POST validates an answer and moves Back/Next/Submit. Each valid
