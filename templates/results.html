@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}你的回答｜未来职业探索{% endblock %}
+
+{% block head_extra %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='survey-questions.css') }}">
+{% endblock %}
+
+{% block content %}
+  <section class="questionnaire-page results-page" aria-labelledby="results-title">
+    <p class="questionnaire-kicker">未来职业探索 <span aria-hidden="true">·</span> 阶段性记录</p>
+    <h1 class="questionnaire-title" id="results-title">你的回答已整理好</h1>
+    <p class="results-intro">以下是你提交内容的摘要。它只是一份回答记录，<strong>不是职业匹配结果，也没有评分。</strong></p>
+
+    <div class="results-list">
+      {% for item in summary %}
+        <section class="result-item" aria-labelledby="result-title-{{ loop.index }}">
+          <h2 id="result-title-{{ loop.index }}">{{ item.title }}</h2>
+          {% if item.labels %}
+            <ul class="result-labels">
+              {% for label in item.labels %}
+                <li>{{ label }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="result-empty-answer">未选择内容</p>
+          {% endif %}
+        </section>
+      {% else %}
+        <p class="results-empty">目前没有可显示的回答摘要。</p>
+      {% endfor %}
+    </div>
+
+    <p class="results-privacy">你的回答暂时保存在签名的浏览器会话中，不写入数据库；目前尚未接入职业匹配或评分。</p>
+
+    <div class="results-actions">
+      <form method="post" action="{{ url_for('edit_survey') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button class="question-button question-button-secondary" type="submit">修改回答</button>
+      </form>
+      <form method="post" action="{{ url_for('restart_survey') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button class="question-button question-button-primary" type="submit">重新开始</button>
+      </form>
+      <a class="question-home-link" href="{{ url_for('index') }}">回到首页</a>
+    </div>
+  </section>
+{% endblock %}

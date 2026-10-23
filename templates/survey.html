@@ -1,24 +1,94 @@
 {% extends "base.html" %}
 
-{% block title %}问卷准备中｜未来职业探索{% endblock %}
+{% block title %}职业探索问卷｜未来职业探索{% endblock %}
+
+{% block head_extra %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='survey-questions.css') }}">
+{% endblock %}
 
 {% block content %}
-  <section class="card survey-card unavailable-card" aria-labelledby="survey-unavailable-title">
-    <div class="status-mark" aria-hidden="true">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v9l5 3"/><circle cx="12" cy="12" r="9"/></svg>
+  <section class="questionnaire-page" aria-labelledby="survey-page-title">
+    <div class="questionnaire-topline">
+      <p class="questionnaire-kicker">未来职业探索 <span aria-hidden="true">·</span> 一步一步来</p>
+      {% if questions %}
+        <p class="question-count">Question {{ current_index }} of {{ total_questions }}</p>
+      {% endif %}
     </div>
-    <p class="survey-kicker">未来职业探索 <span aria-hidden="true">·</span> 正在准备中</p>
-    <h1 id="survey-unavailable-title">问卷暂时还没有接入</h1>
-    <p class="unavailable-copy">感谢你愿意开始探索。目前问卷题目尚未连接，因此还不能收集答案或生成职业建议。你可以先回到介绍页，或返回首页继续浏览。</p>
-    <div class="unavailable-actions">
-      <a class="survey-button" href="{{ url_for('survey_welcome') }}">
-        <span>返回问卷介绍</span>
-        <span class="button-arrow" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
-        </span>
-      </a>
-      <a class="text-link" href="{{ url_for('index') }}">回到首页</a>
-    </div>
-    <p class="survey-footnote">这里不会保存或评估任何回答。</p>
+
+    {% if questions %}
+      <div
+        class="question-progress"
+        role="progressbar"
+        aria-label="问卷进度"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="{{ progress }}"
+      >
+        <span class="question-progress-fill" style="width: {{ progress }}%"></span>
+      </div>
+
+      <h1 class="questionnaire-title" id="survey-page-title">把下一步，一点点理清</h1>
+
+      <form class="question-form" method="post" action="{{ url_for('survey') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        {% for question in questions %}
+          {% set selected_answers = answers.get(question.id, []) %}
+          <input type="hidden" name="question_id" value="{{ question.id }}">
+          <fieldset
+            class="question-fieldset"
+            aria-describedby="{% if question.hint %}question-hint-{{ question.id }}{% endif %}{% if question.hint and error %} {% endif %}{% if error %}question-error-{{ question.id }}{% endif %}"
+          >
+            <legend class="question-legend" id="question-legend-{{ question.id }}">
+              <span>{{ question.title }}</span>
+              {% if question.required %}
+                <span class="required-star" aria-hidden="true">*</span>
+                <span class="visually-hidden">必填</span>
+              {% endif %}
+            </legend>
+            {% if error %}
+              <p class="question-error" id="question-error-{{ question.id }}" role="alert">{{ error }}</p>
+            {% endif %}
+            {% if question.hint %}
+              <p class="question-hint" id="question-hint-{{ question.id }}">{{ question.hint }}</p>
+            {% endif %}
+
+            <div class="answer-options">
+              {% for option in question.options %}
+                {% set input_id = "question-" ~ question.id ~ "-option-" ~ loop.index %}
+                <label class="answer-option" for="{{ input_id }}">
+                  <input
+                    id="{{ input_id }}"
+                    type="{% if question.input_type == 'radio' %}radio{% else %}checkbox{% endif %}"
+                    name="{{ question.id }}"
+                    value="{{ option.value }}"
+                    {% if option.value in selected_answers %}checked{% endif %}
+                    {% if question.input_type == 'radio' and question.required %}required{% endif %}
+                  >
+                  <span class="answer-option-mark" aria-hidden="true"></span>
+                  <span class="answer-option-label">{{ option.label }}</span>
+                </label>
+              {% endfor %}
+            </div>
+          </fieldset>
+        {% endfor %}
+
+        <div class="question-actions">
+          {% if current_index > 1 %}
+            <button class="question-button question-button-secondary" type="submit" name="action" value="back" formnovalidate>Back</button>
+          {% endif %}
+          {% if current_index < total_questions %}
+            <button class="question-button question-button-primary" type="submit" name="action" value="next">Next</button>
+          {% else %}
+            <button class="question-button question-button-primary" type="submit" name="action" value="next">Submit</button>
+          {% endif %}
+        </div>
+      </form>
+    {% else %}
+      <div class="question-empty" role="status">
+        <h1 class="questionnaire-title" id="survey-page-title">No questions are available.</h1>
+        <p>目前没有可显示的问题，请稍后再来，或先回到首页继续浏览。</p>
+        <a class="question-home-link" href="{{ url_for('index') }}">回到首页</a>
+      </div>
+    {% endif %}
   </section>
 {% endblock %}

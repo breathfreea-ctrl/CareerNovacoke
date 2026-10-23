@@ -5,7 +5,8 @@
 - The server listens on `0.0.0.0:5000` and renders the existing
   `templates/index.html` at `/`.
 - Dependencies are recorded in `pyproject.toml` and `uv.lock`.
-- No secrets or external services are needed to view the homepage.
+- No external services are needed. `SESSION_SECRET` is required to sign the
+  questionnaire's session cookie; configure it through Replit Secrets.
 
 ## Current scope
 
@@ -15,11 +16,27 @@ homepage's typography, diagonal pale-yellow/pink gradient, and sage buttons.
 The reusable layout is in `templates/base.html`, with styles in
 `static/survey.css`.
 
-The welcome page's Start form submits a GET request to `/survey`. Questionnaire
-questions and matching are not implemented yet, so this destination renders a
-styled, explicit HTTP 501 notice with links back to the welcome page and home.
-No survey answers are collected or stored.
+The welcome page's Start form opens `/survey`. Three basic steps cover skills,
+experience, and interests, configured in `survey_questions.py`. GET displays the
+current step; POST validates an answer and moves Back/Next/Submit. Each valid
+POST redirects to avoid re-submitting on refresh. Multi-select questions require
+at least one choice; going Back does not require completing the current step.
 
-The imported `matching.py` and results template are empty, and `models.py`
+Answers and the current step are held in a signed browser-session cookie, not
+a database; the cookie is signed, not encrypted. Do not collect sensitive
+personal data in these questions. Cookies use Secure, HttpOnly, SameSite=None,
+and Partitioned so the session works inside the cross-site preview iframe.
+POSTs are CSRF-protected, and survey/summary responses use `Cache-Control:
+no-store`. Browser sessions are independent.
+
+`/results` shows a readable answer summary only after completion. Users can edit
+their saved answers or clear them and restart, using POST forms.
+
+The imported `matching.py` is empty, and `models.py`
 contains incomplete data and a merge-conflict remnant. These remain untouched;
-do not import them into public-page routes until the matching feature is built.
+do not import them into public-page routes until matching is built. The summary
+does not produce career recommendations, matching scores, or salary claims.
+
+## Checks
+
+Run `python -m unittest discover -s tests` for questionnaire flow checks.
