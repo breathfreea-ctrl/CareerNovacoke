@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}{{ role.title }} — Hello Future!{% endblock %}
+{% block title %}{{ role.title }} — Hello Future{% endblock %}
 
 {% block content %}
 <article class="role-detail">
   <header class="role-detail__header">
-    <p class="eyebrow">CAREER PROFILE</p>
+    <p class="eyebrow"><span class="eyebrow__line"></span> CAREER FIELD NOTE</p>
     <h1>{{ role.title }}</h1>
 
     {% if match and tier %}
@@ -13,22 +13,22 @@
         <span
           class="tier-tag"
           style="
-            color: {{ tier.color }};
             background: {{ tier.bg }};
             border-color: {{ tier.border }};
           "
         >
-          {{ tier.emoji }} {{ tier.title }}
+          {{ tier.title }}
         </span>
         <span class="score">{{ match.totalPoints }} <span>pts</span></span>
       </div>
-      <p class="tier-description" style="color: {{ tier.color }};">
+      <p class="tier-description">
         {{ tier.desc }}
       </p>
     {% endif %}
   </header>
 
-  <section class="career-info">
+  <section class="career-info role-detail__overview">
+    <p class="section-kicker">THE ROLE</p>
     <h2>Career overview</h2>
     <p>{{ role.overview }}</p>
     <p><strong>Industry outlook:</strong> {{ role.outlook }}</p>
@@ -36,17 +36,15 @@
       <strong>AI era adaptation:</strong>
       <span
         class="ai-tag"
-        style="
-          color: {{ role.ai_match.color }};
-          background: {{ role.ai_match.bg }};
-        "
+        style="background: {{ role.ai_match.bg }};"
       >
         {{ role.ai_match.level }}
       </span>
     </p>
   </section>
 
-  <section class="card">
+  <section class="card detail-section">
+    <p class="section-kicker">YOUR TOOLKIT</p>
     <h2>Core required skills</h2>
     <ul class="detail-list">
       {% for skill in role.required_skills %}
@@ -55,7 +53,8 @@
     </ul>
   </section>
 
-  <section class="card">
+  <section class="card detail-section">
+    <p class="section-kicker">WHAT YOU MIGHT ENJOY</p>
     <h2>Related interests</h2>
     <ul class="detail-list">
       {% for interest in role.interests %}
@@ -64,7 +63,8 @@
     </ul>
   </section>
 
-  <section class="card">
+  <section class="card detail-section">
+    <p class="section-kicker">A CREDENTIAL TO CONSIDER</p>
     <h2>Certifications</h2>
     {% if learning_plan %}
       <p>
@@ -80,7 +80,8 @@
     {% endif %}
   </section>
 
-  <section class="card">
+  <section class="card detail-section">
+    <p class="section-kicker">PURPOSE IN PRACTICE</p>
     <h2>SDG relevance</h2>
     <div class="tag-list">
       {% for sdg in role.sdgs %}
@@ -90,6 +91,7 @@
   </section>
 
   <section class="mentor-card">
+    <p class="section-kicker">A HUMAN PERSPECTIVE</p>
     <h2>Industry role model</h2>
     <h3>{{ role.mentor.name }}</h3>
 
@@ -104,6 +106,7 @@
 
   {% if learning_plan %}
     <section class="learning-plan">
+      <p class="section-kicker">YOUR NEXT MOVES</p>
       <h2>Your personalized action plan</h2>
       <p>
         Targeting employment in
@@ -142,7 +145,8 @@
   {% endif %}
 
   {% if match %}
-    <section class="card">
+    <section class="card detail-section">
+      <p class="section-kicker">HOW THE MATCH ADDS UP</p>
       <h2>Your match breakdown</h2>
       <div class="breakdown__list">
         {% for item in match.breakdown %}

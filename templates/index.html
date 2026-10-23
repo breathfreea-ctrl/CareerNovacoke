@@ -1,24 +1,70 @@
 {% extends "base.html" %}
 
-{% block title %}Career Match Survey — Hello Future!{% endblock %}
+{% block title %}Find your next chapter — Hello Future{% endblock %}
 
 {% block content %}
-<section class="card welcome-card">
-  <p class="eyebrow">HELLO FUTURE!</p>
-  <h1>Find a career path that fits you.</h1>
+<div class="home-page">
+  <section class="welcome-hero">
+    <div class="welcome-hero__copy">
+      <p class="eyebrow"><span class="eyebrow__line"></span> A little clarity goes a long way</p>
+      <h1>Your next chapter can start <em>from here.</em></h1>
+      <p class="welcome-hero__intro">
+        Whether you want to grow in your field or make a fresh start, discover
+        careers that fit your strengths—and a practical way to move toward them.
+      </p>
+      <div class="welcome-hero__actions">
+        <a class="button button--primary button--large" href="{{ url_for('survey', reset=1) }}">
+          Find my matches <span class="button__arrow" aria-hidden="true">↗</span>
+        </a>
+        <span class="time-note"><span class="time-note__dot"></span> About 3–5 minutes</span>
+      </div>
+      <p class="welcome-card__note">No perfect answers needed. Start with what feels true today.</p>
+    </div>
+    <aside class="hero-note" aria-label="What you will get">
+      <div class="hero-note__topline"><span>YOUR CAREER COMPASS</span><span>01 / 03</span></div>
+      <div class="compass-art" aria-hidden="true">
+        <span class="compass-art__orbit compass-art__orbit--outer"></span>
+        <span class="compass-art__orbit compass-art__orbit--inner"></span>
+        <span class="compass-art__north">N</span>
+        <span class="compass-art__needle"></span>
+        <span class="compass-art__center"></span>
+        <span class="compass-art__label compass-art__label--one">strengths</span>
+        <span class="compass-art__label compass-art__label--two">possibility</span>
+      </div>
+      <p class="hero-note__quote">“A good next step doesn’t have to be a giant leap.”</p>
+      <span class="hero-note__rule"></span>
+      <p class="hero-note__caption">A thoughtful starting point, built around you.</p>
+    </aside>
+  </section>
 
-  <p class="sub">
-    Answer a few questions about your skills, interests, salary expectations,
-    and preferred work location. You’ll receive career matches and a
-    personalized learning plan.
-  </p>
-
-  <p class="welcome-card__note">
-    The survey takes about 3–5 minutes. Please answer as honestly as you can.
-  </p>
-
-  <a class="button button--primary" href="{{ url_for('survey', reset=1) }}">
-    Start the survey
-  </a>
-</section>
+  <section class="welcome-details" aria-labelledby="how-title">
+    <div class="section-intro">
+      <p class="eyebrow">A useful place to begin</p>
+      <h2 id="how-title">From wondering to a way forward.</h2>
+      <p>Bring your interests and constraints. We’ll help connect the dots.</p>
+    </div>
+    <ol class="journey-list">
+      <li class="journey-step">
+        <span class="journey-step__number">01</span>
+        <div><h3>Tell us what matters</h3><p>Share your skills, interests, timeline, salary hopes, and where you’d like to work.</p></div>
+        <span class="journey-step__mark" aria-hidden="true">+</span>
+      </li>
+      <li class="journey-step">
+        <span class="journey-step__number">02</span>
+        <div><h3>See where you align</h3><p>Explore ranked career matches with a clear breakdown of what’s driving each fit.</p></div>
+        <span class="journey-step__mark" aria-hidden="true">↗</span>
+      </li>
+      <li class="journey-step">
+        <span class="journey-step__number">03</span>
+        <div><h3>Make a practical plan</h3><p>Get suggested learning steps shaped around your target role and timeframe.</p></div>
+        <span class="journey-step__mark" aria-hidden="true">→</span>
+      </li>
+    </ol>
+  </section>
+  <aside class="home-reassurance">
+    <span class="home-reassurance__stamp" aria-hidden="true">HF</span>
+    <p><strong>Exploration, not a verdict.</strong> Your results are a starting point for reflection—not a limit on what you can become.</p>
+    <a href="{{ url_for('survey', reset=1) }}">Take the first step <span aria-hidden="true">→</span></a>
+  </aside>
+</div>
 {% endblock %}
