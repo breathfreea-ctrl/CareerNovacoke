@@ -12,9 +12,13 @@
 
 The homepage's exploration links navigate to `/survey/welcome`, a questionnaire
 welcome page based on the user's supplied Jinja template. It shares the
-homepage's typography, diagonal pale-yellow/pink gradient, and sage buttons.
+homepage's diagonal pale-yellow/pink gradient and sage buttons.
 The reusable layout is in `templates/base.html`, with styles in
 `static/survey.css`.
+
+Only the homepage uses the handwritten brush/KaiTi style. All other pages use
+clean sans-serif typography: DM Sans for Latin text and Noto Sans SC for Chinese,
+with platform sans-serif fallbacks.
 
 The welcome page's Start form opens `/survey`. Three basic steps cover skills,
 experience, and interests, configured in `survey_questions.py`. GET displays the

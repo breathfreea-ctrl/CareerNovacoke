@@ -1,5 +1,6 @@
 import re
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from main import app
@@ -62,6 +63,19 @@ class SurveyFlowTests(unittest.TestCase):
         cookie = next(header for header in headers if header.startswith("session="))
         for flag in ("Secure", "HttpOnly", "SameSite=None", "Partitioned"):
             self.assertIn(flag, cookie)
+
+    def test_brush_font_is_only_used_on_the_homepage(self):
+        self.assertIn("Ma Shan Zheng", self.get("/").text)
+        for route in ("/survey/welcome", "/survey"):
+            page = self.get(route)
+            self.assertIn("Noto+Sans+SC", page.text)
+            self.assertNotIn("Ma+Shan+Zheng", page.text)
+        css = Path(app.static_folder, "survey.css").read_text()
+        question_css = Path(app.static_folder, "survey-questions.css").read_text()
+        for stylesheet in (css, question_css):
+            self.assertNotIn("Ma Shan Zheng", stylesheet)
+            self.assertNotIn("KaiTi", stylesheet)
+            self.assertIn("font-family: var(--survey-font)", stylesheet)
 
     def test_empty_required_checkbox_question_stays_on_step(self):
         page = self.get("/survey")
