@@ -2,6 +2,7 @@ modules = ["python-base-3.13", "nodejs-24"]
 
 [nix]
 channel = "stable-25_05"
+packages = ["gitFull", "playwright-driver"]
 
 [workflows]
 runButton = "Project"
@@ -15,6 +16,10 @@ author = "agent"
 task = "workflow.run"
 args = "Start application"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "homepage-regression"
+
 [[workflows.workflow]]
 name = "Start application"
 author = "agent"
@@ -26,6 +31,17 @@ waitForPort = 5000
 
 [workflows.workflow.metadata]
 outputType = "webview"
+
+[[workflows.workflow]]
+name = "homepage-regression"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python -m unittest discover -s tests -v"
+
+[workflows.workflow.metadata]
+isValidation = true
 
 [[ports]]
 localPort = 5000

@@ -60,6 +60,32 @@ are not proven skill deficits. Never fabricate mentors, employment timeframes or
 target countries: these are not collected. Imported salary and market-growth
 claims have not been verified and must not be displayed as authoritative facts.
 
+
+## Homepage regression checks
+
+Install the development dependency `playwright` through Replit's package
+manager if it is not already installed, then run from the project root:
+
+```sh
+python -m unittest discover -s tests -v
+```
+
+The suite uses Flask's test client and real headless Chromium through Playwright.
+It starts and shuts down its own Flask server on a free local port; the preview
+workflow does not need to be running. Replit's `chromium` is used when available.
+On another machine without system Chromium, run `python -m playwright install
+chromium` first. A missing browser or dependency fails the suite rather than
+silently skipping browser checks.
+
+Checks cover HTTP 200/HTML, click/Escape/Enter/automatic welcome dismissal,
+Tab/Shift+Tab containment, background inertness, heading focus restoration,
+subsequent keyboard and in-page link interaction, reduced-motion dismissal,
+and touch dismissal/layout at widths 320, 375, 390 and 414 pixels.
+Mobile layout assertions check text/control bounds and internal overflow as well
+as document width so that `overflow: hidden` cannot hide clipped content.
+Browser tests block Google Fonts to exercise offline fallback rendering and
+avoid a network dependency; they also fail on uncaught JavaScript errors.
+The suite intentionally does not exercise or implement the questionnaire.
 ## Checks
 
 Run `python -m unittest discover -s tests` for questionnaire flow checks.
