@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}{{ role.title }} — Career Match Survey{% endblock %}
+
+{% block content %}
+<article class="role-card">
+  <header class="role-header">
+    <div class="role-title-wrap">
+      <div class="role-rank">Career Details</div>
+      <h1 class="role-title">{{ role.title }}</h1>
+
+      {% if role.ai_match %}
+        <span
+          class="ai-tag"
+          style="color: {{ role.ai_match.color }}; background: {{ role.ai_match.bg }}"
+        >
+          {{ role.ai_match.level }}
+        </span>
+      {% endif %}
+    </div>
+  </header>
+
+  <section class="career-info">
+    <h2>Career Overview</h2>
+    <p><strong>Content &amp; Rewards:</strong> {{ role.overview }}</p>
+    <p><strong>Industry Outlook:</strong> {{ role.outlook }}</p>
+
+    <p>
+      <strong>Core Required Skills:</strong>
+      {{ role.required_skills | join(', ') }}
+    </p>
+
+    {% if role.sdgs %}
+      <p><strong>SDG Relevance:</strong><br>
+        {% for sdg in role.sdgs %}
+          <span class="sdg-tag">{{ sdg }}</span>
+        {% endfor %}
+      </p>
+    {% endif %}
+  </section>
+
+  {% if role.salary_range %}
+    <section class="card">
+      <h2>Salary Range</h2>
+      <p>${{ "{:,}".format(role.salary_range[0]) }} – ${{ "{:,}".format(role.salary_range[1]) }}</p>
+      {% if role.top_countries %}
+        <p><strong>Top Countries:</strong> {{ role.top_countries | join(', ') }}</p>
+      {% endif %}
+    </section>
+  {% endif %}
+
+  {% if role.learning_resources %}
+    <section class="card">
+      <h2>Learning Resources</h2>
+
+      {% if role.learning_resources.courses %}
+        <h3>Courses</h3>
+        <ul>
+          {% for course in role.learning_resources.courses %}
+            <li>{{ course }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% if role.learning_resources.practical %}
+        <h3>Practical Experience</h3>
+        <ul>
+          {% for item in role.learning_resources.practical %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </section>
+  {% endif %}
+
+  {% if role.mentor %}
+    <section class="mentor-card">
+      <h2>Industry Role Model</h2>
+      <h3>{{ role.mentor.name }}</h3>
+      <div class="mentor-meta">
+        <span>{{ role.mentor.org }}</span>
+        <span>{{ role.mentor.years }} in the field</span>
+      </div>
+      <p><strong>Career Path:</strong> {{ role.mentor.path }}</p>
+      <p><strong>A Day in the Life:</strong> {{ role.mentor.daily }}</p>
+    </section>
+  {% endif %}
+
+  <p>
+    <a class="button" href="{{ url_for('results') }}">Back to results</a>
+  </p>
+</article>
+{% endblock %}

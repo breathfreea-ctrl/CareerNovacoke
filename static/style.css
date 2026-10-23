@@ -1,0 +1,418 @@
+:root {
+  --brand: #2563eb;
+  --bg: #f6f7fb;
+  --line: #e5e7eb;
+  --text: #111827;
+  --muted: #6b7280;
+  --success: #16a34a;
+  --danger: #dc2626;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px 96px;
+}
+
+.card,
+.role-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 22px;
+  margin: 0 0 8px;
+}
+
+h2 {
+  margin: 0 0 12px;
+}
+
+h3 {
+  font-size: 18px;
+  margin: 24px 0 8px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+}
+
+.sub {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0 0 20px;
+}
+
+.progress {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress > i {
+  display: block;
+  height: 100%;
+  background: var(--brand);
+  transition: width 0.25s;
+}
+
+.step-text {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.q {
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.req {
+  color: var(--danger);
+  margin-left: 2px;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.opt {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.opt:hover {
+  border-color: #c7d2fe;
+  background: #f8faff;
+}
+
+.opt input {
+  margin: 0;
+}
+
+.question {
+  border: 0;
+  padding: 0;
+  margin: 0 0 24px;
+}
+
+.question legend {
+  display: block;
+  width: 100%;
+}
+
+.err {
+  color: var(--danger);
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  border-top: 1px solid var(--line);
+  padding: 12px 16px;
+  z-index: 10;
+}
+
+.bar .inner,
+.survey-actions {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  gap: 10px;
+}
+
+button,
+.button {
+  display: inline-block;
+  font: inherit;
+  text-decoration: none;
+  text-align: center;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover,
+.button:hover {
+  background: #f8faff;
+}
+
+button.primary,
+.button.primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+  font-weight: 600;
+}
+
+button.primary:hover,
+.button.primary:hover {
+  background: #1d4ed8;
+}
+
+.report-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.role-card {
+  border: 1px solid var(--line);
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.role-card.rank-1 {
+  border: 2px solid var(--brand);
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
+}
+
+.role-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.role-title-wrap {
+  flex: 1;
+}
+
+.role-rank {
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--brand);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.role-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.tier-tag {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid;
+  margin-top: 4px;
+}
+
+.score-big {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: right;
+}
+
+.score-big span {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.match-summary {
+  font-size: 14px;
+  margin: 0 0 16px;
+}
+
+.match-detail {
+  background: #f8faff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 12px 0 20px;
+}
+
+.match-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+}
+
+.match-item:last-child {
+  border-bottom: none;
+}
+
+.pts.plus {
+  color: var(--success);
+  font-weight: bold;
+}
+
+.pts.minus {
+  color: var(--danger);
+  font-weight: bold;
+}
+
+.career-info {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.career-info p {
+  margin: 0 0 10px;
+}
+
+.career-info strong {
+  color: var(--brand);
+}
+
+.ai-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.sdg-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 6px;
+  margin-top: 4px;
+  background: #f0f9ff;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.learning-plan {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #166534;
+}
+
+.learning-plan h4 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+
+.learning-plan ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.learning-plan li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.phase {
+  font-weight: bold;
+  color: #15803d;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.plan-tip {
+  font-size: 13px;
+  background: #dcfce7;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-top: 16px;
+  border: 1px solid #bbf7d0;
+}
+
+.mentor-card {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #92400e;
+}
+
+.mentor-card h4,
+.mentor-card h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  color: #b45309;
+}
+
+.mentor-meta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.mentor-meta span {
+  background: #fef3c7;
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid #fde68a;
+}
+
+.final-farewell {
+  text-align: center;
+  margin: 48px 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--brand);
+}
+
+.final-farewell span {
+  font-size: 16px;
+  font-weight: normal;
+  color: var(--muted);
+}
+
+.no-match {
+  text-align: center;
+}

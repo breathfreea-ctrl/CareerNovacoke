@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Career Match Survey — Questions{% endblock %}
+
+{% block content %}
+<section class="card">
+  {% if questions %}
+    <div class="progress" aria-label="Survey progress">
+      <i style="width: {{ progress }}%"></i>
+    </div>
+
+    <p class="step-text">
+      Question {{ current_index }} of {{ total_questions }}
+    </p>
+
+    <form action="{{ url_for('survey') }}" method="post">
+      {% for question in questions %}
+        <fieldset class="question">
+          <legend class="q">
+            {{ question.title }}
+            {% if question.required %}
+              <span class="req" aria-label="required">*</span>
+            {% endif %}
+          </legend>
+
+          {% if question.hint %}
+            <p class="hint">{{ question.hint }}</p>
+          {% endif %}
+
+          {% for option in question.options %}
+            <label class="opt">
+              <input
+                type="{{ question.input_type | default('radio') }}"
+                name="{{ question.id }}"
+                value="{{ option.value }}"
+                {% if question.required and question.input_type != 'checkbox' %}required{% endif %}
+              >
+              <span>{{ option.label }}</span>
+            </label>
+          {% endfor %}
+        </fieldset>
+      {% endfor %}
+
+      {% if error %}
+        <p class="err" role="alert">{{ error }}</p>
+      {% endif %}
+
+      <div class="survey-actions">
+        {% if current_index > 1 %}
+          <button type="submit" name="action" value="back">Back</button>
+        {% endif %}
+
+        <button class="primary" type="submit" name="action" value="next">
+          {% if current_index == total_questions %}Submit{% else %}Next{% endif %}
+        </button>
+      </div>
+    </form>
+  {% else %}
+    <p class="sub">No questions are available.</p>
+  {% endif %}
+</section>
+{% endblock %}

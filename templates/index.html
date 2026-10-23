@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Career Match Survey — Hello Future!{% endblock %}
+
+{% block content %}
+<section class="card">
+  <h1>Hello Future! 👋</h1>
+  <p class="sub">
+    Welcome. Find the career path that fits you.
+    This survey takes about 3–5 minutes. Please answer honestly.
+  </p>
+
+  <form action="{{ url_for('survey') }}" method="get">
+    <button class="primary" type="submit">Start</button>
+  </form>
+</section>
+{% endblock %}

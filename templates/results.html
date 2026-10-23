@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Career Match Survey — Your Results{% endblock %}
+
+{% block content %}
+<header class="report-header">
+  <h1>Your Career Match Report</h1>
+  <p class="sub">
+    We compared your profile against 10 careers. Here are your top matches and customized roadmaps.
+  </p>
+</header>
+
+{% if results %}
+  {% for role in results %}
+    <article class="role-card rank-{{ loop.index }}">
+      <div class="role-header">
+        <div class="role-title-wrap">
+          <div class="role-rank">Your {{ loop.index }}{% if loop.index == 1 %}st{% elif loop.index == 2 %}nd{% elif loop.index == 3 %}rd{% else %}th{% endif %} Best Match</div>
+          <h2 class="role-title">{{ role.title }}</h2>
+
+          {% if role.tier %}
+            <div
+              class="tier-tag"
+              style="color: {{ role.tier.color }}; background: {{ role.tier.bg }}; border-color: {{ role.tier.border }}"
+            >
+              {{ role.tier.emoji }} {{ role.tier.title }}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="score-big">
+          {{ role.totalPoints }}<span> pts</span>
+        </div>
+      </div>
+
+      {% if role.tier %}
+        <p class="match-summary">{{ role.tier.desc }}</p>
+      {% endif %}
+
+      <details class="breakdown">
+        <summary>View Point Breakdown</summary>
+        <div class="match-detail">
+          {% for item in role.breakdown %}
+            <div class="match-item">
+              <span>{{ item.label }}</span>
+              <span class="pts {% if item.points < 0 %}minus{% else %}plus{% endif %}">
+                {% if item.points > 0 %}+{% endif %}{{ item.points }} pts
+              </span>
+            </div>
+          {% endfor %}
+
+          <div class="match-item">
+            <strong>Total Points</strong>
+            <strong>{{ role.totalPoints }} pts</strong>
+          </div>
+        </div>
+      </details>
+
+      <section class="career-info">
+        <h3>Career Overview</h3>
+        <p><strong>Content &amp; Rewards:</strong> {{ role.overview }}</p>
+        <p><strong>Industry Outlook:</strong> {{ role.outlook }}</p>
+
+        {% if role.ai_match %}
+          <p>
+            <strong>AI Era Adaptation:</strong>
+            <span class="ai-tag"
+                  style="color: {{ role.ai_match.color }}; background: {{ role.ai_match.bg }}">
+              {{ role.ai_match.level }}
+            </span>
+          </p>
+        {% endif %}
+
+        {% if role.sdgs %}
+          <p><strong>SDG Relevance:</strong><br>
+            {% for sdg in role.sdgs %}
+              <span class="sdg-tag">{{ sdg }}</span>
+            {% endfor %}
+          </p>
+        {% endif %}
+
+        <p><strong>Core Required Skills:</strong> {{ role.required_skills | join(', ') }}</p>
+      </section>
+
+      {% if role.mentor %}
+        <section class="mentor-card">
+          <h3>Industry Role Model</h3>
+          <h4>👤 {{ role.mentor.name }}</h4>
+          <div class="mentor-meta">
+            <span>{{ role.mentor.org }}</span>
+            <span>{{ role.mentor.years }} in the field</span>
+          </div>
+          <p><strong>Career Path:</strong> {{ role.mentor.path }}</p>
+          <p><strong>A Day in the Life:</strong> {{ role.mentor.daily }}</p>
+        </section>
+      {% endif %}
+
+      {% if role.learning_plan %}
+        <section class="learning-plan">
+          <h3>Your Personalized Action Plan</h3>
+          <p>Targeting employment in <strong>{{ role.learning_plan.time }}</strong>
+            in <strong>{{ role.learning_plan.country }}</strong>:</p>
+          <ul>
+            {% for step in role.learning_plan.steps %}
+              <li>
+                <span class="phase">{{ step.phase }}</span>
+                {{ step.description }}
+              </li>
+            {% endfor %}
+          </ul>
+          <p class="plan-tip">
+            💡 <strong>Humanized Advice:</strong>
+            Focus on practical projects and one core credential. Employers value real experience.
+          </p>
+        </section>
+      {% endif %}
+    </article>
+  {% endfor %}
+{% else %}
+  <section class="card no-match">
+    <h2>No Suitable Match Found</h2>
+    <p>
+      We are sorry, but we haven't recorded a career match for you yet.
+      We will continue to improve the database. Wishing you success in finding a suitable career.
+    </p>
+    <a class="button primary" href="{{ url_for('index') }}">Start over</a>
+  </section>
+{% endif %}
+
+<footer class="final-farewell">
+  Wishing you a better future, hello future!<br>
+  <span>祝您拥有一个更好的未来，hello future！</span>
+</footer>
+
+{% if results %}
+  <div class="results-actions">
+    <a class="button primary" href="{{ url_for('index') }}">Start over</a>
+  </div>
+{% endif %}
+{% endblock %}
