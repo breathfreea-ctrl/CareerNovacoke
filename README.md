@@ -155,12 +155,12 @@ Describe how your team used Replit. For example:
 
 ## Team
 
-| Name                  | Role                          | GitHub                                                  |
-| --------------------- | ----------------------------- | ------------------------------------------------------- |
-| LIN JIA XI            | Team Lead /Hosting/Dev        | [@breathfreea-ctrl](https://github.com/breathfreea-ctrl)|
-| LIU XIAN YAO          | Backend                       | [@Iris0112-web](https://github.com/Iris0112-web)        |
-| WANG JING YANG        | Fronted                       | [@username](https://github.com/username)                |
-| JANICE WONG JYUN LYNN | Data assistant & Documentation| [@janicewongjl-del](https://github.com/janicewongjl-del)|
+| Name                  | Role                          | GitHub                                                     |
+| --------------------- | ----------------------------- | ---------------------------------------------------------- |
+| LIN JIA XI            | Team Lead /Hosting/Dev        | [@breathfreea-ctrl](https://github.com/breathfreea-ctrl)   |
+| LIU XIAN YAO          | Backend                       | [@Iris0112-web](https://github.com/Iris0112-web)           |
+| WANG JING YANG        | Fronted                       | [@hwangjingyan-ithub](https://github.com/wangjingyan-ithub)|
+| JANICE WONG JYUN LYNN | Data assistant & Documentation| [@janicewongjl-del](https://github.com/janicewongjl-del)   |
 
 ---
 
