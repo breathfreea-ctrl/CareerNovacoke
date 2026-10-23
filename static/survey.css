@@ -7,6 +7,7 @@
   --survey-rose: #bd9287;
   --survey-paper: #f4ecd7;
   --survey-font: "DM Sans", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --survey-heading-font: "Ma Shan Zheng", "KaiTi", "STKaiti", "Kaiti SC", serif;
 }
 
 *,
@@ -29,6 +30,12 @@ body.survey-body {
   color: var(--survey-ink);
   font-family: var(--survey-font);
   -webkit-font-smoothing: antialiased;
+}
+
+body.survey-body :is(h1, h2, h3, h4, h5, h6, .question-legend, .survey-brand),
+body.survey-body .learning-plan__phases li > strong,
+body.survey-body .report-subsection > strong {
+  font-family: var(--survey-heading-font);
 }
 
 body.survey-body::before {

@@ -65,17 +65,18 @@ class SurveyFlowTests(SurveyHelpers, unittest.TestCase):
         for flag in ("Secure", "HttpOnly", "SameSite=None", "Partitioned"):
             self.assertIn(flag, cookie)
 
-    def test_brush_font_is_only_used_on_the_homepage(self):
+    def test_brush_headings_and_sans_serif_body_fonts(self):
         self.assertIn("Ma Shan Zheng", self.get("/").text)
         for route in ("/survey/welcome", "/survey"):
             page = self.get(route)
             self.assertIn("Noto+Sans+SC", page.text)
-            self.assertNotIn("Ma+Shan+Zheng", page.text)
+            self.assertIn("Ma+Shan+Zheng", page.text)
         css = Path(app.static_folder, "survey.css").read_text()
         question_css = Path(app.static_folder, "survey-questions.css").read_text()
+        self.assertIn('"Ma Shan Zheng", "KaiTi"', css)
+        self.assertIn("h1, h2, h3, h4, h5, h6, .question-legend", css)
+        self.assertIn("font-family: var(--survey-heading-font)", css)
         for stylesheet in (css, question_css):
-            self.assertNotIn("Ma Shan Zheng", stylesheet)
-            self.assertNotIn("KaiTi", stylesheet)
             self.assertIn("font-family: var(--survey-font)", stylesheet)
 
     def test_empty_required_checkbox_question_stays_on_step(self):

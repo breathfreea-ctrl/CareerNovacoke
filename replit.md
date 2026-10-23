@@ -16,9 +16,11 @@ homepage's diagonal pale-yellow/pink gradient and sage buttons.
 The reusable layout is in `templates/base.html`, with styles in
 `static/survey.css`.
 
-Only the homepage uses the handwritten brush/KaiTi style. All other pages use
-clean sans-serif typography: DM Sans for Latin text and Noto Sans SC for Chinese,
-with platform sans-serif fallbacks.
+All page headings use the handwritten brush/KaiTi style (Ma Shan Zheng), including
+question legends and learning-plan subheadings. The homepage keeps its existing
+handwritten styling. On other pages, body text, options and controls use clean
+sans-serif typography: DM Sans for Latin text and Noto Sans SC for Chinese,
+with platform fallbacks.
 
 The welcome page's Start form opens `/survey`. Three basic steps cover skills,
 experience, and interests, configured in `survey_questions.py`. GET displays the
