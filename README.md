@@ -8,12 +8,12 @@
 
 | Field                  | Details                                        |
 | ---------------------- | ---------------------------------------------- |
-| **Team Name**          | 疯狂星期四                                      |
+| **Team Name**          | 疯狂星期四                                       |
 | **Team Domain**        | Domain 1                                       |
 | **SDG Track (1–17)**   | SDG 4 — Quality Education,                     |
-|                          SDG 8 - Decnet Work And Economic Growth,       |
-|                          SDG 9 - Industry, Innovatio And Infrastructure,|
-|                          SDG 10 - Reduced Inequalities                  |
+|                        | SDG 8 - Decnet Work And Economic Growth,       |
+|                        | SDG 9 - Industry, Innovatio And Infrastructure,|
+|                        | SDG 10 - Reduced Inequalities                  |
 | **Team Leader**        | LIN JIA XI                                     |
 | **University**         | Xiamen University Malaysia                     |
 | **Number of Members**  | 4                                              |
