@@ -94,9 +94,16 @@ class HomepageBrowserTests(unittest.TestCase):
 
     def test_tab_and_shift_tab_stay_in_welcome(self):
         self.open_home()
-        for key in ("Tab", "Shift+Tab", "Tab"):
+        for key, selector in (
+            ("Tab", ".welcome-language-toggle"),
+            ("Shift+Tab", "#enter-home"),
+            ("Tab", ".welcome-language-toggle"),
+            ("Tab", "#enter-home"),
+            ("Shift+Tab", ".welcome-language-toggle"),
+            ("Shift+Tab", "#enter-home"),
+        ):
             self.page.keyboard.press(key)
-            expect(self.page.locator("#enter-home")).to_be_focused()
+            expect(self.page.locator(selector)).to_be_focused()
             self.assert_background_inert(True)
         self.page.keyboard.press("Enter")
         self.assert_home_ready()

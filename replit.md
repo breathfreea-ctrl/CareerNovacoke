@@ -89,3 +89,11 @@ The suite intentionally does not exercise or implement the questionnaire.
 ## Checks
 
 Run `python -m unittest discover -s tests` for questionnaire flow checks.
+
+## Post-merge setup
+
+`scripts/post-merge.sh` restores locked runtime and development dependencies into
+Replit's existing `.pythonlibs` tree, without creating a virtual environment.
+It then checks dependency imports and Python syntax. Workflow reconciliation
+restarts the app after successful setup; browser regressions use the configured
+`homepage-regression` workflow and the environment's existing Chromium.
