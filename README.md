@@ -1,4 +1,4 @@
-# //Project Name
+# ///Project Name
 
 > A one-sentence description of what your project does and who it is for.
 
