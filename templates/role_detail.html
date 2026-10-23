@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}{{ role.title }}｜未来职业探索{% endblock %}
+
+{% block head_extra %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='survey-questions.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='career-report.css') }}">
+{% endblock %}
+
+{% block content %}
+  <article class="career-report report-page detail-page" aria-labelledby="role-detail-title">
+    <a class="report-back" href="{{ url_for('results') }}">返回我的探索报告</a>
+
+    <header class="role-detail-header">
+      <p class="report-kicker">职业方向 · 继续了解</p>
+      <h1 id="role-detail-title">{{ role.title }}</h1>
+      {% if role.tier %}
+        <span class="tier-tag">{{ role.tier.title }}</span>
+      {% endif %}
+      {% if role.totalPoints is defined %}
+        <p class="report-lede">你的参考分为 {{ role.totalPoints }} / 100。它只表示与本次选择的粗略对应，不是能力评价、职业资格或成功概率。</p>
+      {% else %}
+        <p class="report-lede">把它当作一个可以继续查证和体验的方向，而不是对你的判断或限制。</p>
+      {% endif %}
+    </header>
+
+    <section class="detail-section" aria-labelledby="role-overview-title">
+      <h2 id="role-overview-title">这个方向大致做什么</h2>
+      {% if role.overview %}
+        <p>{{ role.overview }}</p>
+      {% else %}
+        <p>目前没有提供该方向的工作概述。可以进一步查阅可靠的职业介绍，或向从业者了解具体工作内容。</p>
+      {% endif %}
+      {% if role.outlook %}
+        <p><strong>行业信息：</strong>{{ role.outlook }} 这是一般性介绍，未经过实时核实；请结合可靠来源进一步了解。</p>
+      {% endif %}
+    </section>
+
+    {% if role.required_skills or role.matched_skills or role.matched_interests or role.skill_gaps %}
+      <section class="detail-section" aria-labelledby="role-fit-title">
+        <h2 id="role-fit-title">和你这次选择的关联</h2>
+        {% if role.required_skills %}
+          <div class="report-subsection">
+            <strong>该方向可能用到的技能</strong>
+            <ul class="report-tags">
+              {% for skill in role.required_skills %}<li>{{ skill }}</li>{% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        {% if role.matched_skills %}
+          <div class="report-subsection">
+            <strong>你选择的相关技能</strong>
+            <ul class="report-tags">
+              {% for skill in role.matched_skills %}<li>{{ skill }}</li>{% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        {% if role.matched_interests %}
+          <div class="report-subsection">
+            <strong>你提到的相关兴趣</strong>
+            <ul class="report-tags">
+              {% for interest in role.matched_interests %}<li>{{ interest }}</li>{% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        {% if role.skill_gaps %}
+          <div class="report-subsection">
+            <strong>可以继续了解或练习的技能</strong>
+            <ul class="report-tags">
+              {% for gap in role.skill_gaps %}<li>{{ gap }}</li>{% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </section>
+    {% endif %}
+
+    {% if role.ai_match %}
+      <section class="detail-section" aria-labelledby="role-ai-title">
+        <h2 id="role-ai-title">关于人工智能的变化</h2>
+        <p>{{ role.ai_match.level }}</p>
+        <p>这是对任务变化的概括性提示，不代表行业预测。具体工作内容、工具和影响会因岗位与组织而异，建议持续查看可信的最新信息。</p>
+      </section>
+    {% endif %}
+
+    {% if role.sdgs %}
+      <section class="detail-section" aria-labelledby="role-sdg-title">
+        <h2 id="role-sdg-title">可能关联的可持续发展目标</h2>
+        <ul class="report-tags">
+          {% for sdg in role.sdgs %}<li>{{ sdg }}</li>{% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
+    <section class="detail-section" aria-labelledby="role-steps-title">
+      <h2 id="role-steps-title">从小处开始试一试</h2>
+      {% if role.learning_plan %}
+        <p><strong>经验建议：</strong>{{ role.learning_plan.experience }}</p>
+        {% if role.learning_plan.time %}
+          <p><strong>参考时间：</strong>{{ role.learning_plan.time }}。这是建议，不是就业承诺。</p>
+        {% else %}
+          <p><strong>时间安排：</strong>问卷没有收集目标时间，因此不作时间假设。</p>
+        {% endif %}
+        {% if role.learning_plan.country %}
+          <p><strong>地区信息：</strong>{{ role.learning_plan.country }}。相关路径可能因地区而异，请核对当地要求。</p>
+        {% else %}
+          <p><strong>地区信息：</strong>问卷没有收集目标国家或地区，因此不作地域假设。</p>
+        {% endif %}
+        {% if role.learning_plan.phases %}
+          <ol class="learning-plan__phases">
+            {% for phase in role.learning_plan.phases %}
+              <li><strong>{{ phase.title }}</strong><p>{{ phase.description }}</p></li>
+            {% endfor %}
+          </ol>
+        {% endif %}
+        {% if role.learning_plan.tip %}
+          <aside class="plan-tip"><strong>给自己的提醒：</strong>{{ role.learning_plan.tip }}</aside>
+        {% endif %}
+      {% else %}
+        <p>先找一项低成本的小体验：阅读一份真实岗位介绍、完成一个入门练习，或与不同经历的从业者交流。观察过程是否让你感到好奇，再决定是否深入。</p>
+      {% endif %}
+    </section>
+
+    <section class="detail-section" aria-labelledby="role-match-method-title">
+      <h2 id="role-match-method-title">这份参考分如何形成</h2>
+      <p>目前职业目录收录 {{ catalog_count }} 个方向。技能部分最多 60 分，按你选择的相关技能数量除以该方向相关技能总数计算；兴趣部分最多 40 分，按相关兴趣数量除以该方向相关兴趣总数计算。两部分分别四舍五入后相加。</p>
+      <p>达到 {{ threshold }} 分才会列入报告；经验年限只影响学习建议，不参与排名。规则较粗略，不代表你是否适合、够格或能获得工作。</p>
+    </section>
+
+    <section class="mentor-note" aria-label="从业者信息说明">
+      <h3>从业者信息</h3>
+      <p>目前没有经过核实的从业者资料，因此不展示个人推荐。可以通过可信的行业社群、校友或公开访谈，了解多种真实的职业经历。</p>
+    </section>
+
+    <div class="report-actions">
+      <a class="report-button report-button--quiet" href="{{ url_for('download_answers') }}">下载我的回答（JSON）</a>
+      <form method="post" action="{{ url_for('edit_survey') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button class="report-button report-button--quiet" type="submit">修改回答</button>
+      </form>
+      <form method="post" action="{{ url_for('restart_survey') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button class="report-button" type="submit">重新开始</button>
+      </form>
+    </div>
+  </article>
+{% endblock %}

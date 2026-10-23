@@ -7,7 +7,7 @@ from main import app
 from survey_questions import QUESTIONS
 
 
-class SurveyFlowTests(unittest.TestCase):
+class SurveyHelpers:
     def setUp(self):
         app.config["TESTING"] = True
         self.client = app.test_client()
@@ -45,6 +45,7 @@ class SurveyFlowTests(unittest.TestCase):
             self.assertEqual(response.status_code, 303)
         self.assertTrue(response.location.endswith("/results"))
 
+class SurveyFlowTests(SurveyHelpers, unittest.TestCase):
     def test_home_and_start_navigation(self):
         home = self.get("/")
         self.assertEqual(home.status_code, 200)
@@ -115,7 +116,9 @@ class SurveyFlowTests(unittest.TestCase):
         for text in ("编程与技术应用", "写作与内容表达", "1–2 年", "科技与数字产品"):
             self.assertIn(text, summary.text)
         self.assertIn("no-store", summary.headers["Cache-Control"])
-        self.assertIn("不是职业匹配结果，也没有评分", summary.text)
+        self.assertIn("不是成功概率", summary.text)
+        self.assertIn("人工智能工程师", summary.text)
+        self.assertIn("参考分 / 100", summary.text)
 
     def test_each_rendered_input_matches_the_post_contract(self):
         for question in QUESTIONS:

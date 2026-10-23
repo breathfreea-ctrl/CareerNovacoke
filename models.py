@@ -1,3 +1,6 @@
+"""Imported career reference data; market figures are not verified or displayed."""
+
+CAREERS = [
     {
         "id": 1,
         "name": "AI Engineer",
@@ -294,4 +297,3 @@
         "data_date": "2026-10-21"
     }
 ]
->>>>>>> origin/LIU

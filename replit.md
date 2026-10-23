@@ -33,13 +33,23 @@ and Partitioned so the session works inside the cross-site preview iframe.
 POSTs are CSRF-protected, and survey/summary responses use `Cache-Control:
 no-store`. Browser sessions are independent.
 
-`/results` shows a readable answer summary only after completion. Users can edit
-their saved answers or clear them and restart, using POST forms.
+`/results` shows a career exploration report and answer summary after completion.
+Users can download their answers at `/survey/answers.json`, edit their saved
+answers or clear them and restart using CSRF-protected POST forms. `/roles/<id>`
+shows a personalized reference detail page after completion.
 
-The imported `matching.py` is empty, and `models.py`
-contains incomplete data and a merge-conflict remnant. These remain untouched;
-do not import them into public-page routes until matching is built. The summary
-does not produce career recommendations, matching scores, or salary claims.
+The repaired imported catalog in `models.py` contains seven careers, not ten.
+`matching.py` maps the broad survey categories to each career: skill coverage
+contributes up to 60 points and interest coverage up to 40, rounded separately
+and summed. Results at or above 20 points are sorted by score then source ID;
+at most three are shown. Years of general experience affect learning suggestions
+only, not ranking. The rules and limitations are disclosed in the report.
+
+This is exploratory self-report matching, not validated aptitude testing,
+qualification assessment or employment probability. Missing checked categories
+are not proven skill deficits. Never fabricate mentors, employment timeframes or
+target countries: these are not collected. Imported salary and market-growth
+claims have not been verified and must not be displayed as authoritative facts.
 
 ## Checks
 

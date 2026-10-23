@@ -2,8 +2,10 @@ import hmac
 import os
 import secrets
 
-from flask import Flask, abort, redirect, render_template, request, session, url_for
+from flask import Flask, abort, jsonify, redirect, render_template, request, session, url_for
 
+from matching import MATCH_THRESHOLD, match_careers, score_role
+from models import CAREERS
 from survey_questions import QUESTIONS, validate_selection
 
 app = Flask(__name__)
@@ -39,7 +41,7 @@ def survey_state():
 
 @app.after_request
 def protect_survey_responses(response):
-    if request.path == "/results" or request.path.startswith("/survey"):
+    if request.path == "/results" or request.path.startswith(("/survey", "/roles/")):
         response.headers["Cache-Control"] = "no-store"
     return response
 
@@ -139,7 +141,36 @@ def results():
         }
         for question in QUESTIONS
     ]
-    return render_template("results.html", summary=summary, csrf_token=csrf_token())
+    return render_template(
+        "results.html", results=match_careers(state["answers"]),
+        summary=summary, answers=state["answers"], catalog_count=len(CAREERS),
+        threshold=MATCH_THRESHOLD, csrf_token=csrf_token(),
+    )
+
+
+@app.get("/roles/<int:role_id>")
+def role_detail(role_id):
+    career = next((role for role in CAREERS if role["id"] == role_id), None)
+    if career is None:
+        abort(404)
+    state = session.get("survey_state")
+    if not state or not state["completed"]:
+        return redirect(url_for("survey"))
+    return render_template(
+        "role_detail.html", role=score_role(career, state["answers"]),
+        catalog_count=len(CAREERS), threshold=MATCH_THRESHOLD, csrf_token=csrf_token(),
+    )
+
+
+@app.get("/survey/answers.json")
+def download_answers():
+    state = session.get("survey_state")
+    if not state or not state["completed"]:
+        return redirect(url_for("survey"))
+    response = jsonify(state["answers"])
+    response.headers["Content-Disposition"] = 'attachment; filename="career-survey-data.json"'
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    return response
 
 
 @app.post('/survey/edit')
