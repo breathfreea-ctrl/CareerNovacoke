@@ -12,15 +12,15 @@
   --ink: #35433e;
   --muted-ink: #78827b;
   --quiet-ink: #9a9f95;
-  --paper: #f5f3ec;
-  --paper-deep: #efeee5;
+  --paper: #e8dca8;
+  --paper-deep: #e4d69f;
   --sage: #aab9a6;
   --sage-deep: #718579;
   --clay: #c8a99b;
   --blue: #a8b7ba;
   min-height: 100vh;
   overflow: hidden;
-  background: var(--paper);
+  background: linear-gradient(118deg, #e8dba9 0%, #e6d8a4 74%, #dfc5ba 100%);
   color: var(--ink);
   font-family: "Ma Shan Zheng", "KaiTi", "STKaiti", "KaiTi_GB2312", serif;
 }
@@ -40,6 +40,12 @@
 .career-home button:focus-visible {
   outline: 2px solid #526d5a;
   outline-offset: 4px;
+}
+
+.career-home .hero-copy h1:focus,
+.career-home .hero-copy h1:focus-visible {
+  outline: none;
+  box-shadow: none;
 }
 
 .career-brand:hover,
@@ -447,7 +453,7 @@
 
 .pathways {
   padding: 77px max(42px, calc((100vw - 1160px) / 2)) 88px;
-  background: var(--paper-deep);
+  background: linear-gradient(118deg, #e3d49d 0%, #e5d7a3 76%, #dec1b7 100%);
   border-top: 1px solid rgba(67, 81, 72, 0.08);
 }
 
@@ -623,7 +629,7 @@
   place-items: center;
   overflow: hidden;
   padding: 30px;
-  background: var(--paper);
+  background: linear-gradient(118deg, #ebdfaf 0%, #e8daa6 74%, #e2c8bd 100%);
   transition: opacity 760ms ease, transform 760ms ease;
 }
 
