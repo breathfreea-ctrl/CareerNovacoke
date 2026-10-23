@@ -1,3 +1,5 @@
+
+ROLES = [
     {
         "id": 1,
         "name": "AI Engineer",
@@ -293,6 +295,7 @@
         "data_sources": ["U.S. BLS 2025", "ABA 2025", "Robert Half 2026", "Michael Page 2026"],
         "data_date": "2026-10-21"
     }
+<<<<<<< HEAD
 ]
 >>>>>>> origin/LIU
 
@@ -1127,4 +1130,5 @@ SCHEMA = [
             {"v": "NO", "t": "NO, not yet"},
         ],
     },
+
 ]
