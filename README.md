@@ -1,4 +1,4 @@
-# CareerNovacoke
+# Careernova-coke
 
 >CareerNovacoke is an AI-powered career guidance platform that helps job seekers, fresh graduates, and career changers identify suitable career paths, understand future job market trends, discover skill gaps, and create personalised reskilling plans for the AI era.
 ---
@@ -17,11 +17,11 @@
 | **University**         | Xiamen University Malaysia                     |
 | **Number of Members**  | 4                                              |
 
-## /Links
+## Links
 
 | Resource          | Link                                           |
 | ----------------- | ---------------------------------------------- |
-| GitHub Repository | https://github.com/your-username/your-project  |
+| GitHub Repository |(https://github.com/breathfreea-ctrl/Careernova-coke) |
 | Live Demo         | https://your-project.replit.app                |
 | Slide Deck        | https://example.com/slides                     |
 | Demo Video        | https://example.com/demo-video                 |
@@ -87,7 +87,7 @@ User ──► Replit (App/Web) ──► RunPod Endpoint (GPU model)
 
 ## How to Run
 
-### /Option 1 — Run on Replit (Recommended)
+### Option 1 — Run on Replit (Recommended)
 
 1. Open the [Replit Project](https://replit.com/@your-username/your-project), or import this repository via **Create Repl → Import from GitHub**.
 2. Open the **Secrets** tab (🔒) and add the variables listed in `.env.example`:
@@ -124,7 +124,7 @@ python -m unittest discover tests
 
 ---
 
-## /How We Use Replit *(Required)*我们怎么用replit（用replit干了什么
+## How We Use Replit *(Required)*我们怎么用replit（用replit干了什么
 
 Describe how your team used Replit. For example:
 
@@ -136,7 +136,7 @@ Describe how your team used Replit. For example:
 
 ---
 
-## /Challenges & Learnings（我们在开发过程遇到什么难题，怎么解决难题，从中学到什么
+## Challenges & Learnings（我们在开发过程遇到什么难题，怎么解决难题，从中学到什么
 
 - What challenges did you face, and how did you overcome them?
 - What did your team learn?
@@ -157,7 +157,7 @@ Describe how your team used Replit. For example:
 
 ---
 
-## /Submission Checklist
+## Submission Checklist
 
 - [x] Team name, domain (Domain 1 / Domain 2) and SDG track filled in
 - [ ] Slide deck link added
