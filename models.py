@@ -836,7 +836,7 @@ SCHEMA = [
         "id": "salary",
         "type": "single",
         "required": True,
-        "when": lambda answers：    
+        "when": lambda answers:  
 answers.get("path") in {"A", "B"},
 
 
