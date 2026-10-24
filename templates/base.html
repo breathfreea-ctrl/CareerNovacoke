@@ -4,13 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{% block title %}Career Match Survey — Hello Future{% endblock %}</title>
+  <title>{% block title %}Career Match Survey — Hello Future!{% endblock %}</title>
 
-  <link
-    rel="icon"
-    type="image/svg+xml"
-    href="{{ url_for('static', filename='favicon.svg') }}"
-  >
   <link
     rel="stylesheet"
     href="{{ url_for('static', filename='style.css') }}"
@@ -22,10 +17,9 @@
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-brand" href="{{ url_for('index') }}">
-        <span class="site-brand__mark" aria-hidden="true">H</span>
-        <span>Hello Future<span class="site-brand__period">.</span></span>
+        Hello Future!
       </a>
-      <span class="site-header__caption">A clearer way forward</span>
+      <span class="site-header__caption">Career Match Survey</span>
     </div>
   </header>
 
@@ -34,11 +28,8 @@
   </main>
 
   <footer class="site-footer">
-    <div class="site-footer__inner">
-      <span class="footer-mark" aria-hidden="true">HF</span>
-      <p>Thoughtful guidance for whatever comes next.</p>
-      <span class="site-footer__aside">Your path is yours to shape.</span>
-    </div>
+    <p>Wishing you a better future, hello future!</p>
+    <p lang="en">Wishing you a better future, hello future！</p>
   </footer>
 
   {% block scripts %}{% endblock %}

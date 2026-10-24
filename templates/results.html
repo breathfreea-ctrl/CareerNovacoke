@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Your career matches — Hello Future{% endblock %}
+{% block title %}Your Career Matches — Hello Future!{% endblock %}
 
 {% block content %}
 <header class="report-header">
-  <p class="eyebrow"><span class="eyebrow__line"></span> YOUR CAREER FIELD NOTES</p>
-  <h1>A few paths worth <em>exploring.</em></h1>
+  <p class="eyebrow">YOUR CAREER MATCH REPORT</p>
+  <h1>Your next step starts here.</h1>
   <p class="sub">
-    These matches connect your answers to possible next steps. Use them as a
-    starting point—not a final answer.
+    We compared your answers with 10 careers. Here are your strongest matches
+    and a learning plan for each one.
   </p>
-  {% if results %}<p class="report-header__count"><span class="report-header__count-mark"></span> {{ results|length }} promising paths to explore</p>{% endif %}
 </header>
 
 {% if not results %}
@@ -20,8 +19,11 @@
       We haven’t found a career in our current list that reaches the match
       threshold for your answers. We’ll continue to improve the survey.
     </p>
+    <p lang="zh-CN">
+      很抱歉，目前没有录入与您匹配度足够高的职业。我们会继续完善职业库。
+    </p>
     <a class="button button--primary" href="{{ url_for('survey', reset=1) }}">
-      Adjust my answers
+      Start over
     </a>
   </section>
 {% else %}
@@ -44,11 +46,12 @@
           <span
             class="tier-tag"
             style="
+              color: {{ role.tier.color }};
               background: {{ role.tier.bg }};
               border-color: {{ role.tier.border }};
             "
           >
-            {{ role.tier.title }}
+            {{ role.tier.emoji }} {{ role.tier.title }}
           </span>
         </div>
 
@@ -58,7 +61,7 @@
         </p>
       </header>
 
-      <p class="tier-description">
+      <p class="tier-description" style="color: {{ role.tier.color }};">
         {{ role.tier.desc }}
       </p>
 
@@ -82,7 +85,6 @@
       </details>
 
       <section class="career-info">
-        <p class="section-kicker">THE ROLE</p>
         <h3>Career overview</h3>
         <p><strong>Content &amp; rewards:</strong> {{ role.overview }}</p>
         <p><strong>Industry outlook:</strong> {{ role.outlook }}</p>
@@ -90,7 +92,10 @@
           <strong>AI era adaptation:</strong>
           <span
             class="ai-tag"
-            style="background: {{ role.ai_match.bg }};"
+            style="
+              color: {{ role.ai_match.color }};
+              background: {{ role.ai_match.bg }};
+            "
           >
             {{ role.ai_match.level }}
           </span>
@@ -110,7 +115,6 @@
       </section>
 
       <section class="mentor-card">
-        <p class="section-kicker">A HUMAN PERSPECTIVE</p>
         <h3>Industry role model</h3>
         <h4>{{ role.mentor.name }}</h4>
 
@@ -124,7 +128,6 @@
       </section>
 
       <section class="learning-plan">
-        <p class="section-kicker">YOUR NEXT MOVES</p>
         <h3>Your personalized action plan</h3>
         <p>
           Targeting employment in
@@ -159,7 +162,7 @@
 
 <div class="results-actions">
   <button class="button button--secondary" id="download-data" type="button">
-      Download my answers <span class="button__detail">(JSON)</span>
+    Download my answers (JSON)
   </button>
   <a class="button button--secondary" href="{{ url_for('survey', reset=1) }}">
     Start over
@@ -182,8 +185,8 @@
     link.href = url;
     link.download = "career-survey-data.json";
     link.click();
-    link.remove();
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+    URL.revokeObjectURL(url);
   });
 </script>
 {% endblock %}
