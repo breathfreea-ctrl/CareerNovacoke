@@ -886,6 +886,15 @@ select:focus-visible {
 .site-brand {
   color: var(--brand-dark);
   font-family: "KaiTi", "STKaiti", "Kaiti SC", Georgia, serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 6px 14px;
+  border: 1px solid var(--sage);
+  border-radius: 12px;
+  background: rgba(251, 247, 238, 0.8);
 }
 
 .site-footer {
