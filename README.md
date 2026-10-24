@@ -38,20 +38,20 @@ As AI and technology change the job market, many workers face a growing gap betw
 
 Our AI-powered website matches users with suitable careers, identifies their skill gaps, and creates personal learning plans. It also updates career trends to help users build the right skills, find direction, and prepare for future jobs.
 
-### /Key Features我们的网站有什么特点。。（客制化的学习计划和技能培训？问卷分析匹配度？提供优质资源？AI互动？更新职业趋势？）
+### Key Features
 
-- **Feature 1** — Short description.
-- **Feature 2** — Short description.
-- **Feature 3** — Short description.
+- **Feature 1** — Personalised Career Matching: Analyses users’ skills, interests, salary expectations, and preferred countries through a structured questionnaire to recommend suitable careers ranked by matching scores.
+- **Feature 2** — Customised Learning Plans: Generates step-by-step learning plans based on users’ selected career goals, skill gaps, target timeline, and predefined learning resources.
+- **Feature 3** — Career Insights and Learning Resources: Provides career information, salary ranges, target countries, relevant certifications, learning resources, and mentor profiles to help users explore career pathways and plan their next steps.
 
 ### Tech Stack
 
 | Layer                            | Technology                   |
 | ---------------------------------| ---------------------------- |
-| Frontend                         | HTML,CSS,Javascript,React    |
+| Frontend                         | HTML, CSS, JavaScript, Jinja2 Templates|
 | Backend                          | Python, Flask / FastAPI      |
-| Data assistant & Documentation   | VScode, Replit               |
-| Hosting / Dev                    | Replit                       |
+| Data assistant & Documentation   | README.md, project documentation|
+| Hosting / Dev                    | Replit Core, Github           |
 
 ---
 
