@@ -1,230 +1,192 @@
 {% extends "base.html" %}
 
-{% block title %}你的职业探索报告｜未来职业探索{% endblock %}
-
-{% block head_extra %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='survey-questions.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='career-report.css') }}">
-{% endblock %}
+{% block title %}Your Career Matches — Hello Future!{% endblock %}
 
 {% block content %}
-  <div class="career-report report-page results-page" aria-labelledby="results-title">
-    <header class="report-header">
-      <p class="report-eyebrow">一份轻量的职业探索记录</p>
-      <h1 id="results-title">你的下一步，可以从这里开始。</h1>
-      <p class="report-lede">
-        我们把你的回答与目前收录的 {{ catalog_count }} 个职业方向作了粗略对照。
-        下面是最多三个值得继续了解的方向，不是结论，也不需要立刻做决定。
-      </p>
-      <p class="report-note">
-        <strong>先说明：</strong>这是一种基于自我填写信息的简化规则匹配，不是成功概率、资格认证或能力测评。
-        分数只表示与你所选信息的对应程度；它不能预测你会不会喜欢、胜任或获得某份工作。
-      </p>
-    </header>
+<header class="report-header">
+  <p class="eyebrow">YOUR CAREER MATCH REPORT</p>
+  <h1>Your next step starts here.</h1>
+  <p class="sub">
+    We compared your answers with 10 careers. Here are your strongest matches
+    and a learning plan for each one.
+  </p>
+</header>
 
-    <section aria-labelledby="matches-title">
-      <div class="report-section-heading">
-        <h2 id="matches-title">可以先看看这些方向</h2>
-        <p>分数达到 {{ threshold }} 分才会列出；最多展示前三项。</p>
-      </div>
-
-      {% if results %}
-        {% for role in results %}
-          <article class="role-card{% if loop.first %} role-card--top{% endif %}" aria-labelledby="role-title-{{ loop.index }}">
-            <header class="role-card__header">
-              <div>
-                <p class="role-rank">第 {{ loop.index }} 个参考方向</p>
-                <h2 id="role-title-{{ loop.index }}">{{ role.title }}</h2>
-                <span class="tier-tag">{{ role.tier.title }}</span>
-              </div>
-              <p class="role-score" aria-label="匹配参考分 {{ role.totalPoints }} 分">
-                {{ role.totalPoints }}<span>参考分 / 100</span>
-              </p>
-            </header>
-
-            <p class="tier-description">{{ role.tier.desc }}</p>
-
-            <details class="breakdown">
-              <summary>展开查看分数构成</summary>
-              <div class="breakdown__list">
-                {% for item in role.breakdown %}
-                  <div class="breakdown__item">
-                    <span>{{ item.label }}</span>
-                    <strong>{% if item.points > 0 %}+{% endif %}{{ item.points }} 分</strong>
-                  </div>
-                {% endfor %}
-                <div class="breakdown__item breakdown__item--total">
-                  <span>合计参考分</span>
-                  <strong>{{ role.totalPoints }} / 100</strong>
-                </div>
-              </div>
-            </details>
-
-            <section class="career-info" aria-labelledby="overview-{{ loop.index }}">
-              <h3 id="overview-{{ loop.index }}">这个方向大致做什么</h3>
-              <p>{{ role.overview }}</p>
-              <p><strong>行业信息：</strong>{{ role.outlook }} 这部分为一般性介绍，未经过实时核实，请结合可靠来源进一步了解。</p>
-              <p>
-                <strong>人工智能相关提示：</strong>
-                <span>{{ role.ai_match.level }}</span>
-                <span class="ai-caution">这是对任务变化的概括性提示，不代表行业预测；具体工作内容和工具会因岗位与组织而异。</span>
-              </p>
-
-              {% if role.required_skills %}
-                <div class="report-subsection">
-                  <strong>该方向可能用到的技能</strong>
-                  <ul class="report-tags">
-                    {% for skill in role.required_skills %}
-                      <li>{{ skill }}</li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              {% endif %}
-
-              {% if role.matched_skills %}
-                <div class="report-subsection">
-                  <strong>你选择的相关技能</strong>
-                  <ul class="report-tags">
-                    {% for skill in role.matched_skills %}
-                      <li>{{ skill }}</li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              {% endif %}
-
-              {% if role.matched_interests %}
-                <div class="report-subsection">
-                  <strong>你提到的相关兴趣</strong>
-                  <ul class="report-tags">
-                    {% for interest in role.matched_interests %}
-                      <li>{{ interest }}</li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              {% endif %}
-
-              {% if role.skill_gaps %}
-                <div class="report-subsection">
-                  <strong>可以继续了解或练习的技能</strong>
-                  <ul class="report-tags">
-                    {% for gap in role.skill_gaps %}
-                      <li>{{ gap }}</li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              {% endif %}
-
-              {% if role.sdgs %}
-                <div class="report-subsection">
-                  <strong>可能关联的联合国可持续发展目标</strong>
-                  <ul class="report-tags">
-                    {% for sdg in role.sdgs %}
-                      <li class="sdg-tag">{{ sdg }}</li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              {% endif %}
-            </section>
-
-            {% if role.mentor %}
-              <section class="mentor-note">
-                <h3>了解从业者</h3>
-                <p>目前提供的从业者信息尚未核实，因此这里不列出个人推荐。可以通过可信的行业社群、校友或公开访谈，寻找多种真实职业经历。</p>
-              </section>
+{% if not results %}
+  <section class="card empty-results">
+    <h2>No suitable match found yet</h2>
+    <p>
+      We haven’t found a career in our current list that reaches the match
+      threshold for your answers. We’ll continue to improve the survey.
+    </p>
+    <p lang="zh-CN">
+      很抱歉，目前没有录入与您匹配度足够高的职业。我们会继续完善职业库。
+    </p>
+    <a class="button button--primary" href="{{ url_for('survey', reset=1) }}">
+      Start over
+    </a>
+  </section>
+{% else %}
+  {% for role in results %}
+    <article class="role-card {% if loop.first %}role-card--top{% endif %}">
+      <header class="role-card__header">
+        <div>
+          <p class="role-rank">
+            {% if loop.index == 1 %}
+              Your 1st best match
+            {% elif loop.index == 2 %}
+              Your 2nd best match
             {% else %}
-              <section class="mentor-note">
-                <h3>了解真实工作日常</h3>
-                <p>目前没有经过核实的从业者资料。你可以留意可信的职业访谈或从业者分享，了解不同人的真实经历。</p>
-              </section>
+              Your 3rd best match
             {% endif %}
-
-            <section class="learning-plan" aria-labelledby="plan-{{ loop.index }}">
-              <h3 id="plan-{{ loop.index }}">一个可以自己调整的尝试计划</h3>
-              <p><strong>经验建议：</strong>{{ role.learning_plan.experience }}</p>
-              {% if role.learning_plan.time %}
-                <p><strong>参考时间：</strong>{{ role.learning_plan.time }}。这只是建议，不是就业承诺。</p>
-              {% else %}
-                <p><strong>时间安排：</strong>问卷没有收集目标时间，因此这里不作时间假设。</p>
-              {% endif %}
-              {% if role.learning_plan.country %}
-                <p><strong>地区信息：</strong>{{ role.learning_plan.country }}。相关路径可能因地区而异，请自行核对当地要求。</p>
-              {% else %}
-                <p><strong>地区信息：</strong>问卷没有收集目标国家或地区，因此这里不作地域假设。</p>
-              {% endif %}
-              {% if role.learning_plan.phases %}
-                <ol class="learning-plan__phases">
-                  {% for phase in role.learning_plan.phases %}
-                    <li>
-                      <strong>{{ phase.title }}</strong>
-                      <p>{{ phase.description }}</p>
-                    </li>
-                  {% endfor %}
-                </ol>
-              {% endif %}
-              {% if role.learning_plan.tip %}
-                <aside class="plan-tip"><strong>给自己的提醒：</strong>{{ role.learning_plan.tip }}</aside>
-              {% endif %}
-            </section>
-
-            <div class="role-card__actions">
-              <a class="report-button report-button--quiet" href="{{ url_for('role_detail', role_id=role.id) }}">继续了解这个方向</a>
-            </div>
-          </article>
-        {% endfor %}
-      {% else %}
-        <section class="empty-results" aria-labelledby="empty-title">
-          <h2 id="empty-title">这次暂时没有达到参考门槛的方向</h2>
-          <p>
-            在目前收录的 {{ catalog_count }} 个职业方向中，没有结果达到 {{ threshold }} 分的展示门槛。
-            这不代表你没有适合的职业，只说明这份小型职业目录与这次自我填写的信息暂时没有形成足够对应。
           </p>
-          <p>你可以修改回答后再看看，也可以先浏览职业目录以外的方向；这份结果不为你的选择设限。</p>
-        </section>
-      {% endif %}
-    </section>
 
-    <section class="report-note" aria-label="匹配规则说明">
-      <strong>匹配规则，公开说明：</strong>
-      技能部分最多 60 分，按“你选择的相关技能数量 ÷ 该方向相关技能总数”计算；
-      兴趣部分最多 40 分，按“你选择的相关兴趣数量 ÷ 该方向相关兴趣总数”计算。
-      两部分分别四舍五入后相加；达到 {{ threshold }} 分才列为结果，按分数从高到低展示最多三个。
-      年限经验只用于学习建议，不参与排名。这个规则较粗略，不能替代探索、交流或实际体验。
-    </section>
+          <h2>{{ role.title }}</h2>
 
-    <section class="answer-summary" aria-labelledby="answers-title">
-      <h2 id="answers-title">回看你的回答</h2>
-      <p>这些是本次探索的输入记录。你可以据此检查哪些选择最贴近现在的自己。</p>
-      <div class="results-list">
-        {% for item in summary %}
-          <section class="result-item" aria-labelledby="answer-title-{{ loop.index }}">
-            <h3 id="answer-title-{{ loop.index }}">{{ item.title }}</h3>
-            {% if item.labels %}
-              <ul class="result-labels">
-                {% for label in item.labels %}
-                  <li>{{ label }}</li>
-                {% endfor %}
-              </ul>
-            {% else %}
-              <p class="result-empty-answer">未选择内容</p>
-            {% endif %}
-          </section>
-        {% else %}
-          <p class="results-empty">目前没有可显示的回答摘要。</p>
-        {% endfor %}
-      </div>
-    </section>
+          <span
+            class="tier-tag"
+            style="
+              color: {{ role.tier.color }};
+              background: {{ role.tier.bg }};
+              border-color: {{ role.tier.border }};
+            "
+          >
+            {{ role.tier.emoji }} {{ role.tier.title }}
+          </span>
+        </div>
 
-    <div class="report-actions" aria-label="报告操作">
-      <a class="report-button report-button--quiet" href="{{ url_for('download_answers') }}">下载我的回答（JSON）</a>
-      <form method="post" action="{{ url_for('edit_survey') }}">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-        <button class="report-button report-button--quiet" type="submit">修改回答</button>
-      </form>
-      <form method="post" action="{{ url_for('restart_survey') }}">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-        <button class="report-button" type="submit">重新开始</button>
-      </form>
-      <a class="report-back" href="{{ url_for('index') }}">回到首页</a>
-    </div>
-  </div>
+        <p class="score">
+          {{ role.totalPoints }}
+          <span>pts</span>
+        </p>
+      </header>
+
+      <p class="tier-description" style="color: {{ role.tier.color }};">
+        {{ role.tier.desc }}
+      </p>
+
+      <details class="breakdown">
+        <summary>View point breakdown</summary>
+        <div class="breakdown__list">
+          {% for item in role.breakdown %}
+            <div class="breakdown__item">
+              <span>{{ item.label }}</span>
+              <strong class="{% if item.points < 0 %}points--negative{% else %}points--positive{% endif %}">
+                {% if item.points > 0 %}+{% endif %}{{ item.points }} pts
+              </strong>
+            </div>
+          {% endfor %}
+
+          <div class="breakdown__item breakdown__item--total">
+            <span>Total points</span>
+            <strong>{{ role.totalPoints }} pts</strong>
+          </div>
+        </div>
+      </details>
+
+      <section class="career-info">
+        <h3>Career overview</h3>
+        <p><strong>Content &amp; rewards:</strong> {{ role.overview }}</p>
+        <p><strong>Industry outlook:</strong> {{ role.outlook }}</p>
+        <p>
+          <strong>AI era adaptation:</strong>
+          <span
+            class="ai-tag"
+            style="
+              color: {{ role.ai_match.color }};
+              background: {{ role.ai_match.bg }};
+            "
+          >
+            {{ role.ai_match.level }}
+          </span>
+        </p>
+        <p>
+          <strong>Core required skills:</strong>
+          {{ role.required_skills | join(", ") }}
+        </p>
+        <div>
+          <strong>SDG relevance:</strong>
+          <div class="tag-list">
+            {% for sdg in role.sdgs %}
+              <span class="sdg-tag">{{ sdg }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
+      <section class="mentor-card">
+        <h3>Industry role model</h3>
+        <h4>{{ role.mentor.name }}</h4>
+
+        <div class="mentor-meta">
+          <span>{{ role.mentor.org }}</span>
+          <span>{{ role.mentor.years }} in the field</span>
+        </div>
+
+        <p><strong>Career path:</strong> {{ role.mentor.path }}</p>
+        <p><strong>A day in the life:</strong> {{ role.mentor.daily }}</p>
+      </section>
+
+      <section class="learning-plan">
+        <h3>Your personalized action plan</h3>
+        <p>
+          Targeting employment in
+          <strong>{{ role.learning_plan.time }}</strong>
+          in
+          <strong>{{ role.learning_plan.country }}</strong>.
+        </p>
+
+        <ul class="learning-plan__phases">
+          {% for phase in role.learning_plan.phases %}
+            <li>
+              <strong>{{ phase.title }}</strong>
+              <p>{{ phase.description }}</p>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <aside class="plan-tip">
+          <strong>Advice:</strong> {{ role.learning_plan.tip }}
+        </aside>
+      </section>
+
+      <a
+        class="button button--secondary"
+        href="{{ url_for('role_detail', role_id=role.id) }}"
+      >
+        View role details
+      </a>
+    </article>
+  {% endfor %}
+{% endif %}
+
+<div class="results-actions">
+  <button class="button button--secondary" id="download-data" type="button">
+    Download my answers (JSON)
+  </button>
+  <a class="button button--secondary" href="{{ url_for('survey', reset=1) }}">
+    Start over
+  </a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const surveyAnswers = {{ answers | tojson }};
+
+  document.getElementById("download-data").addEventListener("click", () => {
+    const file = new Blob(
+      [JSON.stringify(surveyAnswers, null, 2)],
+      { type: "application/json" }
+    );
+    const url = URL.createObjectURL(file);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "career-survey-data.json";
+    link.click();
+
+    URL.revokeObjectURL(url);
+  });
+</script>
 {% endblock %}

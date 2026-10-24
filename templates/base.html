@@ -1,40 +1,37 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f4ecd7">
-  <meta name="description" content="从技能、经验和兴趣出发，慢慢找到适合你的未来职业。">
-  <title>{% block title %}未来职业探索{% endblock %}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='survey.css') }}">
-  {% block head_extra %}{% endblock %}
+
+  <title>{% block title %}Career Match Survey — Hello Future!{% endblock %}</title>
+
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}"
+  >
+
+  {% block head %}{% endblock %}
 </head>
-<body class="survey-body">
-  <a class="skip-link" href="#main-content">跳到主要内容</a>
-  <div class="survey-site">
-    <header class="survey-header">
-      <a class="survey-brand" href="{{ url_for('index') }}" aria-label="未来职业探索首页">
-        <span class="survey-brand-mark" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z"/></svg>
-        </span>
-        <span>未来职业探索</span>
+  <body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-brand" href="{{ url_for('index') }}">
+        Hello Future!
       </a>
-      <nav class="survey-nav" aria-label="主导航">
-        <a href="{{ url_for('index') }}">返回首页</a>
-      </nav>
-    </header>
+      <span class="site-header__caption">Career Match Survey</span>
+    </div>
+  </header>
 
-    <main class="survey-main" id="main-content">
-      {% block content %}{% endblock %}
-    </main>
+  <main class="wrap">
+    {% block content %}{% endblock %}
+  </main>
 
-    <footer class="survey-footer">
-      <span>给下一段旅程一点空间</span>
-      <span>从认识自己开始，不必一次想清所有答案。</span>
-    </footer>
-  </div>
+  <footer class="site-footer">
+    <p>Wishing you a better future, hello future!</p>
+    <p lang="en">Wishing you a better future, hello future！</p>
+  </footer>
+
+  {% block scripts %}{% endblock %}
 </body>
 </html>

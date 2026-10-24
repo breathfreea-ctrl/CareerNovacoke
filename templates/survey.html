@@ -1,94 +1,179 @@
 {% extends "base.html" %}
 
-{% block title %}职业探索问卷｜未来职业探索{% endblock %}
-
-{% block head_extra %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='survey-questions.css') }}">
-{% endblock %}
+{% block title %}Survey — Hello Future!{% endblock %}
 
 {% block content %}
-  <section class="questionnaire-page" aria-labelledby="survey-page-title">
-    <div class="questionnaire-topline">
-      <p class="questionnaire-kicker">未来职业探索 <span aria-hidden="true">·</span> 一步一步来</p>
-      {% if questions %}
-        <p class="question-count">Question {{ current_index }} of {{ total_questions }}</p>
+<section class="card survey-card">
+  <div class="survey-progress" aria-label="Survey progress">
+    <div
+      class="survey-progress__bar"
+      style="width: {{ (step_number / total_steps * 100) | round | int }}%;"
+    ></div>
+  </div>
+
+  <p class="step-text">
+    Question {{ step_number }} of {{ total_steps }}
+  </p>
+
+  <form method="post" action="{{ url_for('survey') }}" novalidate>
+    <input type="hidden" name="question_id" value="{{ question.id }}">
+
+    <fieldset class="question">
+      <legend class="question__title">
+        {{ question.title }}
+        {% if question.required %}
+          <span class="required-mark" aria-label="required">*</span>
+        {% endif %}
+      </legend>
+
+      {% if question.hint %}
+        <p class="hint">{{ question.hint }}</p>
       {% endif %}
-    </div>
 
-    {% if questions %}
-      <div
-        class="question-progress"
-        role="progressbar"
-        aria-label="问卷进度"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        aria-valuenow="{{ progress }}"
-      >
-        <span class="question-progress-fill" style="width: {{ progress }}%"></span>
-      </div>
+      {% if error %}
+        <p class="form-error" role="alert">{{ error }}</p>
+      {% endif %}
 
-      <h1 class="questionnaire-title" id="survey-page-title">把下一步，一点点理清</h1>
-
-      <form class="question-form" method="post" action="{{ url_for('survey') }}">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-        {% for question in questions %}
-          {% set selected_answers = answers.get(question.id, []) %}
-          <input type="hidden" name="question_id" value="{{ question.id }}">
-          <fieldset
-            class="question-fieldset"
-            aria-describedby="{% if question.hint %}question-hint-{{ question.id }}{% endif %}{% if question.hint and error %} {% endif %}{% if error %}question-error-{{ question.id }}{% endif %}"
-          >
-            <legend class="question-legend" id="question-legend-{{ question.id }}">
-              <span>{{ question.title }}</span>
-              {% if question.required %}
-                <span class="required-star" aria-hidden="true">*</span>
-                <span class="visually-hidden">必填</span>
-              {% endif %}
-            </legend>
-            {% if error %}
-              <p class="question-error" id="question-error-{{ question.id }}" role="alert">{{ error }}</p>
-            {% endif %}
-            {% if question.hint %}
-              <p class="question-hint" id="question-hint-{{ question.id }}">{{ question.hint }}</p>
-            {% endif %}
-
-            <div class="answer-options">
-              {% for option in question.options %}
-                {% set input_id = "question-" ~ question.id ~ "-option-" ~ loop.index %}
-                <label class="answer-option" for="{{ input_id }}">
-                  <input
-                    id="{{ input_id }}"
-                    type="{% if question.input_type == 'radio' %}radio{% else %}checkbox{% endif %}"
-                    name="{{ question.id }}"
-                    value="{{ option.value }}"
-                    {% if option.value in selected_answers %}checked{% endif %}
-                    {% if question.input_type == 'radio' and question.required %}required{% endif %}
-                  >
-                  <span class="answer-option-mark" aria-hidden="true"></span>
-                  <span class="answer-option-label">{{ option.label }}</span>
-                </label>
-              {% endfor %}
-            </div>
-          </fieldset>
-        {% endfor %}
-
-        <div class="question-actions">
-          {% if current_index > 1 %}
-            <button class="question-button question-button-secondary" type="submit" name="action" value="back" formnovalidate>Back</button>
-          {% endif %}
-          {% if current_index < total_questions %}
-            <button class="question-button question-button-primary" type="submit" name="action" value="next">Next</button>
-          {% else %}
-            <button class="question-button question-button-primary" type="submit" name="action" value="next">Submit</button>
-          {% endif %}
+      {% if question.type == "single" %}
+        <div class="option-list">
+          {% for option in question.options %}
+            <label class="option-card">
+              <input
+                type="radio"
+                name="{{ question.id }}"
+                value="{{ option.v }}"
+                {% if answers.get(question.id) == option.v %}checked{% endif %}
+                {% if question.required %}required{% endif %}
+              >
+              <span>{{ option.t }}</span>
+            </label>
+          {% endfor %}
         </div>
-      </form>
-    {% else %}
-      <div class="question-empty" role="status">
-        <h1 class="questionnaire-title" id="survey-page-title">No questions are available.</h1>
-        <p>目前没有可显示的问题，请稍后再来，或先回到首页继续浏览。</p>
-        <a class="question-home-link" href="{{ url_for('index') }}">回到首页</a>
-      </div>
-    {% endif %}
-  </section>
+
+      {% elif question.type == "groupedMulti" %}
+        {% set selected_values = answers.get(question.id, []) %}
+        {% set detail_map = answers.get(question.id ~ "_detail", {}) %}
+
+        <div class="group-list">
+          {% for group in question.groups %}
+            {% set group_is_open = namespace(value=false) %}
+            {% for child in group.children %}
+              {% if child.label in selected_values %}
+                {% set group_is_open.value = true %}
+              {% endif %}
+            {% endfor %}
+
+            <details class="option-group" {% if group_is_open.value %}open{% endif %}>
+              <summary class="option-group__heading">
+                {{ group.label }}
+              </summary>
+
+              <div class="option-group__body">
+                {% for child in group.children %}
+                  {% set is_selected = child.label in selected_values %}
+                  {% set child_details = detail_map.get(child.label, {}) %}
+
+                  <div class="skill-option">
+                    <label class="checkbox-option">
+                      <input
+                        type="checkbox"
+                        name="{{ question.id }}"
+                        value="{{ child.label }}"
+                        {% if is_selected %}checked{% endif %}
+                      >
+                      <span>{{ child.label }}</span>
+                    </label>
+
+                    {% if question.hasFollowUp %}
+                      <div
+                        class="skill-followup"
+                        data-followup-for="{{ child.id }}"
+                        {% if not is_selected %}hidden{% endif %}
+                      >
+                        <label class="field">
+                          <span>Experience</span>
+                          <select name="years__{{ child.label }}">
+                            <option value="">Select years...</option>
+                            {% for years in [
+                              "Less than 1 year",
+                              "1–2 years",
+                              "2–3 years",
+                              "More than 3 years"
+                            ] %}
+                              <option
+                                value="{{ years }}"
+                                {% if child_details.get("years") == years %}selected{% endif %}
+                              >
+                                {{ years }}
+                              </option>
+                            {% endfor %}
+                          </select>
+                        </label>
+
+                        <label class="field">
+                          <span>Certification</span>
+                          <select name="cert__{{ child.label }}">
+                            <option value="">Select...</option>
+                            {% for certification in ["Yes", "No"] %}
+                              <option
+                                value="{{ certification }}"
+                                {% if child_details.get("cert") == certification %}selected{% endif %}
+                              >
+                                {{ certification }}
+                              </option>
+                            {% endfor %}
+                          </select>
+                        </label>
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+            </details>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </fieldset>
+
+    <div class="survey-actions">
+      {% if can_go_back %}
+        <button
+          class="button button--secondary"
+          type="submit"
+          name="action"
+          value="back"
+          formnovalidate
+        >
+          Back
+        </button>
+      {% endif %}
+
+      <button
+        class="button button--primary"
+        type="submit"
+        name="action"
+        value="next"
+        formnovalidate
+      >
+        {% if is_last %}See my results{% else %}Next{% endif %}
+      </button>
+    </div>
+  </form>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.querySelectorAll(".skill-option input[type='checkbox']").forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      const followup = checkbox
+        .closest(".skill-option")
+        .querySelector(".skill-followup");
+
+      if (followup) {
+        followup.hidden = !checkbox.checked;
+      }
+    });
+  });
+</script>
 {% endblock %}

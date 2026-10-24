@@ -1,141 +1,323 @@
-"""Transparent exploratory rules, not a validated aptitude or employment model."""
-
-from models import CAREERS
-from survey_questions import QUESTIONS
-
-MATCH_THRESHOLD = 20
-LABELS = {
-    question["id"]: {option["value"]: option["label"] for option in question["options"]}
-    for question in QUESTIONS
-}
-
-# Broad categories describe relevance, not proof of professional competence.
-PROFILES = {
-    1: {
-        "title": "人工智能工程师",
-        "skills": ("programming", "data", "research"),
-        "interests": ("technology",),
-        "overview": "把编程、机器学习和数据工程结合起来，将模型转化为可使用的软件系统。",
-        "practice": "用公开且允许使用的数据做一个小型模型项目，记录数据处理、评估和部署过程。",
-    },
-    2: {
-        "title": "会计与财务专业人员",
-        "skills": ("data", "research", "management"),
-        "interests": ("business",),
-        "overview": "整理财务信息，参与报表、审计、税务和合规工作，帮助组织作出有依据的决策。",
-        "practice": "用虚构账目练习记录交易、编制简单报表和检查差错，了解目标地区的会计准则。",
-    },
-    3: {
-        "title": "可持续发展教育课程开发者",
-        "skills": ("teaching", "writing", "design", "research", "management"),
-        "interests": ("education", "environment"),
-        "overview": "围绕可持续发展主题设计课程、教材和学习活动，关注学习效果与包容性。",
-        "practice": "选择一个可持续发展主题，设计一节微课，写出目标、活动和反馈方式并请人试学。",
-    },
-    4: {
-        "title": "心理学专业人员",
-        "skills": ("communication", "research", "service"),
-        "interests": ("health", "education"),
-        "overview": "运用心理学研究和专业方法理解行为、支持心理健康；临床工作通常有严格的资质要求。",
-        "practice": "学习心理学研究方法和伦理，阅读一篇入门研究并写摘要，不自行开展诊断或治疗。",
-    },
-    5: {
-        "title": "数字接入项目专员",
-        "skills": ("management", "communication", "programming", "service"),
-        "interests": ("technology", "community"),
-        "overview": "协调信息通信技术普及项目，改善社区数字接入，连接技术、项目管理和社会服务。",
-        "practice": "为一个社区数字服务设计需求调研和简要项目方案，列出参与方、资源及评估指标。",
-    },
-    6: {
-        "title": "医生",
-        "skills": ("research", "communication", "service"),
-        "interests": ("health",),
-        "overview": "在规定的专业训练和执业许可范围内参与疾病诊断、治疗及健康照护。",
-        "practice": "了解目标地区认可的医学教育和执业路径，学习基础医学知识与医疗伦理，不进行医疗操作。",
-    },
-    7: {
-        "title": "律师",
-        "skills": ("research", "writing", "communication"),
-        "interests": ("justice", "business"),
-        "overview": "在获准执业的地区提供法律分析、文书、协商或诉讼服务，具体资格要求因地区而异。",
-        "practice": "阅读公开案例，练习整理事实、争议与论证，并核查目标地区的法律教育和执业要求。",
-    },
-}
+"""问卷答案与职业匹配评分，以及个性化学习计划生成。"""
 
 
-def score_role(career, answers):
-    """Build a report from source facts and explicit survey mappings."""
-    profile = PROFILES[career["id"]]
-    selected_skills = set(answers.get("skills", []))
-    selected_interests = set(answers.get("interests", []))
-    skill_values = [value for value in profile["skills"] if value in selected_skills]
-    interest_values = [value for value in profile["interests"] if value in selected_interests]
-    skill_points = round(60 * len(skill_values) / len(profile["skills"]))
-    interest_points = round(40 * len(interest_values) / len(profile["interests"]))
-    score = skill_points + interest_points
-    gaps = [
-        LABELS["skills"][value] for value in profile["skills"]
-        if value not in selected_skills
-    ]
-    experience_value = next(iter(answers.get("experience", [])), "starting")
-    experience = LABELS["experience"].get(experience_value, "尚未提供")
-    learning_focus = (
-        "先盘点可迁移的项目经验，并用一个职业相关的小项目检验它们。年限不等于该职业的专业经验。"
-        if experience_value in {"3_5", "6_plus"} else
-        "先从基础概念和一个低风险练习入手，再决定是否深入学习。"
-    )
-    if score >= 70:
-        tier = {
-            "key": "strong", "title": "较多探索线索",
-            "desc": "你的自报技能与兴趣和这条方向有较多交集，仍需了解专业门槛与实际工作。",
+def get_salary_range(salary_answer):
+    """将问卷中的薪资选项转换为最低值和最高值。"""
+    salary_ranges = {
+        "Under $30,000": (0, 30000),
+        "$30,000 – $60,000": (30000, 60000),
+        "$60,000 – $100,000": (60000, 100000),
+        "$100,000 – $150,000": (100000, 150000),
+        "$150,000 – $250,000": (150000, 250000),
+        "Above $250,000": (250000, 9999999),
+    }
+    return salary_ranges.get(salary_answer, (0, 9999999))
+
+
+def match_user(answers, roles=None):
+    """
+    按技能、兴趣、薪资和地区计算职业匹配分。
+
+    返回按分数从高到低排列的职业字典列表。
+    """
+    if roles is None:
+        # 延迟导入，避免模块互相导入时出现循环依赖。
+        from models import ROLES
+
+        roles = ROLES
+
+    user_skills = answers.get("skills_detail", {})
+    user_interests = answers.get("interest", [])
+    user_salary_min, user_salary_max = get_salary_range(answers.get("salary"))
+    user_country = answers.get("country")
+
+    results = []
+
+    for role in roles:
+        total_points = 0
+        breakdown = []
+
+        # 已选择的必需技能加 10 分；有证书再加 20 分。
+        for skill in role.get("required_skills", []):
+            skill_detail = user_skills.get(skill)
+            if skill_detail:
+                total_points += 10
+                breakdown.append(
+                    {
+                        "label": f"{skill} (Skill)",
+                        "points": 10,
+                        "type": "skill",
+                    }
+                )
+
+                if skill_detail.get("cert") == "Yes":
+                    total_points += 20
+                    breakdown.append(
+                        {
+                            "label": f"{skill} (Certification)",
+                            "points": 20,
+                            "type": "cert",
+                        }
+                    )
+
+        # 多个兴趣匹配时，沿用原逻辑，只按第一个匹配项加分。
+        matched_interests = [
+            interest
+            for interest in role.get("interests", [])
+            if interest in user_interests
+        ]
+        if matched_interests:
+            total_points += 20
+            breakdown.append(
+                {
+                    "label": f"Interest Match ({matched_interests[0]})",
+                    "points": 20,
+                    "type": "interest",
+                }
+            )
+
+        role_salary_min, role_salary_max = role.get("salary_range", (0, 9999999))
+        salary_is_disjoint = (
+            user_salary_max < role_salary_min
+            or user_salary_min > role_salary_max
+        )
+
+        if salary_is_disjoint:
+            total_points -= 20
+            breakdown.append(
+                {
+                    "label": "Salary Expectation Mismatch",
+                    "points": -20,
+                    "type": "salary_minus",
+                }
+            )
+        else:
+            total_points += 20
+            breakdown.append(
+                {
+                    "label": "Salary Expectation Match",
+                    "points": 20,
+                    "type": "salary_plus",
+                }
+            )
+
+        if user_country in role.get("top_countries", []):
+            total_points += 25
+            breakdown.append(
+                {
+                    "label": f"Top Country Match ({user_country})",
+                    "points": 25,
+                    "type": "country",
+                }
+            )
+
+        results.append(
+            {
+                **role,
+                "totalPoints": total_points,
+                "breakdown": breakdown,
+            }
+        )
+
+    return sorted(results, key=lambda result: result["totalPoints"], reverse=True)
+
+
+def get_tier(points):
+    """根据总分返回结果页展示的匹配等级。"""
+    if points >= 115:
+        return {
+            "title": "You are born for this!",
+            "desc": (
+                "Your skills, interests, and expectations are perfectly aligned."
+            ),
+            "color": "#16a34a",
+            "bg": "#f0fdf4",
+            "border": "#bbf7d0",
+            "emoji": "🌟",
         }
-    elif score >= 40:
-        tier = {
-            "key": "explore", "title": "值得进一步了解",
-            "desc": "这条方向与你的一部分回答相符，可以用小项目和真实职业信息继续核实。",
+
+    if points >= 75:
+        return {
+            "title": "You are highly suitable for this job",
+            "desc": (
+                "You have a strong foundation. A little polish and you are good to go."
+            ),
+            "color": "#2563eb",
+            "bg": "#eff6ff",
+            "border": "#bfdbfe",
+            "emoji": "💙",
         }
-    else:
-        tier = {
-            "key": "start", "title": "初步探索线索",
-            "desc": "目前只有少量交集；先了解工作内容，不必据此急于作出选择。",
+
+    if points >= 35:
+        return {
+            "title": "Suitable, but needs improvement",
+            "desc": (
+                "You have some basics, but there are clear skill gaps to fill."
+            ),
+            "color": "#d97706",
+            "bg": "#fffbeb",
+            "border": "#fde68a",
+            "emoji": "💛",
         }
+
     return {
-        "id": career["id"], "title": profile["title"], "totalPoints": score,
-        "tier": tier,
-        "breakdown": [
-            {"label": f"相关技能：{len(skill_values)} / {len(profile['skills'])} 项（满分 60）",
-             "points": skill_points},
-            {"label": f"相关兴趣：{len(interest_values)} / {len(profile['interests'])} 项（满分 40）",
-             "points": interest_points},
-        ],
-        "overview": profile["overview"],
-        "outlook": "当前职业库不提供经核验的实时招聘、增长率或薪资数据，请结合当地官方信息了解行业。",
-        "ai_match": {"level": "未作适应性评级；建议学习相关工具，并重视隐私、伦理和人工核验。"},
-        "required_skills": list(career["required_skills"]),
-        "sdgs": list(career["sdgs"]),
-        "mentor": None,
-        "matched_skills": [LABELS["skills"][value] for value in skill_values],
-        "matched_interests": [LABELS["interests"][value] for value in interest_values],
-        "skill_gaps": gaps,
-        "learning_plan": {
-            "experience": experience, "time": None, "country": None,
-            "phases": [
-                {"title": "梳理起点", "description": learning_focus},
-                {"title": "补充相关能力", "description": (
-                    "优先了解你尚未勾选的相关类别：" + "、".join(gaps) +
-                    "。未勾选只代表未自报，并不证明你缺乏这些能力。"
-                    if gaps else
-                    "你已勾选所有相关基础类别；下一步应核实职业专门知识与实际熟练度。"
-                )},
-                {"title": "做一次小规模验证", "description": profile["practice"]},
-            ],
-            "tip": "问卷未询问目标国家或就业时间，不能据此预测入职周期。医生、律师、心理学及部分会计岗位需核查当地学历、训练与执业要求。",
-        },
+        "title": "Not quite suitable",
+        "desc": "This role does not match your current profile well.",
+        "color": "#dc2626",
+        "bg": "#fef2f2",
+        "border": "#fecaca",
+        "emoji": "❤️",
     }
 
 
-def match_careers(answers):
-    """Return at most three eligible careers; tied scores use stable source IDs."""
-    ranked = [score_role(career, answers) for career in CAREERS]
-    ranked.sort(key=lambda role: (-role["totalPoints"], role["id"]))
-    return [role for role in ranked if role["totalPoints"] >= MATCH_THRESHOLD][:3]
+def generate_learning_plan(role, answers):
+    """
+    根据目标职业和问卷答案生成学习计划数据。
+
+    返回字典，模板可以遍历其中的 phases、courses 和 practical。
+    """
+    target_time = answers.get("time", "")
+    country = answers.get("country", "")
+    user_skills = answers.get("skills_detail", {})
+
+    skills_to_learn = []
+    for skill in role.get("required_skills", []):
+        skill_detail = user_skills.get(skill)
+
+        if not skill_detail:
+            skills_to_learn.append(skill)
+            continue
+
+        years = skill_detail.get("years")
+        if years in {"Less than 1 year", "1–2 years"}:
+            skills_to_learn.append(skill)
+
+    certifications = role.get("certs", {})
+    recommended_certifications = (
+        certifications.get(country)
+        or certifications.get("Default")
+        or ["Industry Standard Certification"]
+    )
+
+    learning_resources = role.get("learning_resources", {})
+    courses = learning_resources.get("courses", [])[:2]
+    practical = learning_resources.get("practical", [])[:2]
+
+    course_text = " and ".join(courses)
+    practical_text = " and ".join(practical)
+    skills_text = ", ".join(skills_to_learn) or "your existing strengths"
+    certification = recommended_certifications[0]
+
+    if target_time == "This year":
+        phases = [
+            {
+                "title": "Months 1–3: Intensive Skill Acquisition",
+                "description": (
+                    f"Take specialized courses via {course_text} to cover "
+                    f"the missing areas: {skills_text}."
+                ),
+            },
+            {
+                "title": "Months 4–6: Certification & Portfolio",
+                "description": (
+                    f"Prepare for {certification}. Build your portfolio by "
+                    f"doing: {practical_text}."
+                ),
+            },
+            {
+                "title": "Immediate Action",
+                "description": (
+                    "Start applying for junior roles or internships after "
+                    "your portfolio is ready. Don't wait for the certificate."
+                ),
+            },
+        ]
+
+    elif target_time == "In 1 year":
+        phases = [
+            {
+                "title": "Months 1–6: Deep Skill Building",
+                "description": (
+                    f"Study through {course_text}. Focus on "
+                    f"{skills_text}."
+                ),
+            },
+            {
+                "title": "Months 7–9: Certification & Practical Application",
+                "description": (
+                    f"Prepare for {certification} and apply your knowledge "
+                    f"through: {practical_text}."
+                ),
+            },
+            {
+                "title": "Months 10–12: Internship & Job Hunting",
+                "description": (
+                    f"Seek an internship or volunteer role, polish your resume, "
+                    f"and begin interviewing in {country}."
+                ),
+            },
+        ]
+
+    elif target_time == "In 2-3 years":
+        phases = [
+            {
+                "title": "Year 1: Academic & Foundational Deep Dive",
+                "description": (
+                    f"Build a strong foundation using {course_text} and "
+                    f"develop {skills_text}."
+                ),
+            },
+            {
+                "title": "Year 2: Certification & Long-term Practice",
+                "description": (
+                    f"Work towards {certification} and gain practical "
+                    f"experience through: {practical_text}."
+                ),
+            },
+            {
+                "title": "Year 3: Networking & Transition",
+                "description": (
+                    f"Build your professional network in {country}, attend "
+                    "industry events, and prepare to transition into the field."
+                ),
+            },
+        ]
+
+    else:
+        phases = [
+            {
+                "title": "Years 1–2: Advanced Academic Route",
+                "description": (
+                    f"Pursue a suitable long-term qualification and develop "
+                    f"{skills_text} using resources such as {course_text}."
+                ),
+            },
+            {
+                "title": "Years 3–4: Specialized Practice",
+                "description": (
+                    f"Work towards {certification} and build practical "
+                    f"experience through: {practical_text}."
+                ),
+            },
+            {
+                "title": "Year 5+: Thought Leadership",
+                "description": (
+                    f"Publish research, lead projects, and build expertise "
+                    f"in your chosen field in {country}."
+                ),
+            },
+        ]
+
+    return {
+        "time": target_time,
+        "country": country,
+        "skills_to_learn": skills_to_learn,
+        "certification": certification,
+        "courses": courses,
+        "practical": practical,
+        "phases": phases,
+        "tip": (
+            "Don't drown yourself in certificates. Focus on practical projects "
+            "and one core credential. Employers value real experience."
+        ),
+    }

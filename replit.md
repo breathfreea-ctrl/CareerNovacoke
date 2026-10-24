@@ -1,5 +1,17 @@
 # Running the imported homepage
 
+## Current visual update
+
+The current templates use `static/style.css` (older sections below describe a
+previous version). Shared colors are muted yellow, dusty rose and sage.
+The homepage entrance uses `static/entry.js`: automatic dismissal, click,
+Enter/Escape, keyboard containment, and immediate bypass for reduced motion or
+disabled JavaScript. The existing survey entry remains `/survey?reset=1`.
+Run `python -m unittest discover -s tests -p 'test_entry_animation.py' -v`
+for the current entrance checks. Older regression files still reference removed
+templates/modules and need to be reconciled with the current application; do not
+interpret their previous passing count as validation of this version.
+
 - Stack: Python / Flask, keeping the existing project structure.
 - Run the **Start application** workflow, or run `python main.py`.
 - The server listens on `0.0.0.0:5000` and renders the existing
