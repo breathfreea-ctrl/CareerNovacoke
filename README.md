@@ -23,7 +23,7 @@
 | ----------------- | -------------------------------------------------- |
 | GitHub Repository | https://github.com/breathfreea-ctrl/CareerNovacoke |
 | Live Demo         | https://careernova-coke.replit.app                 |
-| Slide Deck        | https://example.com/slides                         |
+| Slide Deck        | https://drive.google.com/file/d/1kjFNzraZ--nkRZWUzv4FBf7diD-kte7q/view?usp=sharing|
 | Demo Video        | https://youtu.be/Ehhi850yV5c                       |
 
 ---
@@ -46,41 +46,67 @@ Our AI-powered website matches users with suitable careers, identifies their ski
 
 ### Tech Stack
 
-| Layer                            | Technology                   |
-| ---------------------------------| ---------------------------- |
-| Frontend                         | HTML, CSS, JavaScript, Jinja2 Templates|
-| Backend                          | Python, Flask / FastAPI      |
-| Data assistant & Documentation   | README.md, project documentation|
-| Hosting / Dev                    | Replit Core, Github           |
+| Layer                            | Technology                              |
+|----------------------------------|-----------------------------------------|
+| Frontend                         | HTML, CSS, JavaScript, Jinja2 Templates |
+| Backend                          | Python, Flask, models.py                |
+| Data & Documentation             | Product documentation,README.md         |
+| Hosting / Development            | Replit Core, GitHub, matching.py         |
 
 ---
 
-## Project Structure/待完善
+## Project Structure
 
 ```
 .
-├── docs/                    # Screenshots, diagrams
+├── .agents/                 # Agent-related configuration
 ├── src/
-│   ├── main.py              # Application entry point
-│   └── utils.py             # Helper functions
+│   └── repl_nix_workspace/  # Python workspace package
+├── static/                  # Frontend static assets (CSS, JavaScript, images)
+├── templates/               # HTML templates for the web pages
 ├── submission/              # Required submission documents
-│   ├── SDC2026_TeamName_Preliminary.pdf      # Preliminary submission
-│   ├── SDC2026_TeamName_TechDeclaration.pdf  # Technology declaration
-│   ├── SDC2026_TeamName_Replit_POU.pdf       # Replit proof of use
-├── .env.example             # Example environment variables
-├── .gitignore
-├── .replit                  # Replit run configuration
-├── LICENSE
-├── requirements.txt         # Python dependencies
-└── README.md
+│   ├── SDC2026_疯狂星期四_Preliminary.pdf      # Preliminary submission
+│   ├── SDC2026_疯狂星期四_TechDeclaration.pdf  # Technology declaration
+│   ├── SDC2026_疯狂星期四_Replit_POU.pdf       # Replit proof of use
+|   ├── demo_slide.pdf
+|   ├── SDC2026_疯狂星期四_slide_deck.pdf
+├── tests/                   # Application tests
+├── .gitignore               # Git ignore rules
+├── .replit                  # Replit run and deployment configuration
+├── .replitignore            # Files excluded from Replit
+├── LICENSE                  # Apache License 2.0
+├── README.md                # Project documentation
+├── main.py                  # Flask application entry point
+├── matching.py              # Career matching and learning-plan logic
+├── models.py                # Career data and questionnaire schema
+├── pyproject.toml           # Python project metadata and dependencies
+├── replit.md                # Replit project instructions
+└── uv.lock                  # Locked Python dependency versions
 ```
 
 ### Architecture
 
 ```
-User ──► Replit (App/Web) ──► RunPod Endpoint (GPU model)
-                │
-                └──► Response returned to user
+
+User
+  │
+  ▼
+Replit (Web Application)
+  │
+  ▼
+Flask Backend (main.py)
+  │
+  ▼
+Career Matching Logic (matching.py)
+  │
+  ▼
+Predefined Career Data (models.py)
+  │
+  ▼
+Ranked Career Recommendations
+  │
+  ▼
+Results displayed to User
 ```
 
 ---
@@ -89,11 +115,15 @@ User ──► Replit (App/Web) ──► RunPod Endpoint (GPU model)
 
 ### Option 1 — Run on Replit (Recommended)
 
-1. Open the [Replit Project](https://replit.com/@your-username/your-project), or import this repository via **Create Repl → Import from GitHub**.
-2. Open the **Secrets** tab (🔒) and add the variables listed in `.env.example`:
-   - `RUNPOD_API_KEY`我们没用runpod，要换掉这里
-   - `RUNPOD_ENDPOINT_ID`
-3. Click **Run**. Replit uses the `.replit` file to start `python src/main.py`.
+1. Open the [CareerNovacoke GitHub Repository](https://github.com/breathfreea-ctrl/CareerNovacoke), then import the repository into Replit using **Create Repl → Import from GitHub**.
+
+2. Allow Replit to set up the project environment and install the dependencies specified in `pyproject.toml`.
+
+3. Click **Run**. The `.replit` configuration starts the application using `python main.py`.
+
+4. Once the application starts successfully, open the Replit web preview to access CareerNova.
+
+**Note:** CareerNovacoke uses predefined career data and rule-based matching. No RunPod API keys or endpoint configuration are required.
 
 ### Option 2 — Run Locally
 
@@ -124,27 +154,31 @@ python -m unittest discover tests
 
 ---
 
-## How We Use Replit *(Required)*我们怎么用replit（用replit干了什么
+## How We Use Replit *(Required)
 
-Describe how your team used Replit. For example:
-
-- **Development:** Collaborative coding in a shared Repl using Multiplayer.
-- **Hosting:** The app is deployed with Replit Deployments at the Live Demo link above.
-- **Secrets:** API keys are stored in Replit Secrets, never in the code.
+- **Development:** Used Replit’s online development environment to write, modify, and debug CareerNova’s code.
+- **Testing:** Tested the questionnaire and fixed issues to ensure the website worked correctly.
+- **Hosting:** Used Replit Deployments to publish CareerNova as a publicly accessible website.
+- **Version Control:** Connected the project to GitHub to manage source code and track changes.
 
 📄 Proof of use: [`submission/SDC2026_TeamName_Replit_POU.pdf`](submission/SDC2026_TeamName_Replit_POU.pdf)
 
 ---
 
-## Challenges & Learnings（我们在开发过程遇到什么难题，怎么解决难题，从中学到什么
+## Challenges & Learnings
 
-- What challenges did you face, and how did you overcome them?
-- What did your team learn?
+- Challenges & Solutions
+Our main challenge was that the career questionnaire kept returning to the first question instead of progressing to the next step. We used debugging logs to trace the issue and discovered that although the answers and next question were correctly processed, the Flask session was not preserved because the browser was not sending the session cookie. We adjusted the session cookie configuration and tested the application again using the Replit preview and a separate browser tab.
 
-## /Future Improvements（网站哪些方面要提升，怎么提升
+- Key Learnings
+We learned the importance of systematic debugging, understanding Flask sessions and browser cookies, configuring secure cookies correctly, and testing the application across different environments. We also learned to verify the actual cause of a problem through logs rather than relying on assumptions.
+What did your team learn?
 
-- [ ] Improvement 1
-- [ ] Improvement 2
+## Future Improvements
+
+- Improvement 1:Expand and regularly update career data, salary ranges, country-specific requirements, and learning resources to improve accuracy.
+- Improvement 2:Enhance recommendation accuracy, improve mobile responsiveness, and conduct more user testing to ensure a smoother experience.
+
 
 ## Team
 
@@ -160,14 +194,14 @@ Describe how your team used Replit. For example:
 ## Submission Checklist
 
 - [x] Team name, domain (Domain 1 / Domain 2) and SDG track filled in
-- [ ] Slide deck link added
-- [ ] Demo video link added
-- [ ] Replit used, with proof of use in `submission/`
+- [x] Slide deck link added
+- [x] Demo video link added
+- [x] Replit used, with proof of use in `submission/`
 - [ ] (GPU not used) RunPod used, with proof of use in `submission/`
-- [ ] Preliminary submission completed (`SDC2026_TeamName_Preliminary.pdf`)
-- [ ] Technology declaration completed (`SDC2026_TeamName_TechDeclaration.pdf`)
-- [ ] Submission files renamed with your team name (replace `TeamName`)
-- [ ] "How to Run" steps verified
+- [x] Preliminary submission completed (`SDC2026_TeamName_Preliminary.pdf`)
+- [x] Technology declaration completed (`SDC2026_TeamName_TechDeclaration.pdf`)
+- [x] Submission files renamed with your team name (replace `TeamName`)
+- [x] "How to Run" steps verified
 - [ ] （API not used）No API keys or secrets committed to the repository
 
 ## License
