@@ -1,0 +1,111 @@
+# Running the imported homepage
+
+## Current visual update
+
+The current templates use `static/style.css` (older sections below describe a
+previous version). Shared colors are muted yellow, dusty rose and sage.
+The homepage entrance uses `static/entry.js`: automatic dismissal, click,
+Enter/Escape, keyboard containment, and immediate bypass for reduced motion or
+disabled JavaScript. The existing survey entry remains `/survey?reset=1`.
+Run `python -m unittest discover -s tests -p 'test_entry_animation.py' -v`
+for the current entrance checks. Older regression files still reference removed
+templates/modules and need to be reconciled with the current application; do not
+interpret their previous passing count as validation of this version.
+
+- Stack: Python / Flask, keeping the existing project structure.
+- Run the **Start application** workflow, or run `python main.py`.
+- The server listens on `0.0.0.0:5000` and renders the existing
+  `templates/index.html` at `/`.
+- Dependencies are recorded in `pyproject.toml` and `uv.lock`.
+- No external services are needed. `SESSION_SECRET` is required to sign the
+  questionnaire's session cookie; configure it through Replit Secrets.
+
+## Current scope
+
+The homepage's exploration links navigate to `/survey/welcome`, a questionnaire
+welcome page based on the user's supplied Jinja template. It shares the
+homepage's diagonal pale-yellow/pink gradient and sage buttons.
+The reusable layout is in `templates/base.html`, with styles in
+`static/survey.css`.
+
+All page headings use the handwritten brush/KaiTi style (Ma Shan Zheng), including
+question legends and learning-plan subheadings. The homepage keeps its existing
+handwritten styling. On other pages, body text, options and controls use clean
+sans-serif typography: DM Sans for Latin text and Noto Sans SC for Chinese,
+with platform fallbacks.
+
+The homepage has synchronized Chinese/English controls in its header and welcome
+overlay. It defaults to Chinese and remembers the selection in the browser under
+`career-home-language`. Translation covers homepage copy and accessibility text
+only; questionnaire and report pages are not localized by this switch. Browser
+storage denial must not prevent switching. Language changes must preserve all
+links, welcome-dialog keyboard navigation and focus handling.
+
+The welcome page's Start form opens `/survey`. Three basic steps cover skills,
+experience, and interests, configured in `survey_questions.py`. GET displays the
+current step; POST validates an answer and moves Back/Next/Submit. Each valid
+POST redirects to avoid re-submitting on refresh. Multi-select questions require
+at least one choice; going Back does not require completing the current step.
+
+Answers and the current step are held in a signed browser-session cookie, not
+a database; the cookie is signed, not encrypted. Do not collect sensitive
+personal data in these questions. Cookies use Secure, HttpOnly, SameSite=None,
+and Partitioned so the session works inside the cross-site preview iframe.
+POSTs are CSRF-protected, and survey/summary responses use `Cache-Control:
+no-store`. Browser sessions are independent.
+
+`/results` shows a career exploration report and answer summary after completion.
+Users can download their answers at `/survey/answers.json`, edit their saved
+answers or clear them and restart using CSRF-protected POST forms. `/roles/<id>`
+shows a personalized reference detail page after completion.
+
+The repaired imported catalog in `models.py` contains seven careers, not ten.
+`matching.py` maps the broad survey categories to each career: skill coverage
+contributes up to 60 points and interest coverage up to 40, rounded separately
+and summed. Results at or above 20 points are sorted by score then source ID;
+at most three are shown. Years of general experience affect learning suggestions
+only, not ranking. The rules and limitations are disclosed in the report.
+
+This is exploratory self-report matching, not validated aptitude testing,
+qualification assessment or employment probability. Missing checked categories
+are not proven skill deficits. Never fabricate mentors, employment timeframes or
+target countries: these are not collected. Imported salary and market-growth
+claims have not been verified and must not be displayed as authoritative facts.
+
+
+## Homepage regression checks
+
+Install the development dependency `playwright` through Replit's package
+manager if it is not already installed, then run from the project root:
+
+```sh
+python -m unittest discover -s tests -v
+```
+
+The suite uses Flask's test client and real headless Chromium through Playwright.
+It starts and shuts down its own Flask server on a free local port; the preview
+workflow does not need to be running. Replit's `chromium` is used when available.
+On another machine without system Chromium, run `python -m playwright install
+chromium` first. A missing browser or dependency fails the suite rather than
+silently skipping browser checks.
+
+Checks cover HTTP 200/HTML, click/Escape/Enter/automatic welcome dismissal,
+Tab/Shift+Tab containment, background inertness, heading focus restoration,
+subsequent keyboard and in-page link interaction, reduced-motion dismissal,
+and touch dismissal/layout at widths 320, 375, 390 and 414 pixels.
+Mobile layout assertions check text/control bounds and internal overflow as well
+as document width so that `overflow: hidden` cannot hide clipped content.
+Browser tests block Google Fonts to exercise offline fallback rendering and
+avoid a network dependency; they also fail on uncaught JavaScript errors.
+The suite intentionally does not exercise or implement the questionnaire.
+## Checks
+
+Run `python -m unittest discover -s tests` for questionnaire flow checks.
+
+## Post-merge setup
+
+`scripts/post-merge.sh` restores locked runtime and development dependencies into
+Replit's existing `.pythonlibs` tree, without creating a virtual environment.
+It then checks dependency imports and Python syntax. Workflow reconciliation
+restarts the app after successful setup; browser regressions use the configured
+`homepage-regression` workflow and the environment's existing Chromium.

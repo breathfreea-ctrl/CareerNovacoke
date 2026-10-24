@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "PuweGcDS4c2Agua2cxuZ8"
+uri = "file://generated-artifacts/career-exploration-source.zip"
+type = "unspecified"
+title = "网页完整源码 ZIP"
+description = "包含首页、问卷欢迎页、三步问卷、答案汇总、全部样式、Flask 后端、依赖文件、测试代码和中文运行说明。不含密钥或本地依赖。"
+logical_id = "3c3d67fd-0a65-4392-a36b-d255e46aad3a"
+content_hash = "sha256:690e8a61eb4ba264eb2859780add4d8668919ce21ccf7ad049649aa1cd0cc8e8"
+size = 50009
+mtime_ms = 1792746359948
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:83bcacbb-149d-42bc-b4b9-48f9a691a79d/3c3d67fd-0a65-4392-a36b-d255e46aad3a/3e3399e0-3d0e-4a85-9f5c-9b754d1c5e6d"
+storage_version_token = "1792746380772696"
+content_type = "application/octet-stream"

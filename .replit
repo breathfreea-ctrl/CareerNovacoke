@@ -1,14 +1,8 @@
-modules = ["python-3.11"]
+modules = ["python-base-3.13", "nodejs-24"]
 
 [nix]
-
-[[ports]]
-localPort = 5000
-externalPort = 8080
-
-[[ports]]
-localPort = 5001
-externalPort = 3000
+channel = "stable-25_05"
+packages = ["gitFull", "playwright-driver"]
 
 [workflows]
 runButton = "Project"
@@ -22,14 +16,37 @@ author = "agent"
 task = "workflow.run"
 args = "Start application"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "homepage-regression"
+
 [[workflows.workflow]]
 name = "Start application"
 author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "python -m flask --app main run --host 0.0.0.0 --port 5000"
+args = "python main.py"
 waitForPort = 5000
 
 [workflows.workflow.metadata]
 outputType = "webview"
+
+[[workflows.workflow]]
+name = "homepage-regression"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python -m unittest discover -s tests -v"
+
+[workflows.workflow.metadata]
+isValidation = true
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 180000

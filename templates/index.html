@@ -3,6 +3,20 @@
 {% block title %}Career Match Survey — Hello Future!{% endblock %}
 
 {% block content %}
+<section class="entry-screen" id="entry-screen" role="dialog" aria-modal="true" aria-labelledby="entry-title" aria-describedby="entry-copy" hidden>
+  <div class="entry-screen__shape entry-screen__shape--sun" aria-hidden="true"></div>
+  <div class="entry-screen__shape entry-screen__shape--horizon" aria-hidden="true"></div>
+  <div class="entry-screen__content">
+    <p class="entry-screen__overline">A little space to wonder</p>
+    <h2 id="entry-title">Your next chapter<br>can start softly.</h2>
+    <p id="entry-copy">Take a breath. You don’t need to have it all figured out.</p>
+    <button class="button button--primary entry-screen__button" id="entry-continue" type="button">
+      Enter Hello Future
+    </button>
+  </div>
+  <span class="entry-screen__hint" aria-hidden="true">A gentle beginning</span>
+</section>
+
 <section class="card welcome-card">
   <p class="eyebrow">HELLO FUTURE!</p>
   <h1>Find a career path that fits you.</h1>
@@ -21,4 +35,8 @@
     Start the survey
   </a>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='entry.js') }}" defer></script>
 {% endblock %}

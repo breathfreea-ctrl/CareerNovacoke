@@ -4,25 +4,23 @@
 
 {% block content %}
 <section class="card survey-card">
-  <div class="survey-progress" role="progressbar" aria-label="Survey progress" aria-valuemin="1" aria-valuemax="{{ total_steps }}" aria-valuenow="{{ step_number }}">
+  <div class="survey-progress" aria-label="Survey progress">
     <div
       class="survey-progress__bar"
       style="width: {{ (step_number / total_steps * 100) | round | int }}%;"
     ></div>
   </div>
 
-  <div class="survey-card__meta">
-    <p class="step-text">YOUR REFLECTION <span aria-hidden="true">/</span> {{ "%02d"|format(step_number) }} of {{ "%02d"|format(total_steps) }}</p>
-    <span class="survey-card__private">Saved as you go</span>
-  </div>
+  <p class="step-text">
+    Question {{ step_number }} of {{ total_steps }}
+  </p>
 
   <form method="post" action="{{ url_for('survey') }}" novalidate>
     <input type="hidden" name="question_id" value="{{ question.id }}">
 
     <fieldset class="question">
       <legend class="question__title">
-        <span class="question__index">{{ "%02d"|format(step_number) }}</span>
-        <span>{{ question.title }}</span>
+        {{ question.title }}
         {% if question.required %}
           <span class="required-mark" aria-label="required">*</span>
         {% endif %}
@@ -157,7 +155,7 @@
         value="next"
         formnovalidate
       >
-          {% if is_last %}See my matches{% else %}Continue{% endif %}
+        {% if is_last %}See my results{% else %}Next{% endif %}
       </button>
     </div>
   </form>
