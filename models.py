@@ -1,6 +1,8 @@
 ROLES = [
 
+
 #This is our resource library, containing information on 10 careers. Each career is a comprehensive profile that includes the career title, required skills, related interests, salary, typical countries with promising career prospects, industry outlook, and relevant SDG information.
+
 
     {
         "id": "ai",
@@ -32,7 +34,9 @@ ROLES = [
         ],
         "certs": {
             "Default": ["AWS Certified Machine Learning"],
+
 #If there are no options for the country selected by the user, it will automatically fall back to "Default", making it a "second-best" answer.
+
 
             "United States": ["AWS ML Specialty"],
             "Mainland China": ["Huawei AI Certification"],
@@ -606,6 +610,7 @@ ROLES = [
 
 SKILL_GROUPS = [
 
+
 #Information is organized by major categories containing subcategories.
 
     {
@@ -616,6 +621,7 @@ SKILL_GROUPS = [
         "children": [
 
 #The subcategories.
+
             {"id": "python", "label": "Python"},
             {"id": "ml", "label": "Machine Learning"},
             {"id": "mlops", "label": "MLOps"},
@@ -626,6 +632,7 @@ SKILL_GROUPS = [
             {"id": "pm", "label": "Project Management"},
             {"id": "ict_infra", "label": "ICT Infrastructure"},
             {"id": "me", "label": "M&E (Monitoring & Evaluation)"},
+
 #The id is for machine recognition, and the label is for customer recognition.
 
         ],
@@ -765,6 +772,7 @@ COUNTRY_OPTIONS = [
 
 SCHEMA = [
 
+
 #Start to define which questions the questionnaire contains, what each question looks like, and when it appears.
 
     {
@@ -788,6 +796,7 @@ SCHEMA = [
         "title": "Your areas of expertise",
         "hint": (
 
+
 #Displayed below the question as an operation guide for the user.
 
             "Select a category, then select specific skills you have "
@@ -796,7 +805,9 @@ SCHEMA = [
         "groups": SKILL_GROUPS,
         "hasFollowUp":True,
 
+
 #Indicates whether there is a follow-up.
+
     },
     {
         "id": "interest",
@@ -827,6 +838,7 @@ SCHEMA = [
         "required": True,
         "when": lambda answers：    
 answers.get("path") in {"A", "B"},
+
 
 #Determine whether the subsequent questions should be displayed.
 

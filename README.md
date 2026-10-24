@@ -1,14 +1,14 @@
-# /Project Name
+# CareerNova
 
-> A one-sentence description of what your project does and who it is for.
-
+>A one-sentence description of what your project does and who it is for:
+CareerNova is an AI-powered career guidance platform that helps job seekers, fresh graduates, and career changers identify suitable career paths, understand future job market trends, discover skill gaps, and create personalised reskilling plans for the AI era.
 ---
 
 ## Team Information
 
 | Field                  | Details                                        |
 | ---------------------- | ---------------------------------------------- |
-| **Team Name**          | 疯狂星期四                                      |
+| **Team Name**          | 疯狂星期四                                       |
 | **Team Domain**        | Domain 1                                       |
 | **SDG Track (1–17)**   | SDG 4 — Quality Education,                     |
 |                        | SDG 8 - Decnet Work And Economic Growth,       |
@@ -32,19 +32,15 @@
 
 ## Overview
 
-### /Problem
+### Problem
 
-Describe the real-world problem you are solving in 2–4 sentences. Who is affected, and why does it matter?
+As AI and technology change the job market, many workers face a growing gap between their skills and job requirements. Fresh graduates and career changers struggle to find the right career direction, while some workers risk losing their jobs. This affects workers, students, HR teams, and education centers, making career guidance and skill training more important than ever.
 
-答案Rapid technological advancement and AI-driven changes are widening the gap between workers’ skills and industry requirements. Fresh graduates struggle to find suitable career paths, career changers face uncertainty, and workers in declining occupations risk unemployment. As AI increasingly automates specific human skills and tasks, people need better guidance to adapt and remain competitive in the evolving job market.
+### Solution
 
-### /Solution
+Our AI-powered website matches users with suitable careers, identifies their skill gaps, and creates personal learning plans. It also updates career trends to help users build the right skills, find direction, and prepare for future jobs.
 
-Explain how your project uses AI to solve the problem and what makes it valuable.
-
-答案Our AI-powered career platform analyzes users’ profiles to recommend suitable careers, explain skill gaps, and generate personalized learning and training plans to improve employability. By continuously updating career information and industry trends, the platform helps users anticipate changes, develop relevant skills, and make informed career decisions. Its value lies in turning career uncertainty into actionable learning pathways, helping people adapt to changing industry demands and prepare for future opportunities.
-
-### /Key Features
+### /Key Features我们的网站有什么特点。。（客制化的学习计划和技能培训？问卷分析匹配度？提供优质资源？AI互动？更新职业趋势？）
 
 - **Feature 1** — Short description.
 - **Feature 2** — Short description.
@@ -61,7 +57,7 @@ Explain how your project uses AI to solve the problem and what makes it valuable
 
 ---
 
-## Project Structure
+## Project Structure/待完善
 
 ```
 .
@@ -73,7 +69,6 @@ Explain how your project uses AI to solve the problem and what makes it valuable
 │   ├── SDC2026_TeamName_Preliminary.pdf      # Preliminary submission
 │   ├── SDC2026_TeamName_TechDeclaration.pdf  # Technology declaration
 │   ├── SDC2026_TeamName_Replit_POU.pdf       # Replit proof of use
-│   └── SDC2026_TeamName_Runpod_POU.pdf       # RunPod proof of use
 ├── .env.example             # Example environment variables
 ├── .gitignore
 ├── .replit                  # Replit run configuration
@@ -85,20 +80,20 @@ Explain how your project uses AI to solve the problem and what makes it valuable
 ### Architecture
 
 ```
-User ──► Replit (App / API) ──► RunPod Endpoint (GPU model)
+User ──► Replit (App/Web) ──► RunPod Endpoint (GPU model)
                 │
                 └──► Response returned to user
 ```
 
 ---
 
-## /How to Run
+## How to Run
 
-### Option 1 — Run on Replit (Recommended)
+### /Option 1 — Run on Replit (Recommended)
 
 1. Open the [Replit Project](https://replit.com/@your-username/your-project), or import this repository via **Create Repl → Import from GitHub**.
 2. Open the **Secrets** tab (🔒) and add the variables listed in `.env.example`:
-   - `RUNPOD_API_KEY`
+   - `RUNPOD_API_KEY`我们没用runpod，要换掉这里
    - `RUNPOD_ENDPOINT_ID`
 3. Click **Run**. Replit uses the `.replit` file to start `python src/main.py`.
 
@@ -131,7 +126,7 @@ python -m unittest discover tests
 
 ---
 
-## /How We Use Replit *(Required)*
+## /How We Use Replit *(Required)*我们怎么用replit（用replit干了什么
 
 Describe how your team used Replit. For example:
 
@@ -143,39 +138,39 @@ Describe how your team used Replit. For example:
 
 ---
 
-## /Challenges & Learnings
+## /Challenges & Learnings（我们在开发过程遇到什么难题，怎么解决难题，从中学到什么
 
 - What challenges did you face, and how did you overcome them?
 - What did your team learn?
 
-## /Future Improvements
+## /Future Improvements（网站哪些方面要提升，怎么提升
 
 - [ ] Improvement 1
 - [ ] Improvement 2
 
 ## Team
 
-| Name                  | Role                          | GitHub                                                     |
-| --------------------- | ----------------------------- | ---------------------------------------------------------- |
-| LIN JIA XI            | Team Lead /Hosting/Dev        | [@breathfreea-ctrl](https://github.com/breathfreea-ctrl)   |
-| LIU XIAN YAO          | Backend                       | [@Iris0112-web](https://github.com/Iris0112-web)           |
-| WANG JING YANG        | Fronted                       | [@hwangjingyan-ithub](https://github.com/wangjingyan-ithub)|
-| JANICE WONG JYUN LYNN | Data assistant & Documentation| [@janicewongjl-del](https://github.com/janicewongjl-del)   |
+| Name                  | Role                          | GitHub                                                    |
+| --------------------- | ----------------------------- | --------------------------------------------------------- |
+| LIN JIA XI            | Team Lead /Hosting/Dev        | [@breathfreea-ctrl](https://github.com/breathfreea-ctrl)  |
+| LIU XIAN YAO          | Backend                       | [@Iris0112-web](https://github.com/Iris0112-web)          |
+| WANG JING YANG        | Fronted                       | [@wangjingyan-ithub](https://github.com/wangjingyan-ithub)|
+| JANICE WONG JYUN LYNN | Data assistant & Documentation| [@janicewongjl-del](https://github.com/janicewongjl-del)  |
 
 ---
 
 ## /Submission Checklist
 
-- [ ] Team name, domain (Domain 1 / Domain 2) and SDG track filled in
+- [x] Team name, domain (Domain 1 / Domain 2) and SDG track filled in
 - [ ] Slide deck link added
 - [ ] Demo video link added
 - [ ] Replit used, with proof of use in `submission/`
-- [ ] RunPod used, with proof of use in `submission/`
+- [ ] (GPU not used) RunPod used, with proof of use in `submission/`
 - [ ] Preliminary submission completed (`SDC2026_TeamName_Preliminary.pdf`)
 - [ ] Technology declaration completed (`SDC2026_TeamName_TechDeclaration.pdf`)
 - [ ] Submission files renamed with your team name (replace `TeamName`)
 - [ ] "How to Run" steps verified
-- [ ] No API keys or secrets committed to the repository
+- [ ] （API not used）No API keys or secrets committed to the repository
 
 ## License
 
