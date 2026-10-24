@@ -1,10 +1,10 @@
-# /Project Name ///待完善
+# CareerNova
 
-> A one-sentence description of what your project does and who it is for.
-
+>A one-sentence description of what your project does and who it is for:
+CareerNova is an AI-powered career guidance platform that helps job seekers, fresh graduates, and career changers identify suitable career paths, understand future job market trends, discover skill gaps, and create personalised reskilling plans for the AI era.
 ---
 
-## Team Information sdgtrack有缺漏吗
+## Team Information
 
 | Field                  | Details                                        |
 | ---------------------- | ---------------------------------------------- |
@@ -57,7 +57,7 @@ Our AI-powered website matches users with suitable careers, identifies their ski
 
 ---
 
-## Project Structure
+## Project Structure/待完善
 
 ```
 .
@@ -80,7 +80,7 @@ Our AI-powered website matches users with suitable careers, identifies their ski
 ### Architecture
 
 ```
-User ──► Replit (App / API) ──► RunPod Endpoint (GPU model)
+User ──► Replit (App/Web) ──► RunPod Endpoint (GPU model)
                 │
                 └──► Response returned to user
 ```
@@ -126,7 +126,7 @@ python -m unittest discover tests
 
 ---
 
-## /How We Use Replit *(Required)*
+## /How We Use Replit *(Required)*我们怎么用replit（用replit干了什么
 
 Describe how your team used Replit. For example:
 
@@ -138,24 +138,24 @@ Describe how your team used Replit. For example:
 
 ---
 
-## /Challenges & Learnings
+## /Challenges & Learnings（我们在开发过程遇到什么难题，怎么解决难题，从中学到什么
 
 - What challenges did you face, and how did you overcome them?
 - What did your team learn?
 
-## /Future Improvements
+## /Future Improvements（网站哪些方面要提升，怎么提升
 
 - [ ] Improvement 1
 - [ ] Improvement 2
 
 ## Team
 
-| Name                  | Role                          | GitHub                                                  |
-| --------------------- | ----------------------------- | ------------------------------------------------------- |
-| LIN JIA XI            | Team Lead /Hosting/Dev        | [@breathfreea-ctrl](https://github.com/breathfreea-ctrl)|
-| LIU XIAN YAO          | Backend                       | [@Iris0112-web](https://github.com/Iris0112-web)        |
-| WANG JING YANG        | Fronted                       | [@wangjingyan-ithub](https://github.com/wangjingyan-ithub))                |
-| JANICE WONG JYUN LYNN | Data assistant & Documentation| [@janicewongjl-del](https://github.com/janicewongjl-del)|
+| Name                  | Role                          | GitHub                                                    |
+| --------------------- | ----------------------------- | --------------------------------------------------------- |
+| LIN JIA XI            | Team Lead /Hosting/Dev        | [@breathfreea-ctrl](https://github.com/breathfreea-ctrl)  |
+| LIU XIAN YAO          | Backend                       | [@Iris0112-web](https://github.com/Iris0112-web)          |
+| WANG JING YANG        | Fronted                       | [@wangjingyan-ithub](https://github.com/wangjingyan-ithub)|
+| JANICE WONG JYUN LYNN | Data assistant & Documentation| [@janicewongjl-del](https://github.com/janicewongjl-del)  |
 
 ---
 
@@ -170,7 +170,7 @@ Describe how your team used Replit. For example:
 - [ ] Technology declaration completed (`SDC2026_TeamName_TechDeclaration.pdf`)
 - [ ] Submission files renamed with your team name (replace `TeamName`)
 - [ ] "How to Run" steps verified
-- [ ] No API keys or secrets committed to the repository
+- [ ] （API not used）No API keys or secrets committed to the repository
 
 ## License
 
