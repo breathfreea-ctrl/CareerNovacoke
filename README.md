@@ -1,4 +1,4 @@
-# Careernova-coke
+# CareerNovacoke
 
 >CareerNovacoke is an AI-powered career guidance platform that helps job seekers, fresh graduates, and career changers identify suitable career paths, understand future job market trends, discover skill gaps, and create personalised reskilling plans for the AI era.
 ---
@@ -21,7 +21,7 @@
 
 | Resource          | Link                                           |
 | ----------------- | ---------------------------------------------- |
-| GitHub Repository |(https://github.com/breathfreea-ctrl/Careernova-coke) |
+| GitHub Repository | https://github.com/breathfreea-ctrl/CareerNovacoke |
 | Live Demo         | https://your-project.replit.app                |
 | Slide Deck        | https://example.com/slides                     |
 | Demo Video        | https://example.com/demo-video                 |
