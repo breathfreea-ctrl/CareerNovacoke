@@ -1,7 +1,6 @@
-# CareerNova
+# CareerNovacoke
 
->A one-sentence description of what your project does and who it is for:
-CareerNova is an AI-powered career guidance platform that helps job seekers, fresh graduates, and career changers identify suitable career paths, understand future job market trends, discover skill gaps, and create personalised reskilling plans for the AI era.
+>CareerNovacoke is an AI-powered career guidance platform that helps job seekers, fresh graduates, and career changers identify suitable career paths, understand future job market trends, discover skill gaps, and create personalised reskilling plans for the AI era.
 ---
 
 ## Team Information
