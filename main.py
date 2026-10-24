@@ -54,7 +54,6 @@ def save_current_answer(question, answers):
     if question_type == "single":
         new_value = request.form.get(question_id, "").strip()
 
-        # Changing the path invalidates answers from the previous path.
         if question_id == "path" and answers.get("path") != new_value:
             for key in (
                 "skills",
@@ -80,8 +79,6 @@ def save_current_answer(question, answers):
         details = answers.get(detail_key, {})
 
         if question.get("hasFollowUp"):
-            # The survey template should name these fields years__<skill>
-            # and cert__<skill>, using the skill label in the field name.
             details = {}
             for label in selected:
                 years = request.form.get(f"years__{label}", "").strip()
@@ -159,7 +156,7 @@ def survey():
         print("后续步骤：", [item["id"] for item in get_active_steps(answers)])
         steps = get_active_steps(answers)
 
-        # The step list can change after answering the path question.
+ 
         question_ids = [item["id"] for item in steps]
         if question_id not in question_ids:
             question_id = steps[0]["id"]
@@ -283,7 +280,7 @@ def role_detail(role_id):
     )
 
 def get_total_steps(answers):
-    # A 路径有 6 题；B 路径多一道准备度题，共 7 题。
+
     return 6 if answers.get("path") == "A" else 7
 
 

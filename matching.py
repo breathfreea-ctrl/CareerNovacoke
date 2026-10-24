@@ -1,8 +1,4 @@
-"""问卷答案与职业匹配评分，以及个性化学习计划生成。"""
-
-
 def get_salary_range(salary_answer):
-    """将问卷中的薪资选项转换为最低值和最高值。"""
     salary_ranges = {
         "Under $30,000": (0, 30000),
         "$30,000 – $60,000": (30000, 60000),
@@ -15,13 +11,7 @@ def get_salary_range(salary_answer):
 
 
 def match_user(answers, roles=None):
-    """
-    按技能、兴趣、薪资和地区计算职业匹配分。
-
-    返回按分数从高到低排列的职业字典列表。
-    """
     if roles is None:
-        # 延迟导入，避免模块互相导入时出现循环依赖。
         from models import ROLES
 
         roles = ROLES
@@ -37,7 +27,7 @@ def match_user(answers, roles=None):
         total_points = 0
         breakdown = []
 
-        # 已选择的必需技能加 10 分；有证书再加 20 分。
+ 
         for skill in role.get("required_skills", []):
             skill_detail = user_skills.get(skill)
             if skill_detail:
@@ -60,7 +50,7 @@ def match_user(answers, roles=None):
                         }
                     )
 
-        # 多个兴趣匹配时，沿用原逻辑，只按第一个匹配项加分。
+ 
         matched_interests = [
             interest
             for interest in role.get("interests", [])
@@ -123,7 +113,6 @@ def match_user(answers, roles=None):
 
 
 def get_tier(points):
-    """根据总分返回结果页展示的匹配等级。"""
     if points >= 115:
         return {
             "title": "You are born for this!",
@@ -171,11 +160,7 @@ def get_tier(points):
 
 
 def generate_learning_plan(role, answers):
-    """
-    根据目标职业和问卷答案生成学习计划数据。
 
-    返回字典，模板可以遍历其中的 phases、courses 和 practical。
-    """
     target_time = answers.get("time", "")
     country = answers.get("country", "")
     user_skills = answers.get("skills_detail", {})
