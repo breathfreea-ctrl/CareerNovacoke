@@ -1,3 +1,4 @@
+#Handle browser requests, save survey progress, call the scoring function, and select which page to display.
 import os
 
 from flask import Flask, abort, redirect, render_template, request, session, url_for
@@ -15,15 +16,16 @@ app.config.update(
     SESSION_COOKIE_SAMESITE="None",
     SESSION_COOKIE_SECURE=True,
 )
+#Protect session data. Also ensure application stability, enhance session security, and support specific cross-origin requests.
 
 def get_answers():
-    """Read the survey answers saved in the user's session."""
+#Read the survey answers saved in the user's session.
     answers = session.get("answers", {})
     return answers if isinstance(answers, dict) else {}
 
 
 def get_active_steps(answers):
-    """Return the questions shown for the selected career path."""
+#Return the questions shown for the selected career path.
     path = answers.get("path")
     visible_ids = {"path"}
 
@@ -47,14 +49,15 @@ def get_active_steps(answers):
 
 
 def save_current_answer(question, answers):
-    """Read the current question's answer from the submitted form."""
+#Read the current question's answer from the submitted form.
     question_id = question["id"]
     question_type = question.get("type")
 
     if question_type == "single":
+#Read the answer to a single-choice question.
         new_value = request.form.get(question_id, "").strip()
 
-        # Changing the path invalidates answers from the previous path.
+
         if question_id == "path" and answers.get("path") != new_value:
             for key in (
                 "skills",
@@ -75,13 +78,12 @@ def save_current_answer(question, answers):
     elif question_type == "groupedMulti":
         selected = request.form.getlist(question_id)
         answers[question_id] = selected
+#Read multiple selected answers; if the question has follow-up fields, read the experience duration(years) and certification status(cert) for each selected option
 
         detail_key = f"{question_id}_detail"
         details = answers.get(detail_key, {})
 
         if question.get("hasFollowUp"):
-            # The survey template should name these fields years__<skill>
-            # and cert__<skill>, using the skill label in the field name.
             details = {}
             for label in selected:
                 years = request.form.get(f"years__{label}", "").strip()
@@ -94,7 +96,7 @@ def save_current_answer(question, answers):
 
 
 def validate_answer(question, answers):
-    """Return an error message when a required answer is incomplete."""
+#Return an error message when a required answer is incomplete.
     if not question.get("required", False):
         return None
 
@@ -127,6 +129,7 @@ def index():
 
 @app.route("/survey", methods=["GET", "POST"])
 def survey():
+    
     answers = get_answers()
     steps = get_active_steps(answers)
 
@@ -138,7 +141,8 @@ def survey():
         session.clear()
         answers = {}
         steps = get_active_steps(answers)
-
+    #GET:Use the session to find and display the current question
+    #POST:Check whether the submitted question_id belongs to the current survey path, save the answer, validate required fields, and then decide whether to display questions or results page.
     if request.method == "POST":
         question_id = request.form.get("question_id", "")
         action = request.form.get("action", "next")
@@ -154,12 +158,8 @@ def survey():
             abort(400, description="The submitted question is not part of this survey path.")
 
         answers = save_current_answer(question, answers)
-        print("POST 表单：", request.form.to_dict(flat=False))
-        print("保存的答案：", answers)
-        print("后续步骤：", [item["id"] for item in get_active_steps(answers)])
         steps = get_active_steps(answers)
 
-        # The step list can change after answering the path question.
         question_ids = [item["id"] for item in steps]
         if question_id not in question_ids:
             question_id = steps[0]["id"]
@@ -172,7 +172,6 @@ def survey():
 
         if error:
             session["answers"] = answers
-            print("POST 下一题：", question_id)
             session["current_id"] = question_id
             session.modified = True
             return render_template(
@@ -200,17 +199,9 @@ def survey():
         session["current_id"] = question_id
         session.modified = True
 
-        print("POST 下一题：", question_id)
-        print("POST session：", dict(session))
 
         response = redirect(url_for("survey"))
-        print("响应是否设置 session cookie：", "Set-Cookie" in response.headers)
         return response
-    print("GET session：", dict(session))
-    print(
-        "GET 是否收到 session cookie：",
-        bool(request.cookies.get(app.config.get("SESSION_COOKIE_NAME", "session")))
-    )
 
     current_id = session.get("current_id", steps[0]["id"])
     current_index = next(
@@ -232,6 +223,7 @@ def survey():
 
 @app.route("/results")
 def results():
+    #Rank careers, keep only the top three with scores of at least 34, then call the tier and learning-plan functions, and finally render the results page.
     answers = get_answers()
     if not answers.get("path"):
         return redirect(url_for("index"))
@@ -283,7 +275,7 @@ def role_detail(role_id):
     )
 
 def get_total_steps(answers):
-    # A 路径有 6 题；B 路径多一道准备度题，共 7 题。
+    #A:6 questions B:7 questions
     return 6 if answers.get("path") == "A" else 7
 
 

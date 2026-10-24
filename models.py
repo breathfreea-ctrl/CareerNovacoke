@@ -1,6 +1,7 @@
-"""职业数据、问卷选项和问卷题目配置。"""
-
 ROLES = [
+
+#This is our resource library, containing information on 10 careers. Each career is a comprehensive profile that includes the career title, required skills, related interests, salary, typical countries with promising career prospects, industry outlook, and relevant SDG information.
+
     {
         "id": "ai",
         "title": "AI Engineer",
@@ -31,6 +32,8 @@ ROLES = [
         ],
         "certs": {
             "Default": ["AWS Certified Machine Learning"],
+#If there are no options for the country selected by the user, it will automatically fall back to "Default", making it a "second-best" answer.
+
             "United States": ["AWS ML Specialty"],
             "Mainland China": ["Huawei AI Certification"],
         },
@@ -602,10 +605,17 @@ ROLES = [
 
 
 SKILL_GROUPS = [
+
+#Information is organized by major categories containing subcategories.
+
     {
         "id": "tech",
         "label": "Technology & Engineering",
+#The major category.
+
         "children": [
+
+#The subcategories.
             {"id": "python", "label": "Python"},
             {"id": "ml", "label": "Machine Learning"},
             {"id": "mlops", "label": "MLOps"},
@@ -616,6 +626,8 @@ SKILL_GROUPS = [
             {"id": "pm", "label": "Project Management"},
             {"id": "ict_infra", "label": "ICT Infrastructure"},
             {"id": "me", "label": "M&E (Monitoring & Evaluation)"},
+#The id is for machine recognition, and the label is for customer recognition.
+
         ],
     },
     {
@@ -751,8 +763,10 @@ COUNTRY_OPTIONS = [
 ]
 
 
-# 首页负责欢迎说明；这里从第一道实际问卷题开始。
 SCHEMA = [
+
+#Start to define which questions the questionnaire contains, what each question looks like, and when it appears.
+
     {
         "id": "path",
         "type": "single",
@@ -773,11 +787,16 @@ SCHEMA = [
         "when": lambda answers: answers.get("path") in {"A", "B"},
         "title": "Your areas of expertise",
         "hint": (
+
+#Displayed below the question as an operation guide for the user.
+
             "Select a category, then select specific skills you have "
             "or are currently learning."
         ),
         "groups": SKILL_GROUPS,
-        "hasFollowUp": True,
+        "hasFollowUp":True,
+
+#Indicates whether there is a follow-up.
     },
     {
         "id": "interest",
@@ -806,9 +825,17 @@ SCHEMA = [
         "id": "salary",
         "type": "single",
         "required": True,
-        "when": lambda answers: answers.get("path") in {"A", "B"},
+        "when": lambda answers：    
+answers.get("path") in {"A", "B"},
+
+#Determine whether the subsequent questions should be displayed.
+
         "title": "What is your expected annual salary? (in USD)",
-        "options": [{"v": value, "t": value} for value in SALARY_OPTIONS],
+        "options": [{"v": value, "t": value} 
+
+#What the user sees is t (text), while the hidden data sent from the frontend to the backend is v (value).
+
+            for value in SALARY_OPTIONS],
     },
     {
         "id": "country",

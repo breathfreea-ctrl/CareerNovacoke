@@ -12,17 +12,23 @@
   </p>
 </header>
 
+<!-- Overall page framework and header. -->
+
 {% if not results %}
+<!-- Decision logic: if the backend indicates that no matching careers were found. -->
+
   <section class="card empty-results">
     <h2>No suitable match found yet</h2>
     <p>
       We haven’t found a career in our current list that reaches the match
       threshold for your answers. We’ll continue to improve the survey.
     </p>
-    <p lang="zh-CN">
-      很抱歉，目前没有录入与您匹配度足够高的职业。我们会继续完善职业库。
-    </p>
+    <p lang="en">      
+    We apologize, but there are currently no careers with a high enough match for you. We will continue to improve our career database.
+    </p >
     <a class="button button--primary" href="{{ url_for('survey', reset=1) }}">
+      <!-- A placeholder that automatically generates a URL link to "restart the questionnaire", equivalent to clicking the "restart" button for you. -->
+
       Start over
     </a>
   </section>
@@ -33,6 +39,8 @@
         <div>
           <p class="role-rank">
             {% if loop.index == 1 %}
+
+            <!-- A loop statement that starts from the first matching result, takes out a career, and generates a "profile card" for it. -->
               Your 1st best match
             {% elif loop.index == 2 %}
               Your 2nd best match
@@ -42,11 +50,13 @@
           </p>
 
           <h2>{{ role.title }}</h2>
-
+          
+<!-- Normally colors are fixed, but here backend uploads variables based on match level -->
           <span
             class="tier-tag"
             style="
               color: {{ role.tier.color }};
+             
               background: {{ role.tier.bg }};
               border-color: {{ role.tier.border }};
             "
@@ -66,6 +76,9 @@
       </p>
 
       <details class="breakdown">
+
+<!--This is a collapsible panel natively supported by HTML. The user must click "View point breakdown" to expand it and see the detailed scoring breakdown.-->
+        
         <summary>View point breakdown</summary>
         <div class="breakdown__list">
           {% for item in role.breakdown %}
@@ -114,6 +127,8 @@
         </div>
       </section>
 
+<!--The above is the detailed information inside the profile card.-->
+
       <section class="mentor-card">
         <h3>Industry role model</h3>
         <h4>{{ role.mentor.name }}</h4>
@@ -153,6 +168,7 @@
       <a
         class="button button--secondary"
         href="{{ url_for('role_detail', role_id=role.id) }}"
+<!--Generate a button; when clicked, it jumps to the detail page for that career.-->
       >
         View role details
       </a>
@@ -170,12 +186,13 @@
 </div>
 {% endblock %}
 
+<!--Convert all the answers the user filled in the questionnaire into a piece of JSON data.-->
 {% block scripts %}
 <script>
   const surveyAnswers = {{ answers | tojson }};
-
   document.getElementById("download-data").addEventListener("click", () => {
     const file = new Blob(
+
       [JSON.stringify(surveyAnswers, null, 2)],
       { type: "application/json" }
     );
@@ -190,3 +207,5 @@
   });
 </script>
 {% endblock %}
+
+<!--This is equivalent to temporarily creating a file in the browser's memory, packaging the just-translated JSON data into a file named "career-survey-data.json", which the user can open with Notepad to see exactly what they filled in at the time.-->
