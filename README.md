@@ -19,12 +19,12 @@
 
 ## Links
 
-| Resource          | Link                                           |
-| ----------------- | ---------------------------------------------- |
+| Resource          | Link                                               |
+| ----------------- | -------------------------------------------------- |
 | GitHub Repository | https://github.com/breathfreea-ctrl/CareerNovacoke |
-| Live Demo         | https://your-project.replit.app                |
-| Slide Deck        | https://example.com/slides                     |
-| Demo Video        | https://example.com/demo-video                 |
+| Live Demo         | https://careernova-coke.replit.app                 |
+| Slide Deck        | https://example.com/slides                         |
+| Demo Video        | https://youtu.be/Ehhi850yV5c                       |
 
 ---
 
